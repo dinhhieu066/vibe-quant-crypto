@@ -1,6 +1,6 @@
 {
   "owner": "Personal Terminal (Private)",
-  "publicUrl": "https://mercy-counting-solutions-astrology.trycloudflare.com",
+  "publicUrl": "https://gmc-texture-mathematical-proceeds.trycloudflare.com",
   "config": {
     "exchangeRate": 25400,
     "dailyTargetUSD": 10,
@@ -27,14 +27,14 @@
       "icon": "₿",
       "side": "SHORT",
       "entryPrice": 80624.54,
-      "currentPrice": 80664.59,
+      "currentPrice": 80666.94,
       "marginUSD": 4.92,
       "sizeUSD": 14.76,
       "leverage": 3,
       "stopLoss": 81592.03,
       "takeProfit": 78850.8,
-      "unrealizedPnlUSD": -0.007,
-      "unrealizedPnlPercent": -0.14,
+      "unrealizedPnlUSD": -0.008,
+      "unrealizedPnlPercent": -0.16,
       "isBreakevenProtected": false,
       "reason": "AI Radar: Điểm tiềm năng 95/100 [🔻 Siêu Quá Mua (Overbought Pullback)]",
       "openTime": "2026-10-27T16:20:59.243Z"
@@ -57,14 +57,14 @@
         "icon": "₿",
         "side": "SHORT",
         "entryPrice": 80624.54,
-        "currentPrice": 80664.59,
+        "currentPrice": 80666.94,
         "marginUSD": 4.92,
         "sizeUSD": 14.76,
         "leverage": 3,
         "stopLoss": 81592.03,
         "takeProfit": 78850.8,
-        "unrealizedPnlUSD": -0.007,
-        "unrealizedPnlPercent": -0.14,
+        "unrealizedPnlUSD": -0.008,
+        "unrealizedPnlPercent": -0.16,
         "isBreakevenProtected": false,
         "reason": "AI Radar: Điểm tiềm năng 95/100 [🔻 Siêu Quá Mua (Overbought Pullback)]",
         "openTime": "2026-10-27T16:20:59.243Z"
@@ -76,14 +76,14 @@
         "icon": "◎",
         "side": "LONG",
         "entryPrice": 100.99,
-        "currentPrice": 101.05,
+        "currentPrice": 101.11,
         "marginUSD": 7.09,
         "sizeUSD": 21.27,
         "leverage": 3,
         "stopLoss": 99.78,
         "takeProfit": 103.21,
-        "unrealizedPnlUSD": 0.013,
-        "unrealizedPnlPercent": 0.18,
+        "unrealizedPnlUSD": 0.025,
+        "unrealizedPnlPercent": 0.35,
         "isBreakevenProtected": false,
         "isProfitLocked": false,
         "reason": "AI Multi-Radar: Điểm tiềm năng 97/100 [🔥 Siêu Quá Bán (Mean-Reversion Rebound)]",
@@ -96,14 +96,14 @@
         "icon": "Ξ",
         "side": "SHORT",
         "entryPrice": 2348.36,
-        "currentPrice": 2350.8,
+        "currentPrice": 2351.17,
         "marginUSD": 7.09,
         "sizeUSD": 21.27,
         "leverage": 3,
         "stopLoss": 2376.54,
         "takeProfit": 2296.7,
-        "unrealizedPnlUSD": -0.022,
-        "unrealizedPnlPercent": -0.31,
+        "unrealizedPnlUSD": -0.025,
+        "unrealizedPnlPercent": -0.35,
         "isBreakevenProtected": false,
         "isProfitLocked": false,
         "reason": "Manual Private Click",
@@ -113,6 +113,162 @@
   },
   "dailyPnlRecords": [],
   "logs": [
+    {
+      "timestamp": "2026-10-27T17:17:06.861Z",
+      "level": "SUCCESS",
+      "source": "Security",
+      "message": "Xác thực thành công. Đã cấp quyền truy cập trạm điều hành."
+    },
+    {
+      "timestamp": "2026-10-27T17:17:01.715Z",
+      "level": "SUCCESS",
+      "source": "Tunnel",
+      "message": "Cổng truy cập riêng đã online tại: https://gmc-texture-mathematical-proceeds.trycloudflare.com"
+    },
+    {
+      "timestamp": "2026-10-27T17:16:55.690Z",
+      "level": "SUCCESS",
+      "source": "QuantEngine",
+      "message": "Đã kết nối luồng dữ liệu toàn bộ thị trường Binance thời gian thực."
+    },
+    {
+      "timestamp": "2026-10-27T17:16:55.186Z",
+      "level": "INFO",
+      "source": "Tunnel",
+      "message": "Đang thiết lập cổng bảo mật Cloudflare Tunnel truy cập riêng từ điện thoại..."
+    },
+    {
+      "timestamp": "2026-10-27T17:15:26.756Z",
+      "level": "SUCCESS",
+      "source": "Security",
+      "message": "Xác thực thành công. Đã cấp quyền truy cập trạm điều hành."
+    },
+    {
+      "timestamp": "2026-10-27T17:15:14.598Z",
+      "level": "SUCCESS",
+      "source": "Tunnel",
+      "message": "Cổng truy cập riêng đã online tại: https://field-lender-repository-exec.trycloudflare.com"
+    },
+    {
+      "timestamp": "2026-10-27T17:15:11.551Z",
+      "level": "SUCCESS",
+      "source": "QuantEngine",
+      "message": "Đã kết nối luồng dữ liệu toàn bộ thị trường Binance thời gian thực."
+    },
+    {
+      "timestamp": "2026-10-27T17:15:11.269Z",
+      "level": "SUCCESS",
+      "source": "QuantRadar",
+      "message": "Radar toàn thị trường: Đang quét 415 đồng coin Binance 24/7 tìm cơ hội số 1."
+    },
+    {
+      "timestamp": "2026-10-27T17:15:10.989Z",
+      "level": "INFO",
+      "source": "Tunnel",
+      "message": "Đang thiết lập cổng bảo mật Cloudflare Tunnel truy cập riêng từ điện thoại..."
+    },
+    {
+      "timestamp": "2026-10-27T17:14:44.177Z",
+      "level": "SUCCESS",
+      "source": "Tunnel",
+      "message": "Cổng truy cập riêng đã online tại: https://roman-association-joan-arena.trycloudflare.com"
+    },
+    {
+      "timestamp": "2026-10-27T17:14:39.059Z",
+      "level": "SUCCESS",
+      "source": "QuantEngine",
+      "message": "Đã kết nối luồng dữ liệu toàn bộ thị trường Binance thời gian thực."
+    },
+    {
+      "timestamp": "2026-10-27T17:14:38.545Z",
+      "level": "INFO",
+      "source": "Tunnel",
+      "message": "Đang thiết lập cổng bảo mật Cloudflare Tunnel truy cập riêng từ điện thoại..."
+    },
+    {
+      "timestamp": "2026-10-27T17:13:18.068Z",
+      "level": "SUCCESS",
+      "source": "Security",
+      "message": "Xác thực thành công. Đã cấp quyền truy cập trạm điều hành."
+    },
+    {
+      "timestamp": "2026-10-27T17:12:25.266Z",
+      "level": "SUCCESS",
+      "source": "Tunnel",
+      "message": "Cổng truy cập riêng đã online tại: https://theology-annie-attended-parallel.trycloudflare.com"
+    },
+    {
+      "timestamp": "2026-10-27T17:12:20.396Z",
+      "level": "SUCCESS",
+      "source": "QuantEngine",
+      "message": "Đã kết nối luồng dữ liệu toàn bộ thị trường Binance thời gian thực."
+    },
+    {
+      "timestamp": "2026-10-27T17:12:19.820Z",
+      "level": "INFO",
+      "source": "Tunnel",
+      "message": "Đang thiết lập cổng bảo mật Cloudflare Tunnel truy cập riêng từ điện thoại..."
+    },
+    {
+      "timestamp": "2026-10-27T17:10:23.578Z",
+      "level": "SUCCESS",
+      "source": "Tunnel",
+      "message": "Cổng truy cập riêng đã online tại: https://drilling-purple-drill-latest.trycloudflare.com"
+    },
+    {
+      "timestamp": "2026-10-27T17:10:17.250Z",
+      "level": "SUCCESS",
+      "source": "QuantEngine",
+      "message": "Đã kết nối luồng dữ liệu toàn bộ thị trường Binance thời gian thực."
+    },
+    {
+      "timestamp": "2026-10-27T17:10:16.957Z",
+      "level": "SUCCESS",
+      "source": "QuantRadar",
+      "message": "Radar toàn thị trường: Đang quét 415 đồng coin Binance 24/7 tìm cơ hội số 1."
+    },
+    {
+      "timestamp": "2026-10-27T17:10:16.495Z",
+      "level": "INFO",
+      "source": "Tunnel",
+      "message": "Đang thiết lập cổng bảo mật Cloudflare Tunnel truy cập riêng từ điện thoại..."
+    },
+    {
+      "timestamp": "2026-10-27T17:00:47.908Z",
+      "level": "INFO",
+      "source": "Capital",
+      "message": "Đã cập nhật mức vốn cá nhân: 1.000.000 đ (≈ $39.37 USD)."
+    },
+    {
+      "timestamp": "2026-10-27T17:00:47.458Z",
+      "level": "INFO",
+      "source": "Capital",
+      "message": "Đã cập nhật mức vốn cá nhân: 500.000 đ (≈ $19.69 USD)."
+    },
+    {
+      "timestamp": "2026-10-27T17:00:35.634Z",
+      "level": "SUCCESS",
+      "source": "Security",
+      "message": "Xác thực thành công. Đã cấp quyền truy cập trạm điều hành."
+    },
+    {
+      "timestamp": "2026-10-27T17:00:33.796Z",
+      "level": "WARN",
+      "source": "Security",
+      "message": "Phát hiện nhập sai mã PIN (Còn 3 lần thử trước khi khóa)."
+    },
+    {
+      "timestamp": "2026-10-27T17:00:32.729Z",
+      "level": "WARN",
+      "source": "Security",
+      "message": "Phát hiện nhập sai mã PIN (Còn 4 lần thử trước khi khóa)."
+    },
+    {
+      "timestamp": "2026-10-27T17:00:04.219Z",
+      "level": "SUCCESS",
+      "source": "Security",
+      "message": "Xác thực thành công. Đã cấp quyền truy cập trạm điều hành."
+    },
     {
       "timestamp": "2026-10-27T16:58:31.564Z",
       "level": "INFO",

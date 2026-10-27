@@ -233,10 +233,10 @@ body {
   font-size: 11px;
 }
 
-/* Financial Performance Strip */
+/* Financial Performance Strip (3 Main Cards) */
 .performance-strip {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   padding: 16px 24px;
   max-width: 1440px;
@@ -245,7 +245,7 @@ body {
 
 @media (max-width: 990px) {
   .performance-strip {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 }
 

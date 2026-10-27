@@ -273,7 +273,7 @@ function connectWebSocket() {
   ws = new WebSocket(wsUrl);
 
   ws.onopen = () => {
-    wsBadge.textContent = '10 COINS LIVE';
+    wsBadge.textContent = '⚡ 350+ COINS LIVE';
     wsBadge.className = 'badge-online';
   };
 
@@ -393,11 +393,22 @@ function handleWsMessage(payload) {
 function handleRadarTick(data) {
   if (!data) return;
 
+  if (data.totalCoinsScanned) {
+    state.totalCoinsScanned = data.totalCoinsScanned;
+    if (wsBadge) {
+      wsBadge.textContent = `⚡ ${data.totalCoinsScanned} COINS LIVE`;
+    }
+  }
+
   if (data.marketRadar && Array.isArray(data.marketRadar)) {
     state.marketRadar = data.marketRadar;
     renderRadarTable();
   }
 
+  if (data.activePositions !== undefined) {
+    if (!state.trading) state.trading = {};
+    state.trading.activePositions = data.activePositions;
+  }
   if (data.activePosition !== undefined) {
     if (!state.trading) state.trading = {};
     state.trading.activePosition = data.activePosition;
@@ -633,11 +644,12 @@ async function closeSinglePosition(id) {
   }
 }
 
-// Render 10 Coins Multi-Asset Market Radar
+// Render All-Market Multi-Asset Market Radar
 function renderRadarTable() {
   if (!state.marketRadar || state.marketRadar.length === 0) return;
 
-  radarScanStatus.textContent = `AI đang quét 10 coin Binance theo thời gian thực (Cập nhật: ${new Date().toLocaleTimeString()})`;
+  const total = state.totalCoinsScanned || 350;
+  radarScanStatus.textContent = `AI đang quét ${total}+ coin Binance thời gian thực • Top ${state.marketRadar.length} cơ hội tốt nhất (Cập nhật: ${new Date().toLocaleTimeString()})`;
 
   const sorted = [...state.marketRadar].sort((a, b) => (b.opportunityScore || 0) - (a.opportunityScore || 0));
 
@@ -959,6 +971,11 @@ if (authToken) {
         unlockTerminal();
         if (data.trading) state.trading = data.trading;
         if (data.config) state.config = data.config;
+        if (data.marketRadar) state.marketRadar = data.marketRadar;
+        if (data.totalCoinsScanned) {
+          state.totalCoinsScanned = data.totalCoinsScanned;
+          if (wsBadge) wsBadge.textContent = `⚡ ${data.totalCoinsScanned} COINS LIVE`;
+        }
         renderAll();
       } else {
         lockTerminal();

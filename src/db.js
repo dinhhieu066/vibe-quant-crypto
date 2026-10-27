@@ -72,12 +72,17 @@ function ensureDir(dir) {
 class DB {
   constructor() {
     ensureDir(DATA_DIR);
+    this._cache = null;
+    this._saveTimer = null;
     if (!fs.existsSync(DB_FILE)) {
       this.save(defaultData);
     }
   }
 
   load() {
+    if (this._cache) {
+      return JSON.parse(JSON.stringify(this._cache));
+    }
     try {
       const content = fs.readFileSync(DB_FILE, 'utf-8');
       const data = JSON.parse(content);
@@ -85,20 +90,33 @@ class DB {
       if (!data.config) data.config = defaultData.config;
       if (!data.auth) data.auth = defaultData.auth;
       if (!data.logs) data.logs = [];
-      return data;
+      this._cache = data;
+      return JSON.parse(JSON.stringify(this._cache));
     } catch (e) {
       console.error('Error loading DB, restoring default schema:', e.message);
+      this._cache = defaultData;
       this.save(defaultData);
-      return defaultData;
+      return JSON.parse(JSON.stringify(defaultData));
     }
   }
 
   save(data) {
-    try {
-      fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
-    } catch (e) {
-      console.error('Error saving DB:', e.message);
-    }
+    this._cache = JSON.parse(JSON.stringify(data));
+    if (this._saveTimer) return;
+    this._saveTimer = setTimeout(() => {
+      this._saveTimer = null;
+      try {
+        fs.writeFileSync(DB_FILE, JSON.stringify(this._cache, null, 2), 'utf-8');
+      } catch (e) {
+        if (e.code === 'EBUSY') {
+          setTimeout(() => {
+            try { fs.writeFileSync(DB_FILE, JSON.stringify(this._cache, null, 2), 'utf-8'); } catch {}
+          }, 150);
+        } else {
+          console.error('Error saving DB:', e.message);
+        }
+      }
+    }, 60);
   }
 
   // --- SECURITY & AUTHENTICATION METHODS ---

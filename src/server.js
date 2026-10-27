@@ -220,7 +220,11 @@ app.get('/api/trading/status', (req, res) => {
       stats: { totalTrades: 0, wins: 0, losses: 0, winRate: 0 }
     },
     config: db.getConfig(),
-    marketRadar: Object.values(quantEngine.marketData),
+    marketRadar: Object.values(quantEngine.marketData)
+      .filter(c => c.price > 0)
+      .sort((a, b) => (b.opportunityScore - a.opportunityScore) || (b.volume - a.volume))
+      .slice(0, 30),
+    totalCoinsScanned: Object.keys(quantEngine.marketData).length,
     isAutoTrading: quantEngine.isAutoTrading,
     publicUrl: db.getPublicUrl()
   });
