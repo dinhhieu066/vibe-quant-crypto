@@ -77,6 +77,18 @@ setInterval(() => {
   });
 }, 3000);
 
+// Automatic Anti-Sleep Pulse for Cloud Deployments (Render / Koyeb)
+const cloudExternalUrl = process.env.RENDER_EXTERNAL_URL || process.env.APP_URL;
+if (cloudExternalUrl) {
+  console.log(`[Anti-Sleep] 24/7 Cloud Keep-Alive armed for: ${cloudExternalUrl}`);
+  setInterval(async () => {
+    try {
+      await fetch(`${cloudExternalUrl}/api/trading/status`);
+      console.log(`[Anti-Sleep] Keep-alive ping sent to ${cloudExternalUrl}`);
+    } catch {}
+  }, 9 * 60 * 1000); // Every 9 minutes
+}
+
 // --- REST API ROUTES (PRIVATE TERMINAL ONLY) ---
 
 app.get('/api/trading/status', (req, res) => {

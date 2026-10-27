@@ -1,0 +1,26 @@
+name: 24/7 Never-Sleep Keep-Alive Engine
+
+on:
+  schedule:
+    # Runs every 10 minutes to guarantee cloud instances never sleep
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Cloud Trading App
+        run: |
+          TARGET_URL="${{ vars.APP_URL }}"
+          if [ -z "$TARGET_URL" ]; then
+            TARGET_URL="https://vibe-quant-crypto.onrender.com"
+          fi
+          echo "Pinging $TARGET_URL to keep 24/7 trading engine awake..."
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$TARGET_URL/api/trading/status" || true)
+          echo "Status: $HTTP_STATUS"
+          if [ "$HTTP_STATUS" = "200" ]; then
+            echo "SUCCESS: 24/7 Cloud Trading Engine is ONLINE and AWAKE!"
+          else
+            echo "PING sent (status: $HTTP_STATUS). Keep-alive signal active."
+          fi
