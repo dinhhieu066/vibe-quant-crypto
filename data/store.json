@@ -1,6 +1,6 @@
 {
   "owner": "Personal Terminal (Private)",
-  "publicUrl": "https://importantly-diary-sponsors-atmospheric.trycloudflare.com",
+  "publicUrl": "https://virtue-affordable-graduate-mayor.trycloudflare.com",
   "config": {
     "exchangeRate": 25400,
     "dailyTargetUSD": 10,
@@ -113,6 +113,30 @@
   },
   "dailyPnlRecords": [],
   "logs": [
+    {
+      "timestamp": "2026-10-27T18:14:54.847Z",
+      "level": "SUCCESS",
+      "source": "Tunnel",
+      "message": "Cổng truy cập riêng đã online tại: https://virtue-affordable-graduate-mayor.trycloudflare.com"
+    },
+    {
+      "timestamp": "2026-10-27T18:14:50.792Z",
+      "level": "SUCCESS",
+      "source": "QuantEngine",
+      "message": "Đã kết nối luồng dữ liệu toàn bộ thị trường Binance thời gian thực."
+    },
+    {
+      "timestamp": "2026-10-27T18:14:50.501Z",
+      "level": "SUCCESS",
+      "source": "PoodleRadar",
+      "message": "🐩 Radar Poodle: Đang quét 409 đồng coin Binance 24/7 tìm kèo thơm cho sếp."
+    },
+    {
+      "timestamp": "2026-10-27T18:14:50.281Z",
+      "level": "INFO",
+      "source": "Tunnel",
+      "message": "Đang thiết lập cổng bảo mật Cloudflare Tunnel truy cập riêng từ điện thoại..."
+    },
     {
       "timestamp": "2026-10-27T18:11:36.576Z",
       "level": "SUCCESS",
