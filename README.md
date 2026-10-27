@@ -2,6 +2,8 @@
 
 Hệ thống điều hành và kiếm tiền thụ động 24/7 qua thị trường tiền mã hóa (Crypto Quantitative Trading) dành riêng cho chủ nhân.
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/dinhhieu066/vibe-quant-crypto)
+
 ---
 
 ## 🎯 Tổng Quan Hệ Thống
