@@ -94,6 +94,13 @@ class QuantEngine {
     this.maxPortfolioMargin = 0.54;  // Tổng ký quỹ tối đa 54%, giữ an toàn 46% tiền mặt
     this.lastMessageTime = Date.now();
     this.watchdogInterval = null;
+
+    // In-memory active positions for real-time live price streaming
+    const initialTrading = db.getTrading();
+    this.activePositions = Array.isArray(initialTrading.activePositions)
+      ? initialTrading.activePositions
+      : (initialTrading.activePosition ? [initialTrading.activePosition] : []);
+    this.lastStateSyncTime = Date.now();
   }
 
   async start() {
@@ -103,6 +110,9 @@ class QuantEngine {
 
     // Autonomous Radar Scan every 4 seconds across ALL 400+ coins
     this.scanInterval = setInterval(() => this.autonomousRadarScan(), 4000);
+
+    // Active scalping position evaluation every 1.5s
+    this.positionEvalInterval = setInterval(() => this.evaluateAllPositions(), 1500);
 
     // Periodic 60s REST re-sync to guarantee complete market coverage
     this.restSyncInterval = setInterval(() => this.preloadInitialData(), 60000);
@@ -236,11 +246,6 @@ class QuantEngine {
   }
 
   handleAllMarketTickers(tickers) {
-    const trading = db.getTrading();
-    const activePositions = Array.isArray(trading.activePositions)
-      ? trading.activePositions
-      : (trading.activePosition ? [trading.activePosition] : []);
-
     let positionUpdated = false;
 
     for (const t of tickers) {
@@ -298,20 +303,29 @@ class QuantEngine {
 
       this.computeCoinOpportunity(symbol);
 
-      // Check active positions matching this symbol
-      activePositions.forEach(pos => {
+      // Check active positions matching this symbol with live price updates
+      for (const pos of this.activePositions) {
         if (pos.symbol === symbol) {
           this.evaluatePositionTick(pos, price);
           positionUpdated = true;
         }
-      });
+      }
     }
 
-    // Throttle WebSocket broadcast to 1 message every 1000ms
+    // Broadcast WebSocket tick every 800ms or immediately on position price change
     const now = Date.now();
-    if (now - this.lastBroadcastTime >= 1000 || positionUpdated) {
+    if (now - this.lastBroadcastTime >= 800 || positionUpdated) {
       this.lastBroadcastTime = now;
       this.broadcastTick();
+    }
+
+    // Persist position prices to database periodically (every 5s)
+    if (now - this.lastStateSyncTime >= 5000 && this.activePositions.length > 0) {
+      this.lastStateSyncTime = now;
+      db.updateTrading({
+        activePositions: this.activePositions,
+        activePosition: this.activePositions[0] || null
+      });
     }
   }
 
@@ -417,6 +431,18 @@ class QuantEngine {
   }
 
   // --- ADAPTIVE POSITION MANAGEMENT & DYNAMIC TRAILING PROFIT LOCK ---
+  evaluateAllPositions() {
+    if (this.activePositions.length === 0) return;
+    let anyClosedOrRotated = false;
+    for (const pos of [...this.activePositions]) {
+      const coin = this.marketData[pos.symbol];
+      const livePrice = coin ? coin.price : pos.currentPrice;
+      if (livePrice) {
+        this.evaluatePositionTick(pos, livePrice);
+      }
+    }
+  }
+
   evaluatePositionTick(pos, currentPrice) {
     if (!pos || !currentPrice) return;
 
@@ -432,7 +458,7 @@ class QuantEngine {
     pos.unrealizedPnlUSD = pnlUSD;
     pos.unrealizedPnlPercent = pnlPercent;
 
-    // A. Chốt lời mục tiêu Take Profit (+2.2%)
+    // A. Chốt lời mục tiêu Take Profit (Dynamic Scalp TP +1.2%)
     if (pos.side === 'LONG' && currentPrice >= pos.takeProfit) {
       this.closePosition(pos.id, 'TAKE_PROFIT');
       return;
@@ -442,7 +468,7 @@ class QuantEngine {
       return;
     }
 
-    // B. Cắt lỗ an toàn Stop Loss (-1.2%)
+    // B. Cắt lỗ an toàn Stop Loss (-0.8%)
     if (pos.side === 'LONG' && currentPrice <= pos.stopLoss) {
       this.closePosition(pos.id, 'STOP_LOSS');
       return;
@@ -454,11 +480,27 @@ class QuantEngine {
 
     // C. Trailing Stop & Breakeven Protection
     this.checkTrailingBreakeven(pos, currentPrice, pnlPercent);
+
+    // D. Time-Decay Stagnancy Rotation (Scalping siêu tốc, quay vòng lệnh liên tục)
+    const openMs = new Date(pos.openTime || Date.now()).getTime();
+    const durationSec = (Date.now() - openMs) / 1000;
+
+    // Lệnh mở > 60s và có lãi >= +0.20% -> Chốt lãi ngay để bỏ túi tiền tươi!
+    if (durationSec >= 60 && pnlPercent >= 0.20) {
+      this.closePosition(pos.id, 'PROFIT_SCALP_EXIT');
+      return;
+    }
+
+    // Lệnh mở > 150s (2.5 phút) mà đi ngang không chạy -> Tự động xoay sang coin nóng hơn
+    if (durationSec >= 150) {
+      this.closePosition(pos.id, 'TIME_ROTATION');
+      return;
+    }
   }
 
   checkTrailingBreakeven(pos, currentPrice, pnlPercent) {
-    // 1. Khi lợi nhuận đạt >= +1.0%, tự động dời Stop Loss về GIÁ VÀO (Hòa vốn)
-    if (pnlPercent >= 1.0 && !pos.isBreakevenProtected) {
+    // 1. Khi lợi nhuận đạt >= +0.30%, tự động dời Stop Loss về GIÁ VÀO (Hòa vốn an toàn 100%)
+    if (pnlPercent >= 0.30 && !pos.isBreakevenProtected) {
       pos.isBreakevenProtected = true;
       pos.stopLoss = pos.entryPrice;
       db.addLog(
@@ -468,10 +510,10 @@ class QuantEngine {
       );
     }
 
-    // 2. Khi lợi nhuận đạt >= +1.8%, khóa lãi tối thiểu +1.0%
-    if (pnlPercent >= 1.8 && !pos.isProfitLocked) {
+    // 2. Khi lợi nhuận đạt >= +0.70%, khóa lãi tối thiểu +0.35%
+    if (pnlPercent >= 0.70 && !pos.isProfitLocked) {
       pos.isProfitLocked = true;
-      const lockOffset = (pos.entryPrice * 0.01) / pos.leverage;
+      const lockOffset = (pos.entryPrice * 0.0035) / pos.leverage;
       pos.stopLoss = pos.side === 'LONG'
         ? parseFloat((pos.entryPrice + lockOffset).toFixed(pos.entryPrice < 1 ? 4 : 2))
         : parseFloat((pos.entryPrice - lockOffset).toFixed(pos.entryPrice < 1 ? 4 : 2));
@@ -479,42 +521,29 @@ class QuantEngine {
       db.addLog(
         'SUCCESS',
         'TrailingLock',
-        `💰 [KHÓA LÃI THỤ ĐỘNG] Lợi nhuận ${pos.symbol} đạt +${pnlPercent}%. Đã dời Stop Loss khóa chắc tối thiểu +1.0% lãi ròng.`
+        `💰 [KHÓA LÃI THỤ ĐỘNG] Lợi nhuận ${pos.symbol} đạt +${pnlPercent}%. Đã dời Stop Loss khóa chắc tối thiểu +0.35% lãi ròng.`
       );
     }
-
-    // Sync state
-    const trading = db.getTrading();
-    const positions = Array.isArray(trading.activePositions) ? trading.activePositions : [];
-    db.updateTrading({
-      activePositions: positions,
-      activePosition: positions[0] || null
-    });
   }
 
   // --- AUTONOMOUS ALL-MARKET RADAR SCANNER ---
-  // Quét toàn bộ 350+ coin Binance để tự động tìm cơ hội ngon nhất thị trường và vào lệnh
+  // Quét toàn bộ 400+ coin Binance để tự động tìm cơ hội ngon nhất thị trường và vào lệnh
   autonomousRadarScan() {
     if (!this.isAutoTrading) return;
-    const trading = db.getTrading();
     const now = Date.now();
 
-    const activePositions = Array.isArray(trading.activePositions)
-      ? trading.activePositions
-      : (trading.activePosition ? [trading.activePosition] : []);
-
     // 1. Giới hạn tối đa 3 vị thế đồng thời để an toàn vốn tuyệt đối
-    if (activePositions.length >= this.maxConcurrentPositions) return;
+    if (this.activePositions.length >= this.maxConcurrentPositions) return;
 
-    // 2. Cooldown 15s giữa các lần mở lệnh liên tiếp
-    if (now - this.lastSignalTime < 15000) return;
+    // 2. Cooldown 4s giữa các lần mở lệnh liên tiếp
+    if (now - this.lastSignalTime < 4000) return;
 
-    // 3. Lọc danh sách coin hợp lệ từ TOÀN BỘ thị trường (Giá > 0, Volume >= $500k để tránh coin rác)
-    const candidates = Object.values(this.marketData).filter(c => c.price > 0 && c.volume >= 500000);
+    // 3. Lọc danh sách coin hợp lệ từ TOÀN BỘ thị trường (Giá > 0, Volume >= $300k để tránh coin rác)
+    const candidates = Object.values(this.marketData).filter(c => c.price > 0 && c.volume >= 300000);
     if (candidates.length === 0) return;
 
     // Loại trừ các đồng coin ĐANG CÓ vị thế mở
-    const available = candidates.filter(c => !activePositions.some(p => p.symbol === c.symbol));
+    const available = candidates.filter(c => !this.activePositions.some(p => p.symbol === c.symbol));
     if (available.length === 0) return;
 
     // Sắp xếp theo Điểm tiềm năng AI cao nhất (Ưu tiên volume cao hơn nếu bằng điểm)
@@ -528,12 +557,12 @@ class QuantEngine {
       db.addLog(
         'INFO',
         'PoodleRadar',
-        `🐩 [Poodle 24/7] Đã dò ${candidates.length} đồng coin Binance (Đang cắn ${activePositions.length}/${this.maxConcurrentPositions} kèo). Kèo ngon nhất: ${bestCoin.symbol} (Điểm: ${bestCoin.opportunityScore}/100, RSI: ${bestCoin.rsi}, 24h: ${bestCoin.change24h > 0 ? '+' : ''}${bestCoin.change24h}%, Vol: $${volFormatted}, Setup: ${bestCoin.setupType}).`
+        `🐩 [Poodle 24/7] Đã dò ${candidates.length} đồng coin Binance (Đang giữ ${this.activePositions.length}/${this.maxConcurrentPositions} kèo). Kèo ngon nhất: ${bestCoin.symbol} (Điểm: ${bestCoin.opportunityScore}/100, RSI: ${bestCoin.rsi}, 24h: ${bestCoin.change24h > 0 ? '+' : ''}${bestCoin.change24h}%, Vol: $${volFormatted}, Setup: ${bestCoin.setupType}).`
       );
     }
 
-    // 4. Ngưỡng tự động kích hoạt lệnh: Điểm cơ hội >= 78/100 (Cơ hội ngon nhất thị trường)
-    if (bestCoin.opportunityScore >= 78) {
+    // 4. Ngưỡng tự động kích hoạt lệnh: Điểm cơ hội >= 75/100 (Cơ hội đẹp nhất thị trường)
+    if (bestCoin.opportunityScore >= 75) {
       const side = (bestCoin.signal === 'STRONG_BUY' || bestCoin.signal === 'BUY') ? 'LONG' : 'SHORT';
       this.lastSignalTime = now;
       this.openPosition(
@@ -546,16 +575,11 @@ class QuantEngine {
 
   // --- POSITION SIZING (FRACTIONAL KELLY) & SAFE EXECUTION ---
   openPosition(symbol, side, reason = 'Auto AI All-Market Scanner') {
-    const trading = db.getTrading();
-    let activePositions = Array.isArray(trading.activePositions)
-      ? trading.activePositions
-      : (trading.activePosition ? [trading.activePosition] : []);
-
-    if (activePositions.length >= this.maxConcurrentPositions) {
+    if (this.activePositions.length >= this.maxConcurrentPositions) {
       return { success: false, error: `Đã đạt giới hạn tối đa ${this.maxConcurrentPositions} vị thế cùng lúc để bảo vệ an toàn vốn.` };
     }
 
-    if (activePositions.some(p => p.symbol === symbol)) {
+    if (this.activePositions.some(p => p.symbol === symbol)) {
       return { success: false, error: `Đã có một vị thế đang mở cho ${symbol}.` };
     }
 
@@ -565,15 +589,15 @@ class QuantEngine {
       return { success: false, error: `Chưa có giá thời gian thực cho ${symbol}` };
     }
 
-    // FRACTIONAL KELLY SIZING (18% vốn khả dụng cho mỗi lệnh)
+    const trading = db.getTrading();
     const leverage = trading.leverage || 3;
     const balanceUSD = trading.balanceUSD || 19.68;
     const marginUSD = parseFloat((balanceUSD * this.positionMarginRatio).toFixed(2));
     const sizeUSD = parseFloat((marginUSD * leverage).toFixed(2));
 
-    // Dynamic Volatility Stops
-    const slDistance = currentPrice * 0.012; // Cắt lỗ 1.2%
-    const tpDistance = currentPrice * 0.022; // Chốt lời 2.2% (Tỷ lệ R:R ~ 1.83)
+    // Dynamic Volatility Stops - Fast Scalping
+    const slDistance = currentPrice * 0.008; // Cắt lỗ 0.8%
+    const tpDistance = currentPrice * 0.012; // Chốt lời 1.2% (Tỷ lệ R:R = 1.5)
 
     const stopLoss = side === 'LONG'
       ? parseFloat((currentPrice - slDistance).toFixed(currentPrice < 1 ? 4 : 2))
@@ -604,25 +628,25 @@ class QuantEngine {
       openTime: new Date().toISOString()
     };
 
-    activePositions.push(position);
+    this.activePositions.push(position);
 
     db.updateTrading({
-      activePositions,
-      activePosition: activePositions[0] || null
+      activePositions: this.activePositions,
+      activePosition: this.activePositions[0] || null
     });
 
     db.addLog(
       'INFO',
       'PoodleAI',
-      `🐩⚡ [POODLE VÀO LỆNH ${side}] ${position.icon} ${symbol} @ $${currentPrice.toLocaleString('en-US')}. Đòn bẩy x${leverage}, Ký quỹ $${marginUSD} (18% vốn). SL: $${stopLoss}, TP: $${takeProfit} | Poodle đang giữ: ${activePositions.length}/${this.maxConcurrentPositions} kèo (Dò từ ${Object.keys(this.marketData).length}+ coin)`
+      `🐩⚡ [POODLE VÀO LỆNH ${side}] ${position.icon} ${symbol} @ $${currentPrice.toLocaleString('en-US')}. Đòn bẩy x${leverage}, Ký quỹ $${marginUSD} (18% vốn). SL: $${stopLoss}, TP: $${takeProfit} | Poodle đang giữ: ${this.activePositions.length}/${this.maxConcurrentPositions} kèo`
     );
 
     this.broadcast({
       type: 'POSITION_OPENED',
       data: {
         position,
-        activePositions,
-        activePosition: activePositions[0] || null,
+        activePositions: this.activePositions,
+        activePosition: this.activePositions[0] || null,
         balanceUSD: db.getTrading().balanceUSD
       }
     });
@@ -631,40 +655,35 @@ class QuantEngine {
   }
 
   closePosition(positionId, reason = 'MANUAL_CLOSE') {
-    const trading = db.getTrading();
-    let activePositions = Array.isArray(trading.activePositions)
-      ? [...trading.activePositions]
-      : (trading.activePosition ? [trading.activePosition] : []);
-
-    const targetIdx = activePositions.findIndex(p => p.id === positionId);
+    const targetIdx = this.activePositions.findIndex(p => p.id === positionId);
     if (targetIdx === -1) {
-      if (activePositions.length > 0 && !positionId) {
-        return this.closePosition(activePositions[0].id, reason);
+      if (this.activePositions.length > 0 && !positionId) {
+        return this.closePosition(this.activePositions[0].id, reason);
       }
       return { success: false, error: 'Không tìm thấy vị thế cần đóng' };
     }
 
-    const pos = activePositions[targetIdx];
+    const pos = this.activePositions[targetIdx];
     const trade = this.finalizeTradeClose(pos, reason);
 
-    activePositions.splice(targetIdx, 1);
+    this.activePositions.splice(targetIdx, 1);
     db.updateTrading({
-      activePositions,
-      activePosition: activePositions[0] || null
+      activePositions: this.activePositions,
+      activePosition: this.activePositions[0] || null
     });
 
     this.broadcast({
       type: 'POSITION_CLOSED',
       data: {
         trade,
-        activePositions,
-        activePosition: activePositions[0] || null,
+        activePositions: this.activePositions,
+        activePosition: this.activePositions[0] || null,
         stats: db.getTrading().stats,
         balanceUSD: db.getTrading().balanceUSD
       }
     });
 
-    return { success: true, trade, activePositions };
+    return { success: true, trade, activePositions: this.activePositions };
   }
 
   finalizeTradeClose(pos, reason) {
@@ -679,10 +698,12 @@ class QuantEngine {
     const pnlPercent = parseFloat(((pnlUSD / pos.marginUSD) * 100).toFixed(2));
 
     let displayReason = reason;
-    if (reason === 'TAKE_PROFIT') displayReason = 'Chốt lời tự động (Take Profit +2.2%)';
-    else if (reason === 'STOP_LOSS') displayReason = 'Cắt lỗ an toàn (Stop Loss -1.2%)';
-    else if (reason === 'BREAKEVEN_EXIT') displayReason = 'Bảo toàn hòa vốn (Breakeven Exit 0%)';
-    else if (reason === 'PROFIT_TRAILING_EXIT') displayReason = 'Khóa lãi Trailing Stop (+1.0%)';
+    if (reason === 'TAKE_PROFIT') displayReason = 'Chốt lời tự động Scalp (Take Profit)';
+    else if (reason === 'STOP_LOSS') displayReason = 'Cắt lỗ an toàn (Stop Loss)';
+    else if (reason === 'BREAKEVEN_EXIT') displayReason = 'Bảo toàn hòa vốn (Breakeven Exit)';
+    else if (reason === 'PROFIT_TRAILING_EXIT') displayReason = 'Khóa lãi Trailing Stop';
+    else if (reason === 'PROFIT_SCALP_EXIT') displayReason = 'Chốt lãi nhanh Scalp (+Lãi tươi)';
+    else if (reason === 'TIME_ROTATION') displayReason = 'Xoay vòng vốn (Đổi sang coin có sóng mạnh hơn)';
     else if (reason === 'MANUAL_PANIC_CLOSE') displayReason = 'Đóng khẩn cấp thủ công';
 
     const trade = {
@@ -707,13 +728,9 @@ class QuantEngine {
 
   broadcastTick() {
     const trading = db.getTrading();
-    const activePositions = Array.isArray(trading.activePositions)
-      ? trading.activePositions
-      : (trading.activePosition ? [trading.activePosition] : []);
-
     const allCoins = Object.values(this.marketData);
 
-    // Sort all coins by opportunityScore descending, send top 30 to keep UI ultra-responsive
+    // Sort all coins by opportunityScore descending, send top 30
     const topCandidates = [...allCoins]
       .filter(c => c.price > 0)
       .sort((a, b) => (b.opportunityScore - a.opportunityScore) || (b.volume - a.volume))
@@ -724,8 +741,8 @@ class QuantEngine {
       data: {
         marketRadar: topCandidates,
         totalCoinsScanned: allCoins.length,
-        activePositions,
-        activePosition: activePositions[0] || null,
+        activePositions: this.activePositions,
+        activePosition: this.activePositions[0] || null,
         balanceUSD: trading.balanceUSD,
         balanceVND: trading.balanceVND,
         realizedPnlUSD: trading.realizedPnlUSD,

@@ -574,8 +574,23 @@ function renderPosition() {
         const pnlSign = isProfit ? '+' : '';
         const pnlVND = Math.round((pos.unrealizedPnlUSD || 0) * (state.config.exchangeRate || 25400));
         
+        // Dynamic price tick flash
+        const prevKey = pos.id || pos.symbol;
+        const prevPrice = previousPrices[prevKey];
+        let tickClass = '';
+        if (prevPrice !== undefined && pos.currentPrice !== undefined) {
+          if (pos.currentPrice > prevPrice) tickClass = 'tick-flash-up';
+          else if (pos.currentPrice < prevPrice) tickClass = 'tick-flash-down';
+        }
+        previousPrices[prevKey] = pos.currentPrice;
+
+        // Scalping elapsed timer
+        const openMs = new Date(pos.openTime || Date.now()).getTime();
+        const elapsedSec = Math.max(0, Math.floor((Date.now() - openMs) / 1000));
+        const elapsedFormatted = elapsedSec < 60 ? `${elapsedSec}s` : `${Math.floor(elapsedSec / 60)}p ${elapsedSec % 60}s`;
+
         let protectionTag = '<span class="status-chip chip-watch">⏳ Trailing SL</span>';
-        if (pos.isProfitLocked) protectionTag = '<span class="status-chip chip-locked">🔒 ĐÃ KHÓA LÃI (+1.0%)</span>';
+        if (pos.isProfitLocked) protectionTag = '<span class="status-chip chip-locked">🔒 ĐÃ KHÓA LÃI (+0.35%)</span>';
         else if (pos.isBreakevenProtected) protectionTag = '<span class="status-chip chip-safe">🛡️ ĐÃ BẢO VỆ HÒA VỐN</span>';
 
         return `
@@ -584,7 +599,11 @@ function renderPosition() {
               <div class="pos-item-coin">
                 <span class="pos-coin-icon">${pos.icon || '🪙'}</span>
                 <div>
-                  <div class="pos-coin-name">${escapeHtml(pos.name || pos.symbol)} <span class="mono">${pos.symbol}</span></div>
+                  <div class="pos-coin-name">
+                    ${escapeHtml(pos.name || pos.symbol)} <span class="mono">${pos.symbol}</span>
+                    <span class="live-dot-pulse">● LIVE</span>
+                    <span class="mono" style="font-size:10px; color:var(--text-dim); margin-left:4px;">⏱️ ${elapsedFormatted}</span>
+                  </div>
                   <div class="pos-side-pill ${isLong ? 'long' : 'short'}">${pos.side} &bull; x${pos.leverage}</div>
                 </div>
               </div>
@@ -595,7 +614,7 @@ function renderPosition() {
 
             <div class="pos-reason-box" style="margin: 8px 0;">
               <span class="reason-label">CHIẾN LƯỢC:</span>
-              <span class="reason-text">${escapeHtml(pos.reason || 'AI Quantitative Setup')}</span>
+              <span class="reason-text">${escapeHtml(pos.reason || 'AI Quantitative Scalp')}</span>
             </div>
 
             <div class="pos-item-prices">
@@ -605,7 +624,7 @@ function renderPosition() {
               </div>
               <div class="price-row">
                 <span class="p-lbl">Giá hiện tại:</span>
-                <span class="p-val mono highlight-cyan">${formatPrice(pos.currentPrice || pos.entryPrice)}</span>
+                <span class="p-val mono highlight-cyan ${tickClass}">${formatPrice(pos.currentPrice || pos.entryPrice)}</span>
               </div>
               <div class="price-row">
                 <span class="p-lbl">Cắt lỗ (SL):</span>

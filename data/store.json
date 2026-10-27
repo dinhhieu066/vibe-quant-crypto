@@ -1,6 +1,6 @@
 {
   "owner": "Personal Terminal (Private)",
-  "publicUrl": "https://virtue-affordable-graduate-mayor.trycloudflare.com",
+  "publicUrl": "https://amp-surprise-invited-rocks.trycloudflare.com",
   "config": {
     "exchangeRate": 25400,
     "dailyTargetUSD": 10,
@@ -11,108 +11,252 @@
   "trading": {
     "initialCapitalVND": 1000000,
     "initialCapitalUSD": 39.37,
-    "balanceVND": 999998,
-    "balanceUSD": 39.37,
-    "realizedPnlUSD": 0,
-    "realizedPnlVND": 0,
-    "todayPnlUSD": 0,
-    "todayPnlVND": 0,
+    "balanceVND": 1000506,
+    "balanceUSD": 39.39,
+    "realizedPnlUSD": 0.02,
+    "realizedPnlVND": 508,
+    "todayPnlUSD": 0.02,
+    "todayPnlVND": 508,
     "leverage": 3,
     "mode": "paper",
     "symbol": "BTCUSDT",
     "activePosition": {
-      "id": "POS-9243",
-      "symbol": "BTCUSDT",
-      "name": "Bitcoin",
-      "icon": "₿",
+      "id": "POS-5937",
+      "symbol": "XRPUSDT",
+      "name": "Ripple",
+      "icon": "✕",
       "side": "SHORT",
-      "entryPrice": 80624.54,
-      "currentPrice": 80666.94,
-      "marginUSD": 4.92,
-      "sizeUSD": 14.76,
+      "entryPrice": 1.3237,
+      "currentPrice": 1.3237,
+      "marginUSD": 7.09,
+      "sizeUSD": 21.27,
       "leverage": 3,
-      "stopLoss": 81592.03,
-      "takeProfit": 78850.8,
-      "unrealizedPnlUSD": -0.008,
-      "unrealizedPnlPercent": -0.16,
+      "stopLoss": 1.33,
+      "takeProfit": 1.31,
+      "unrealizedPnlUSD": 0,
+      "unrealizedPnlPercent": 0,
       "isBreakevenProtected": false,
-      "reason": "AI Radar: Điểm tiềm năng 95/100 [🔻 Siêu Quá Mua (Overbought Pullback)]",
-      "openTime": "2026-10-27T16:20:59.243Z"
+      "isProfitLocked": false,
+      "reason": "AI All-Market Scanner (Top 1/408 coin): Điểm 99/100 [🔻 Siêu Quá Mua (Mean-Reversion Short)]",
+      "openTime": "2026-10-27T18:55:55.937Z"
     },
-    "tradesHistory": [],
-    "stats": {
-      "totalTrades": 0,
-      "wins": 0,
-      "losses": 0,
-      "winRate": 0,
-      "profitFactor": 0,
-      "bestTradeUSD": 0,
-      "worstTradeUSD": 0
-    },
-    "activePositions": [
-      {
-        "id": "POS-9243",
-        "symbol": "BTCUSDT",
-        "name": "Bitcoin",
-        "icon": "₿",
-        "side": "SHORT",
-        "entryPrice": 80624.54,
-        "currentPrice": 80666.94,
-        "marginUSD": 4.92,
-        "sizeUSD": 14.76,
-        "leverage": 3,
-        "stopLoss": 81592.03,
-        "takeProfit": 78850.8,
-        "unrealizedPnlUSD": -0.008,
-        "unrealizedPnlPercent": -0.16,
-        "isBreakevenProtected": false,
-        "reason": "AI Radar: Điểm tiềm năng 95/100 [🔻 Siêu Quá Mua (Overbought Pullback)]",
-        "openTime": "2026-10-27T16:20:59.243Z"
-      },
+    "tradesHistory": [
       {
         "id": "POS-7890",
         "symbol": "SOLUSDT",
-        "name": "Solana",
-        "icon": "◎",
         "side": "LONG",
         "entryPrice": 100.99,
-        "currentPrice": 101.11,
+        "closePrice": 100.94,
         "marginUSD": 7.09,
         "sizeUSD": 21.27,
         "leverage": 3,
-        "stopLoss": 99.78,
-        "takeProfit": 103.21,
-        "unrealizedPnlUSD": 0.025,
-        "unrealizedPnlPercent": 0.35,
-        "isBreakevenProtected": false,
-        "isProfitLocked": false,
-        "reason": "AI Multi-Radar: Điểm tiềm năng 97/100 [🔥 Siêu Quá Bán (Mean-Reversion Rebound)]",
-        "openTime": "2026-10-27T16:58:27.890Z"
+        "pnlUSD": -0.011,
+        "pnlPercent": -0.16,
+        "closeReason": "Xoay vòng vốn (Đổi sang coin có sóng mạnh hơn)",
+        "openTime": "2026-10-27T16:58:27.890Z",
+        "closeTime": "2026-10-27T18:55:53.335Z"
       },
       {
         "id": "POS-1443",
         "symbol": "ETHUSDT",
-        "name": "Ethereum",
-        "icon": "Ξ",
         "side": "SHORT",
         "entryPrice": 2348.36,
-        "currentPrice": 2351.17,
+        "closePrice": 2344.57,
         "marginUSD": 7.09,
         "sizeUSD": 21.27,
         "leverage": 3,
-        "stopLoss": 2376.54,
-        "takeProfit": 2296.7,
-        "unrealizedPnlUSD": -0.025,
-        "unrealizedPnlPercent": -0.35,
+        "pnlUSD": 0.034,
+        "pnlPercent": 0.48,
+        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
+        "openTime": "2026-10-27T16:58:31.443Z",
+        "closeTime": "2026-10-27T18:55:52.340Z"
+      },
+      {
+        "id": "POS-9243",
+        "symbol": "BTCUSDT",
+        "side": "SHORT",
+        "entryPrice": 80624.54,
+        "closePrice": 80644.18,
+        "marginUSD": 4.92,
+        "sizeUSD": 14.76,
+        "leverage": 3,
+        "pnlUSD": -0.004,
+        "pnlPercent": -0.08,
+        "closeReason": "Xoay vòng vốn (Đổi sang coin có sóng mạnh hơn)",
+        "openTime": "2026-10-27T16:20:59.243Z",
+        "closeTime": "2026-10-27T18:55:52.338Z"
+      }
+    ],
+    "stats": {
+      "totalTrades": 3,
+      "wins": 1,
+      "losses": 2,
+      "winRate": 33,
+      "profitFactor": 2.27,
+      "bestTradeUSD": 0.03,
+      "worstTradeUSD": -0.01
+    },
+    "activePositions": [
+      {
+        "id": "POS-5937",
+        "symbol": "XRPUSDT",
+        "name": "Ripple",
+        "icon": "✕",
+        "side": "SHORT",
+        "entryPrice": 1.3237,
+        "currentPrice": 1.3237,
+        "marginUSD": 7.09,
+        "sizeUSD": 21.27,
+        "leverage": 3,
+        "stopLoss": 1.33,
+        "takeProfit": 1.31,
+        "unrealizedPnlUSD": 0,
+        "unrealizedPnlPercent": 0,
         "isBreakevenProtected": false,
         "isProfitLocked": false,
-        "reason": "Manual Private Click",
-        "openTime": "2026-10-27T16:58:31.443Z"
+        "reason": "AI All-Market Scanner (Top 1/408 coin): Điểm 99/100 [🔻 Siêu Quá Mua (Mean-Reversion Short)]",
+        "openTime": "2026-10-27T18:55:55.937Z"
+      },
+      {
+        "id": "POS-9944",
+        "symbol": "LINKUSDT",
+        "name": "Chainlink",
+        "icon": "⬡",
+        "side": "SHORT",
+        "entryPrice": 11.486,
+        "currentPrice": 11.483,
+        "marginUSD": 7.09,
+        "sizeUSD": 21.27,
+        "leverage": 3,
+        "stopLoss": 11.58,
+        "takeProfit": 11.35,
+        "unrealizedPnlUSD": 0.006,
+        "unrealizedPnlPercent": 0.08,
+        "isBreakevenProtected": false,
+        "isProfitLocked": false,
+        "reason": "AI All-Market Scanner (Top 1/408 coin): Điểm 99/100 [🔻 Siêu Quá Mua (Mean-Reversion Short)]",
+        "openTime": "2026-10-27T18:55:59.944Z"
+      },
+      {
+        "id": "POS-3966",
+        "symbol": "NEARUSDT",
+        "name": "NEAR Protocol",
+        "icon": "Ⓝ",
+        "side": "SHORT",
+        "entryPrice": 4.634,
+        "currentPrice": 4.63,
+        "marginUSD": 7.09,
+        "sizeUSD": 21.27,
+        "leverage": 3,
+        "stopLoss": 4.67,
+        "takeProfit": 4.58,
+        "unrealizedPnlUSD": 0.018,
+        "unrealizedPnlPercent": 0.26,
+        "isBreakevenProtected": false,
+        "isProfitLocked": false,
+        "reason": "AI All-Market Scanner (Top 1/408 coin): Điểm 99/100 [🔻 Siêu Quá Mua (Mean-Reversion Short)]",
+        "openTime": "2026-10-27T18:56:03.966Z"
       }
     ]
   },
   "dailyPnlRecords": [],
   "logs": [
+    {
+      "timestamp": "2026-10-27T18:56:33.334Z",
+      "level": "SUCCESS",
+      "source": "RiskGuard",
+      "message": "🛡️ [BẢO VỆ VỐN] Vị thế SHORT NEARUSDT đang lãi +0.32%. Đã tự động dời Stop Loss về giá vào ($4.634). Lệnh này được bảo toàn hòa vốn 100%!"
+    },
+    {
+      "timestamp": "2026-10-27T18:56:16.656Z",
+      "level": "SUCCESS",
+      "source": "Security",
+      "message": "Xác thực thành công. Đã cấp quyền truy cập trạm điều hành."
+    },
+    {
+      "timestamp": "2026-10-27T18:56:09.085Z",
+      "level": "SUCCESS",
+      "source": "Security",
+      "message": "Xác thực thành công. Đã cấp quyền truy cập trạm điều hành."
+    },
+    {
+      "timestamp": "2026-10-27T18:56:03.966Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH SHORT] Ⓝ NEARUSDT @ $4.634. Đòn bẩy x3, Ký quỹ $7.09 (18% vốn). SL: $4.67, TP: $4.58 | Poodle đang giữ: 3/3 kèo"
+    },
+    {
+      "timestamp": "2026-10-27T18:55:59.944Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH SHORT] ⬡ LINKUSDT @ $11.486. Đòn bẩy x3, Ký quỹ $7.09 (18% vốn). SL: $11.58, TP: $11.35 | Poodle đang giữ: 2/3 kèo"
+    },
+    {
+      "timestamp": "2026-10-27T18:55:55.944Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH SHORT] ✕ XRPUSDT @ $1.324. Đòn bẩy x3, Ký quỹ $7.09 (18% vốn). SL: $1.33, TP: $1.31 | Poodle đang giữ: 1/3 kèo"
+    },
+    {
+      "timestamp": "2026-10-27T18:55:55.936Z",
+      "level": "INFO",
+      "source": "PoodleRadar",
+      "message": "🐩 [Poodle 24/7] Đã dò 408 đồng coin Binance (Đang giữ 0/3 kèo). Kèo ngon nhất: XRPUSDT (Điểm: 99/100, RSI: 75, 24h: +2.25%, Vol: $89.5M, Setup: 🔻 Siêu Quá Mua (Mean-Reversion Short))."
+    },
+    {
+      "timestamp": "2026-10-27T18:55:55.328Z",
+      "level": "SUCCESS",
+      "source": "Tunnel",
+      "message": "Cổng truy cập riêng đã online tại: https://amp-surprise-invited-rocks.trycloudflare.com"
+    },
+    {
+      "timestamp": "2026-10-27T18:55:52.340Z",
+      "level": "SUCCESS",
+      "source": "RiskGuard",
+      "message": "🛡️ [BẢO VỆ VỐN] Vị thế SHORT ETHUSDT đang lãi +0.48%. Đã tự động dời Stop Loss về giá vào ($2348.36). Lệnh này được bảo toàn hòa vốn 100%!"
+    },
+    {
+      "timestamp": "2026-10-27T18:55:52.218Z",
+      "level": "SUCCESS",
+      "source": "QuantEngine",
+      "message": "Đã kết nối luồng dữ liệu toàn bộ thị trường Binance thời gian thực."
+    },
+    {
+      "timestamp": "2026-10-27T18:55:51.686Z",
+      "level": "INFO",
+      "source": "Tunnel",
+      "message": "Đang thiết lập cổng bảo mật Cloudflare Tunnel truy cập riêng từ điện thoại..."
+    },
+    {
+      "timestamp": "2026-10-27T18:52:51.600Z",
+      "level": "SUCCESS",
+      "source": "PoodleRadar",
+      "message": "🐩 Radar Poodle: Đang quét 410 đồng coin Binance 24/7 tìm kèo thơm cho sếp."
+    },
+    {
+      "timestamp": "2026-10-27T18:51:51.281Z",
+      "level": "SUCCESS",
+      "source": "PoodleRadar",
+      "message": "🐩 Radar Poodle: Đang quét 410 đồng coin Binance 24/7 tìm kèo thơm cho sếp."
+    },
+    {
+      "timestamp": "2026-10-27T18:49:36.984Z",
+      "level": "SUCCESS",
+      "source": "Security",
+      "message": "Xác thực thành công. Đã cấp quyền truy cập trạm điều hành."
+    },
+    {
+      "timestamp": "2026-10-27T18:43:51.256Z",
+      "level": "SUCCESS",
+      "source": "PoodleRadar",
+      "message": "🐩 Radar Poodle: Đang quét 410 đồng coin Binance 24/7 tìm kèo thơm cho sếp."
+    },
+    {
+      "timestamp": "2026-10-27T18:19:50.817Z",
+      "level": "SUCCESS",
+      "source": "PoodleRadar",
+      "message": "🐩 Radar Poodle: Đang quét 409 đồng coin Binance 24/7 tìm kèo thơm cho sếp."
+    },
     {
       "timestamp": "2026-10-27T18:14:54.847Z",
       "level": "SUCCESS",
