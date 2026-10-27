@@ -6,6 +6,7 @@ const { WebSocketServer } = require('ws');
 const { spawn } = require('child_process');
 const os = require('os');
 const fs = require('fs');
+const crypto = require('crypto');
 
 const db = require('./db');
 const QuantEngine = require('./quantEngine');
@@ -23,11 +24,49 @@ const app = express();
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
 
+// --- SECURITY LAYER 1: HTTP SECURITY HEADERS ---
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  next();
+});
+
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-// Broadcast to all connected clients
+// --- SECURITY LAYER 2: SESSION TOKEN STORE & AUTH MIDDLEWARE ---
+const authenticatedTokens = new Set();
+
+function generateAuthToken() {
+  const token = crypto.randomBytes(32).toString('hex');
+  authenticatedTokens.add(token);
+  return token;
+}
+
+function isValidToken(token) {
+  return !!(token && authenticatedTokens.has(token));
+}
+
+// Middleware to guard sensitive endpoints
+function requireAuth(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = (authHeader && authHeader.startsWith('Bearer '))
+    ? authHeader.slice(7)
+    : (req.headers['x-terminal-token'] || req.query.token);
+
+  if (!isValidToken(token)) {
+    return res.status(401).json({
+      success: false,
+      error: 'Xác thực thất bại! Vui lòng nhập mã PIN bảo mật để điều khiển trạm.'
+    });
+  }
+  next();
+}
+
+// Broadcast to all connected WebSocket clients
 function broadcast(payload) {
   const message = JSON.stringify(payload);
   wss.clients.forEach(client => {
@@ -40,19 +79,34 @@ function broadcast(payload) {
 // Initialize Quant Trading Engine
 const quantEngine = new QuantEngine(broadcast);
 
-// WebSocket connection handling
-wss.on('connection', ws => {
+// WebSocket connection handling (Authenticated or Public Stream)
+wss.on('connection', (ws, req) => {
+  const url = new URL(req.url, 'http://localhost');
+  const token = url.searchParams.get('token');
+  const isAuth = isValidToken(token);
+
   const data = db.load();
+
+  // Send state (if not authenticated, hide sensitive balances until PIN is verified)
   ws.send(
     JSON.stringify({
       type: 'INIT_STATE',
       data: {
-        trading: db.getTrading(),
+        isAuthenticated: isAuth,
+        trading: isAuth ? db.getTrading() : {
+          balanceVND: '••••••',
+          balanceUSD: '•••',
+          realizedPnlUSD: 0,
+          leverage: 3,
+          activePosition: null,
+          tradesHistory: [],
+          stats: { totalTrades: 0, wins: 0, losses: 0, winRate: 0 }
+        },
         config: db.getConfig(),
         marketRadar: Object.values(quantEngine.marketData),
         isAutoTrading: quantEngine.isAutoTrading,
         publicUrl: db.getPublicUrl(),
-        logs: (data.logs || []).slice(0, 50),
+        logs: isAuth ? (data.logs || []).slice(0, 50) : [],
         system: {
           uptimeSeconds: process.uptime(),
           platform: os.platform(),
@@ -61,6 +115,23 @@ wss.on('connection', ws => {
       }
     })
   );
+
+  ws.on('message', raw => {
+    try {
+      const msg = JSON.parse(raw);
+      if (msg.type === 'AUTH' && isValidToken(msg.token)) {
+        ws.send(
+          JSON.stringify({
+            type: 'AUTH_SUCCESS',
+            data: {
+              trading: db.getTrading(),
+              logs: (data.logs || []).slice(0, 50)
+            }
+          })
+        );
+      }
+    } catch {}
+  });
 });
 
 // Periodic system pulse (every 3 seconds)
@@ -89,11 +160,65 @@ if (cloudExternalUrl) {
   }, 9 * 60 * 1000); // Every 9 minutes
 }
 
-// --- REST API ROUTES (PRIVATE TERMINAL ONLY) ---
+// --- AUTHENTICATION API ROUTES ---
+
+app.post('/api/auth/verify', (req, res) => {
+  const { pin } = req.body;
+  if (!pin) {
+    return res.status(400).json({ success: false, error: 'Vui lòng nhập mã PIN.' });
+  }
+
+  const result = db.verifyPin(pin);
+  if (result.success) {
+    const token = generateAuthToken();
+    return res.json({
+      success: true,
+      token,
+      message: 'Mã PIN chính xác! Đã mở khóa trạm điều hành.',
+      trading: db.getTrading(),
+      config: db.getConfig()
+    });
+  }
+
+  res.status(401).json(result);
+});
+
+app.post('/api/auth/change-pin', requireAuth, (req, res) => {
+  const { currentPin, newPin } = req.body;
+  if (!currentPin || !newPin) {
+    return res.status(400).json({ success: false, error: 'Thiếu thông tin mã PIN.' });
+  }
+
+  const result = db.changePin(currentPin, newPin);
+  res.json(result);
+});
+
+app.post('/api/auth/logout', (req, res) => {
+  const authHeader = req.headers['authorization'];
+  const token = (authHeader && authHeader.startsWith('Bearer ')) ? authHeader.slice(7) : req.body.token;
+  if (token) authenticatedTokens.delete(token);
+  res.json({ success: true });
+});
+
+// --- REST API ROUTES (PROTECTED BY PIN TOKEN) ---
 
 app.get('/api/trading/status', (req, res) => {
+  const authHeader = req.headers['authorization'];
+  const token = (authHeader && authHeader.startsWith('Bearer '))
+    ? authHeader.slice(7)
+    : (req.headers['x-terminal-token'] || req.query.token);
+  const isAuth = isValidToken(token);
+
   res.json({
-    trading: db.getTrading(),
+    isAuthenticated: isAuth,
+    trading: isAuth ? db.getTrading() : {
+      balanceVND: '••••••',
+      balanceUSD: '•••',
+      realizedPnlUSD: 0,
+      leverage: 3,
+      activePosition: null,
+      stats: { totalTrades: 0, wins: 0, losses: 0, winRate: 0 }
+    },
     config: db.getConfig(),
     marketRadar: Object.values(quantEngine.marketData),
     isAutoTrading: quantEngine.isAutoTrading,
@@ -101,31 +226,31 @@ app.get('/api/trading/status', (req, res) => {
   });
 });
 
-app.post('/api/trading/order', (req, res) => {
+app.post('/api/trading/order', requireAuth, (req, res) => {
   const { symbol, side } = req.body;
   const targetSymbol = symbol || (quantEngine.marketData['BTCUSDT'] ? 'BTCUSDT' : Object.keys(quantEngine.marketData)[0]);
   const result = quantEngine.openPosition(targetSymbol, side, 'Manual Private Click');
   res.json(result);
 });
 
-app.post('/api/trading/close', (req, res) => {
+app.post('/api/trading/close', requireAuth, (req, res) => {
   const result = quantEngine.closePosition('MANUAL_PANIC_CLOSE');
   res.json(result);
 });
 
-app.post('/api/trading/capital', (req, res) => {
+app.post('/api/trading/capital', requireAuth, (req, res) => {
   const { amountVND } = req.body;
   quantEngine.setCapital(amountVND);
   res.json({ success: true, trading: db.getTrading() });
 });
 
-app.post('/api/trading/leverage', (req, res) => {
+app.post('/api/trading/leverage', requireAuth, (req, res) => {
   const { leverage } = req.body;
   const result = quantEngine.setLeverage(leverage);
   res.json({ success: true, trading: result });
 });
 
-app.post('/api/trading/auto', (req, res) => {
+app.post('/api/trading/auto', requireAuth, (req, res) => {
   const { enabled } = req.body;
   quantEngine.isAutoTrading = !!enabled;
   db.addLog('INFO', 'QuantTrading', `Chế độ tự động kiếm tiền AI 24/7: ${enabled ? 'BẬT' : 'TẮT'}`);
@@ -136,7 +261,7 @@ app.post('/api/trading/auto', (req, res) => {
   res.json({ success: true, isAutoTrading: quantEngine.isAutoTrading });
 });
 
-app.post('/api/config', (req, res) => {
+app.post('/api/config', requireAuth, (req, res) => {
   const { dailyTargetUSD, monthlyTargetUSD, riskProfile } = req.body;
   const updated = db.updateConfig({
     ...(dailyTargetUSD !== undefined && { dailyTargetUSD: parseFloat(dailyTargetUSD) }),
@@ -151,7 +276,7 @@ app.post('/api/config', (req, res) => {
   res.json({ success: true, config: updated });
 });
 
-app.post('/api/logs/clear', (req, res) => {
+app.post('/api/logs/clear', requireAuth, (req, res) => {
   db.clearLogs();
   broadcast({ type: 'LOGS_CLEARED' });
   res.json({ success: true });
@@ -208,6 +333,7 @@ server.listen(PORT, '0.0.0.0', () => {
   console.log(`====================================================`);
   console.log(`💎 VIBE-QUANT // PERSONAL AUTONOMOUS CRYPTO TERMINAL`);
   console.log(`👑 Private Dashboard: http://localhost:${PORT}`);
+  console.log(`🛡️ Multi-Layer Security Shield: ACTIVE (PIN Protected)`);
   console.log(`====================================================`);
   
   quantEngine.start();

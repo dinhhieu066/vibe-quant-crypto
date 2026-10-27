@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VibeQuant AI // Private Passive Crypto Income Terminal</title>
+  <title>VibeQuant AI // Private Passive Crypto Terminal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -13,6 +13,54 @@
   <!-- Ambient background glow -->
   <div class="bg-glow glow-1"></div>
   <div class="bg-glow glow-2"></div>
+
+  <!-- SECURITY SHIELD PIN GATE (LOCK SCREEN OVERLAY) -->
+  <div id="pin-gate" class="pin-gate-overlay">
+    <div class="pin-gate-box">
+      <div class="pin-shield-icon">
+        <span class="shield-pulse"></span>
+        <span class="shield-emoji">🛡️</span>
+      </div>
+      <h2 class="pin-title">VIBE-QUANT AI // SECURITY SHIELD</h2>
+      <p class="pin-subtitle">BẢO VỆ ĐA TẦNG &bull; XÁC THỰC MÃ PIN CHỦ NHÂN</p>
+      
+      <!-- Visual Pin Dots -->
+      <div class="pin-dots-wrap" id="pin-dots">
+        <span class="pin-dot"></span>
+        <span class="pin-dot"></span>
+        <span class="pin-dot"></span>
+        <span class="pin-dot"></span>
+        <span class="pin-dot"></span>
+        <span class="pin-dot"></span>
+      </div>
+
+      <input type="password" id="pin-input-hidden" class="pin-hidden-input" maxlength="12" autofocus autocomplete="off">
+
+      <!-- Error / Status message -->
+      <div id="pin-error-msg" class="pin-error-msg hidden"></div>
+
+      <!-- Cyber Keypad -->
+      <div class="cyber-keypad">
+        <button class="key-btn" data-val="1">1</button>
+        <button class="key-btn" data-val="2">2</button>
+        <button class="key-btn" data-val="3">3</button>
+        <button class="key-btn" data-val="4">4</button>
+        <button class="key-btn" data-val="5">5</button>
+        <button class="key-btn" data-val="6">6</button>
+        <button class="key-btn" data-val="7">7</button>
+        <button class="key-btn" data-val="8">8</button>
+        <button class="key-btn" data-val="9">9</button>
+        <button class="key-btn key-clear" id="key-clear">XÓA</button>
+        <button class="key-btn" data-val="0">0</button>
+        <button class="key-btn key-unlock" id="key-unlock">MỞ</button>
+      </div>
+
+      <div class="pin-footer-tip">
+        <span>🔑 Mặc định ban đầu: <strong>888888</strong> (Có thể đổi trong Cài Đặt)</span>
+        <small class="lock-policy">Chống dò mật khẩu: Tự động khóa 15 phút nếu nhập sai 5 lần.</small>
+      </div>
+    </div>
+  </div>
 
   <!-- Top Main Header Navigation -->
   <header class="header">
@@ -45,7 +93,10 @@
         </label>
       </div>
       <button id="btn-open-settings" class="btn btn-sm btn-outline" title="Cài đặt mục tiêu thụ động">
-        ⚙️ Cài Đặt Mục Tiêu
+        ⚙️ Cài Đặt
+      </button>
+      <button id="btn-lock-terminal" class="btn btn-sm btn-ghost" title="Khóa trạm điều hành ngay">
+        🔒 Khóa
       </button>
       <div class="system-stat">
         <span class="label">BINANCE FEED:</span>
@@ -244,12 +295,12 @@
 
   </main>
 
-  <!-- Modal Cài Đặt Mục Tiêu Cá Nhân -->
+  <!-- Modal Cài Đặt Mục Tiêu & Đổi Mã PIN Cá Nhân -->
   <div id="modal-settings" class="modal hidden">
     <div class="modal-backdrop"></div>
     <div class="modal-box">
       <div class="modal-header">
-        <h3>⚙️ CÀI ĐẶT MỤC TIÊU KIẾM TIỀN THỤ ĐỘNG CÁ NHÂN</h3>
+        <h3>⚙️ CÀI ĐẶT MỤC TIÊU & BẢO MẬT CÁ NHÂN</h3>
         <button id="btn-close-settings" class="btn-close">&times;</button>
       </div>
       <div class="modal-body">
@@ -271,9 +322,24 @@
             <option value="aggressive">Tăng Trưởng Nhanh (Đòn bẩy x5, Tận dụng biến động)</option>
           </select>
         </div>
+
+        <hr style="border:none; border-top:1px solid rgba(255,255,255,0.08); margin:10px 0;">
+
+        <!-- Change PIN Section -->
+        <div class="form-group">
+          <label>🛡️ Đổi Mã PIN Bảo Mật Cá Nhân:</label>
+          <div style="display:flex; gap:10px;">
+            <input type="password" id="input-current-pin" class="form-input" placeholder="Mã PIN cũ (mặc định 888888)" maxlength="12" style="flex:1;">
+            <input type="password" id="input-new-pin" class="form-input" placeholder="Mã PIN mới" maxlength="12" style="flex:1;">
+          </div>
+          <button id="btn-change-pin" class="btn btn-sm btn-outline" style="margin-top:6px; align-self:flex-start;">
+            Cập Nhật Mã PIN Mới
+          </button>
+          <small id="pin-change-status" class="text-dim"></small>
+        </div>
       </div>
       <div class="modal-footer">
-        <button id="btn-cancel-settings" class="btn btn-ghost">Hủy</button>
+        <button id="btn-cancel-settings" class="btn btn-ghost">Đóng</button>
         <button id="btn-save-settings" class="btn btn-primary">Lưu Cấu Hình</button>
       </div>
     </div>

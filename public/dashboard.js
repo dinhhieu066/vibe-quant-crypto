@@ -29,8 +29,20 @@ let state = {
 
 let previousPrices = {};
 let ws = null;
+let currentPinBuffer = '';
+let authToken = localStorage.getItem('vibe_auth_token') || '';
 
-// DOM Elements
+// DOM Elements - PIN Gate
+const pinGate = document.getElementById('pin-gate');
+const pinDotsWrap = document.getElementById('pin-dots');
+const pinDots = document.querySelectorAll('.pin-dot');
+const pinInputHidden = document.getElementById('pin-input-hidden');
+const pinErrorMsg = document.getElementById('pin-error-msg');
+const keyUnlock = document.getElementById('key-unlock');
+const keyClear = document.getElementById('key-clear');
+const btnLockTerminal = document.getElementById('btn-lock-terminal');
+
+// DOM Elements - Header
 const wsBadge = document.getElementById('ws-badge');
 const statUptime = document.getElementById('stat-uptime');
 const publicWebLink = document.getElementById('public-web-link');
@@ -82,17 +94,21 @@ const btnSaveSettings = document.getElementById('btn-save-settings');
 const inputDailyTarget = document.getElementById('input-daily-target');
 const inputMonthlyTarget = document.getElementById('input-monthly-target');
 const selectRiskProfile = document.getElementById('select-risk-profile');
+const inputCurrentPin = document.getElementById('input-current-pin');
+const inputNewPin = document.getElementById('input-new-pin');
+const btnChangePin = document.getElementById('btn-change-pin');
+const pinChangeStatus = document.getElementById('pin-change-status');
 
 // Formatters
 function formatPrice(num) {
-  if (num === undefined || num === null) return '--';
+  if (num === undefined || num === null || isNaN(num)) return '--';
   if (num < 1) return '$' + num.toFixed(4);
   if (num < 10) return '$' + num.toFixed(3);
   return '$' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
 function formatVolume(vol) {
-  if (!vol) return '--';
+  if (!vol || isNaN(vol)) return '--';
   if (vol > 1000000000) return '$' + (vol / 1000000000).toFixed(2) + 'B';
   if (vol > 1000000) return '$' + (vol / 1000000).toFixed(1) + 'M';
   return '$' + (vol / 1000).toFixed(0) + 'K';
@@ -116,10 +132,143 @@ function escapeHtml(text) {
   return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
+// Authenticated Fetch Wrapper
+async function authFetch(url, options = {}) {
+  options.headers = options.headers || {};
+  if (authToken) {
+    options.headers['Authorization'] = 'Bearer ' + authToken;
+  }
+  const res = await fetch(url, options);
+  if (res.status === 401) {
+    // Session expired or unauthorized -> show PIN gate
+    lockTerminal();
+  }
+  return res;
+}
+
+// --- PIN GATE & SECURITY LOGIC ---
+
+function updatePinDots() {
+  pinDots.forEach((dot, idx) => {
+    dot.classList.toggle('filled', idx < currentPinBuffer.length);
+  });
+}
+
+function showPinError(msg) {
+  pinErrorMsg.textContent = msg;
+  pinErrorMsg.classList.remove('hidden');
+  pinGate.querySelector('.pin-gate-box').classList.add('shake');
+  setTimeout(() => pinGate.querySelector('.pin-gate-box').classList.remove('shake'), 400);
+}
+
+async function submitPin() {
+  if (!currentPinBuffer) {
+    showPinError('Vui lòng nhập mã PIN bảo mật.');
+    return;
+  }
+
+  try {
+    keyUnlock.textContent = '...';
+    const res = await fetch('/api/auth/verify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pin: currentPinBuffer })
+    });
+    const data = await res.json();
+
+    if (data.success && data.token) {
+      authToken = data.token;
+      localStorage.setItem('vibe_auth_token', authToken);
+      unlockTerminal();
+      if (data.trading) state.trading = data.trading;
+      if (data.config) state.config = data.config;
+      renderAll();
+      // Inform websocket
+      if (ws && ws.readyState === 1) {
+        ws.send(JSON.stringify({ type: 'AUTH', token: authToken }));
+      }
+    } else {
+      showPinError(data.error || 'Mã PIN không chính xác!');
+      currentPinBuffer = '';
+      updatePinDots();
+    }
+  } catch (err) {
+    showPinError('Lỗi kết nối bảo mật: ' + err.message);
+  } finally {
+    keyUnlock.textContent = 'MỞ';
+  }
+}
+
+function unlockTerminal() {
+  pinGate.classList.add('hidden');
+  pinErrorMsg.classList.add('hidden');
+  currentPinBuffer = '';
+  updatePinDots();
+}
+
+function lockTerminal() {
+  authToken = '';
+  localStorage.removeItem('vibe_auth_token');
+  pinGate.classList.remove('hidden');
+  currentPinBuffer = '';
+  updatePinDots();
+  if (pinInputHidden) pinInputHidden.focus();
+}
+
+// Setup PIN Keypad & Keyboard
+function setupPinKeypad() {
+  document.querySelectorAll('.key-btn[data-val]').forEach(btn => {
+    btn.onclick = () => {
+      if (currentPinBuffer.length < 12) {
+        currentPinBuffer += btn.getAttribute('data-val');
+        updatePinDots();
+        pinErrorMsg.classList.add('hidden');
+        if (currentPinBuffer.length === 6) {
+          // Auto submit at 6 digits
+          setTimeout(submitPin, 150);
+        }
+      }
+    };
+  });
+
+  keyClear.onclick = () => {
+    currentPinBuffer = '';
+    updatePinDots();
+    pinErrorMsg.classList.add('hidden');
+  };
+
+  keyUnlock.onclick = submitPin;
+
+  // Listen for physical keyboard typing
+  window.addEventListener('keydown', e => {
+    if (pinGate.classList.contains('hidden')) return;
+    if (e.key >= '0' && e.key <= '9') {
+      if (currentPinBuffer.length < 12) {
+        currentPinBuffer += e.key;
+        updatePinDots();
+        pinErrorMsg.classList.add('hidden');
+        if (currentPinBuffer.length === 6) {
+          setTimeout(submitPin, 150);
+        }
+      }
+    } else if (e.key === 'Backspace') {
+      currentPinBuffer = currentPinBuffer.slice(0, -1);
+      updatePinDots();
+    } else if (e.key === 'Enter') {
+      submitPin();
+    } else if (e.key === 'Escape') {
+      currentPinBuffer = '';
+      updatePinDots();
+    }
+  });
+
+  btnLockTerminal.onclick = lockTerminal;
+}
+
 // WebSocket Connection
 function connectWebSocket() {
   const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-  const wsUrl = `${protocol}//${window.location.host}`;
+  const wsUrl = `${protocol}//${window.location.host}?token=${encodeURIComponent(authToken)}`;
 
   ws = new WebSocket(wsUrl);
 
@@ -152,11 +301,22 @@ function handleWsMessage(payload) {
   switch (payload.type) {
     case 'INIT_STATE':
       state = { ...state, ...payload.data };
+      if (!payload.data.isAuthenticated && !authToken) {
+        lockTerminal();
+      } else if (authToken) {
+        unlockTerminal();
+      }
       if (payload.data.publicUrl) renderPublicUrl(payload.data.publicUrl);
       if (payload.data.isAutoTrading !== undefined) {
         state.isAutoTrading = payload.data.isAutoTrading;
         toggleAutoTrading.checked = state.isAutoTrading;
       }
+      renderAll();
+      break;
+
+    case 'AUTH_SUCCESS':
+      if (payload.data.trading) state.trading = payload.data.trading;
+      if (payload.data.logs) state.logs = payload.data.logs;
       renderAll();
       break;
 
@@ -238,12 +398,14 @@ function handleRadarTick(data) {
     renderRadarTable();
   }
 
-  if (!state.trading) state.trading = {};
-  state.trading.activePosition = data.activePosition;
-  state.trading.balanceUSD = data.balanceUSD;
-  state.trading.balanceVND = data.balanceVND;
-  state.trading.realizedPnlUSD = data.realizedPnlUSD;
-  state.trading.stats = data.stats;
+  if (data.activePosition !== undefined) {
+    if (!state.trading) state.trading = {};
+    state.trading.activePosition = data.activePosition;
+  }
+  if (data.balanceUSD !== undefined) state.trading.balanceUSD = data.balanceUSD;
+  if (data.balanceVND !== undefined) state.trading.balanceVND = data.balanceVND;
+  if (data.realizedPnlUSD !== undefined) state.trading.realizedPnlUSD = data.realizedPnlUSD;
+  if (data.stats) state.trading.stats = data.stats;
 
   renderPosition();
   renderPerformance();
@@ -282,8 +444,13 @@ function renderPerformance() {
   const rate = cfg.exchangeRate || 25400;
 
   // Capital Card
-  tradeBalanceVnd.textContent = (t.balanceVND || 500000).toLocaleString('vi-VN') + ' đ';
-  tradeBalanceUsd.textContent = '≈ $' + (t.balanceUSD || 19.68).toFixed(2) + ' USD';
+  if (typeof t.balanceVND === 'string') {
+    tradeBalanceVnd.textContent = t.balanceVND;
+    tradeBalanceUsd.textContent = '≈ $' + t.balanceUSD;
+  } else {
+    tradeBalanceVnd.textContent = (t.balanceVND || 500000).toLocaleString('vi-VN') + ' đ';
+    tradeBalanceUsd.textContent = '≈ $' + (t.balanceUSD || 19.68).toFixed(2) + ' USD';
+  }
 
   // Capital pill highlight
   const capVND = t.initialCapitalVND || 500000;
@@ -570,10 +737,10 @@ function createLogLineHtml(l) {
   `;
 }
 
-// User Action Handlers
+// User Action Handlers (Protected with authFetch)
 async function triggerOrder(symbol, side) {
   try {
-    const res = await fetch('/api/trading/order', {
+    const res = await authFetch('/api/trading/order', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ symbol, side })
@@ -590,7 +757,7 @@ async function triggerOrder(symbol, side) {
 async function panicClose() {
   if (!confirm('Bạn có chắc chắn muốn ĐÓNG KHẨN CẤP vị thế hiện tại ngay lập tức?')) return;
   try {
-    const res = await fetch('/api/trading/close', {
+    const res = await authFetch('/api/trading/close', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
     });
@@ -607,7 +774,7 @@ async function panicClose() {
 toggleAutoTrading.onchange = async () => {
   const enabled = toggleAutoTrading.checked;
   try {
-    await fetch('/api/trading/auto', {
+    await authFetch('/api/trading/auto', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ enabled })
@@ -630,7 +797,7 @@ function setupCapitalButtons() {
     if (!item.btn) return;
     item.btn.onclick = async () => {
       try {
-        await fetch('/api/trading/capital', {
+        await authFetch('/api/trading/capital', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ amountVND: item.vnd })
@@ -655,7 +822,7 @@ function setupLeverageButtons() {
     if (!item.btn) return;
     item.btn.onclick = async () => {
       try {
-        await fetch('/api/trading/leverage', {
+        await authFetch('/api/trading/leverage', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ leverage: item.lev })
@@ -667,13 +834,16 @@ function setupLeverageButtons() {
   });
 }
 
-// Settings Modal Handlers
+// Settings Modal & Change PIN Handlers
 function setupSettingsModal() {
   btnOpenSettings.onclick = () => {
     const cfg = state.config || {};
     inputDailyTarget.value = cfg.dailyTargetUSD || 10;
     inputMonthlyTarget.value = cfg.monthlyTargetUSD || 300;
     selectRiskProfile.value = cfg.riskProfile || 'balanced';
+    pinChangeStatus.textContent = '';
+    inputCurrentPin.value = '';
+    inputNewPin.value = '';
     modalSettings.classList.remove('hidden');
   };
 
@@ -686,7 +856,7 @@ function setupSettingsModal() {
     const riskProfile = selectRiskProfile.value;
 
     try {
-      const res = await fetch('/api/config', {
+      const res = await authFetch('/api/config', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ dailyTargetUSD, monthlyTargetUSD, riskProfile })
@@ -699,19 +869,74 @@ function setupSettingsModal() {
       alert('Lỗi lưu cấu hình: ' + e.message);
     }
   };
+
+  btnChangePin.onclick = async () => {
+    const currentPin = inputCurrentPin.value.trim();
+    const newPin = inputNewPin.value.trim();
+    if (!currentPin || !newPin) {
+      pinChangeStatus.textContent = 'Vui lòng nhập cả mã PIN hiện tại và mã PIN mới.';
+      pinChangeStatus.style.color = 'var(--danger)';
+      return;
+    }
+
+    try {
+      btnChangePin.textContent = 'Đang đổi...';
+      const res = await authFetch('/api/auth/change-pin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ currentPin, newPin })
+      });
+      const data = await res.json();
+      if (data.success) {
+        pinChangeStatus.textContent = 'Đổi mã PIN thành công! Hãy ghi nhớ mã PIN mới của bạn.';
+        pinChangeStatus.style.color = 'var(--success)';
+        inputCurrentPin.value = '';
+        inputNewPin.value = '';
+      } else {
+        pinChangeStatus.textContent = data.error || 'Đổi mã PIN thất bại!';
+        pinChangeStatus.style.color = 'var(--danger)';
+      }
+    } catch (err) {
+      pinChangeStatus.textContent = 'Lỗi kết nối: ' + err.message;
+      pinChangeStatus.style.color = 'var(--danger)';
+    } finally {
+      btnChangePin.textContent = 'Cập Nhật Mã PIN Mới';
+    }
+  };
 }
 
 // Clear Logs
 btnClearLogs.onclick = async () => {
   try {
-    await fetch('/api/logs/clear', { method: 'POST' });
+    await authFetch('/api/logs/clear', { method: 'POST' });
   } catch (e) {
     console.error('Lỗi xoá log:', e);
   }
 };
 
 // Initial bootstrap
+setupPinKeypad();
 setupCapitalButtons();
 setupLeverageButtons();
 setupSettingsModal();
+
+// If we already have a saved token, verify it silently
+if (authToken) {
+  authFetch('/api/trading/status')
+    .then(r => r.json())
+    .then(data => {
+      if (data.isAuthenticated) {
+        unlockTerminal();
+        if (data.trading) state.trading = data.trading;
+        if (data.config) state.config = data.config;
+        renderAll();
+      } else {
+        lockTerminal();
+      }
+    })
+    .catch(() => lockTerminal());
+} else {
+  lockTerminal();
+}
+
 connectWebSocket();

@@ -1,6 +1,6 @@
 {
   "owner": "Personal Terminal (Private)",
-  "publicUrl": "https://prescribed-processor-declined-instructors.trycloudflare.com",
+  "publicUrl": "https://addressed-inches-commands-senior.trycloudflare.com",
   "config": {
     "exchangeRate": 25400,
     "dailyTargetUSD": 10,
@@ -9,10 +9,10 @@
     "riskProfile": "balanced"
   },
   "trading": {
-    "initialCapitalVND": 500000,
-    "initialCapitalUSD": 19.68,
-    "balanceVND": 500000,
-    "balanceUSD": 19.68,
+    "initialCapitalVND": 1000000,
+    "initialCapitalUSD": 39.37,
+    "balanceVND": 999998,
+    "balanceUSD": 39.37,
     "realizedPnlUSD": 0,
     "realizedPnlVND": 0,
     "todayPnlUSD": 0,
@@ -27,14 +27,14 @@
       "icon": "₿",
       "side": "SHORT",
       "entryPrice": 80624.54,
-      "currentPrice": 80585.67,
+      "currentPrice": 80567.19,
       "marginUSD": 4.92,
       "sizeUSD": 14.76,
       "leverage": 3,
       "stopLoss": 81592.03,
       "takeProfit": 78850.8,
-      "unrealizedPnlUSD": 0.007,
-      "unrealizedPnlPercent": 0.14,
+      "unrealizedPnlUSD": 0.01,
+      "unrealizedPnlPercent": 0.2,
       "isBreakevenProtected": false,
       "reason": "AI Radar: Điểm tiềm năng 95/100 [🔻 Siêu Quá Mua (Overbought Pullback)]",
       "openTime": "2026-10-27T16:20:59.243Z"
@@ -52,6 +52,48 @@
   },
   "dailyPnlRecords": [],
   "logs": [
+    {
+      "timestamp": "2026-10-27T16:44:05.429Z",
+      "level": "INFO",
+      "source": "Capital",
+      "message": "Đã cập nhật mức vốn cá nhân: 1.000.000 đ (≈ $39.37 USD)."
+    },
+    {
+      "timestamp": "2026-10-27T16:44:05.379Z",
+      "level": "SUCCESS",
+      "source": "Security",
+      "message": "Xác thực thành công. Đã cấp quyền truy cập trạm điều hành."
+    },
+    {
+      "timestamp": "2026-10-27T16:44:05.361Z",
+      "level": "WARN",
+      "source": "Security",
+      "message": "Phát hiện nhập sai mã PIN (Còn 4 lần thử trước khi khóa)."
+    },
+    {
+      "timestamp": "2026-10-27T16:43:56.914Z",
+      "level": "SUCCESS",
+      "source": "Tunnel",
+      "message": "Cổng truy cập riêng đã online tại: https://addressed-inches-commands-senior.trycloudflare.com"
+    },
+    {
+      "timestamp": "2026-10-27T16:43:53.139Z",
+      "level": "SUCCESS",
+      "source": "QuantEngine",
+      "message": "Kết nối thành công luồng WebSocket 10 Coin trực tiếp từ Binance."
+    },
+    {
+      "timestamp": "2026-10-27T16:43:52.855Z",
+      "level": "SUCCESS",
+      "source": "QuantRadar",
+      "message": "Đã nạp dữ liệu 10 đồng coin top Binance (BTC, ETH, SOL, BNB, DOGE, XRP, SUI, LINK, NEAR, AVAX)."
+    },
+    {
+      "timestamp": "2026-10-27T16:43:52.595Z",
+      "level": "INFO",
+      "source": "Tunnel",
+      "message": "Đang thiết lập cổng bảo mật Cloudflare Tunnel truy cập riêng từ điện thoại..."
+    },
     {
       "timestamp": "2026-10-27T16:20:59.328Z",
       "level": "INFO",
@@ -94,5 +136,10 @@
       "source": "System",
       "message": "Private Autonomous Crypto Terminal khởi tạo thành công. Chế độ kiếm tiền thụ động 24/7 kích hoạt."
     }
-  ]
+  ],
+  "auth": {
+    "pinHash": "9913f5915cb88da73836d3a3022419b13de371d43bb053c50dfedabbd8b52823",
+    "failedAttempts": 0,
+    "lockedUntil": 0
+  }
 }

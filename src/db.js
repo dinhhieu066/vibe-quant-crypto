@@ -1,13 +1,24 @@
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const DB_FILE = path.join(DATA_DIR, 'store.json');
+
+function hashPin(pin) {
+  return crypto.createHash('sha256').update(String(pin).trim() + '_vibe_salt_2026').digest('hex');
+}
 
 // Private Passive Crypto Trading Database Schema
 const defaultData = {
   owner: 'Personal Terminal (Private)',
   publicUrl: '',
+  auth: {
+    // Mã PIN mặc định ban đầu là: 888888 (Có thể đổi bất kỳ lúc nào trên web)
+    pinHash: hashPin('888888'),
+    failedAttempts: 0,
+    lockedUntil: 0
+  },
   config: {
     exchangeRate: 25400,
     dailyTargetUSD: 10.0,      // Mục tiêu thụ động mỗi ngày: $10 (~254.000đ)
@@ -44,8 +55,8 @@ const defaultData = {
     {
       timestamp: new Date().toISOString(),
       level: 'INFO',
-      source: 'System',
-      message: 'Private Autonomous Crypto Terminal khởi tạo thành công. Chế độ kiếm tiền thụ động 24/7 kích hoạt.'
+      source: 'SecurityShield',
+      message: 'Hệ thống bảo vệ đa tầng đã kích hoạt. Mọi thao tác đều yêu cầu xác thực mã PIN cá nhân.'
     }
   ]
 };
@@ -70,6 +81,7 @@ class DB {
       const data = JSON.parse(content);
       if (!data.trading) data.trading = defaultData.trading;
       if (!data.config) data.config = defaultData.config;
+      if (!data.auth) data.auth = defaultData.auth;
       if (!data.logs) data.logs = [];
       return data;
     } catch (e) {
@@ -85,6 +97,79 @@ class DB {
     } catch (e) {
       console.error('Error saving DB:', e.message);
     }
+  }
+
+  // --- SECURITY & AUTHENTICATION METHODS ---
+  verifyPin(inputPin) {
+    const data = this.load();
+    const now = Date.now();
+
+    // Check brute-force lockout
+    if (data.auth.lockedUntil && data.auth.lockedUntil > now) {
+      const remainingMinutes = Math.ceil((data.auth.lockedUntil - now) / 60000);
+      return {
+        success: false,
+        error: `Hệ thống đang khóa bảo vệ do nhập sai nhiều lần. Thử lại sau ${remainingMinutes} phút.`,
+        locked: true,
+        remainingMinutes
+      };
+    }
+
+    // Support environment override via TERMINAL_PIN
+    const envPin = process.env.TERMINAL_PIN;
+    const isCorrect = envPin
+      ? String(inputPin).trim() === String(envPin).trim()
+      : hashPin(inputPin) === data.auth.pinHash;
+
+    if (isCorrect) {
+      data.auth.failedAttempts = 0;
+      data.auth.lockedUntil = 0;
+      this.save(data);
+      this.addLog('SUCCESS', 'Security', 'Xác thực thành công. Đã cấp quyền truy cập trạm điều hành.');
+      return { success: true };
+    } else {
+      data.auth.failedAttempts = (data.auth.failedAttempts || 0) + 1;
+      const remainingAttempts = Math.max(0, 5 - data.auth.failedAttempts);
+
+      if (data.auth.failedAttempts >= 5) {
+        data.auth.lockedUntil = now + 15 * 60 * 1000; // Lock for 15 minutes
+        this.save(data);
+        this.addLog('WARN', 'SecurityShield', 'CẢNH BÁO: Phát hiện 5 lần nhập sai mã PIN. Kích hoạt khóa bảo mật 15 phút!');
+        return {
+          success: false,
+          error: 'Nhập sai 5 lần. Hệ thống tự động khóa bảo vệ trong 15 phút!',
+          locked: true,
+          remainingMinutes: 15
+        };
+      }
+
+      this.save(data);
+      this.addLog('WARN', 'Security', `Phát hiện nhập sai mã PIN (Còn ${remainingAttempts} lần thử trước khi khóa).`);
+      return {
+        success: false,
+        error: `Mã PIN không chính xác! Còn ${remainingAttempts} lần thử.`,
+        remainingAttempts
+      };
+    }
+  }
+
+  changePin(currentPin, newPin) {
+    const verify = this.verifyPin(currentPin);
+    if (!verify.success) return verify;
+
+    const cleanNewPin = String(newPin).trim();
+    if (cleanNewPin.length < 4 || cleanNewPin.length > 12) {
+      return { success: false, error: 'Mã PIN mới phải từ 4 đến 12 ký tự.' };
+    }
+
+    const data = this.load();
+    data.auth.pinHash = hashPin(cleanNewPin);
+    data.auth.failedAttempts = 0;
+    data.auth.lockedUntil = 0;
+    this.save(data);
+
+    this.addLog('SUCCESS', 'Security', 'Đã cập nhật mã PIN bảo mật cá nhân mới thành công.');
+    return { success: true };
   }
 
   getConfig() {
