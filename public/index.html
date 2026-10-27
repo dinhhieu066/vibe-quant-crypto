@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="dashboard.css?v=2.1">
 </head>
 <body>
   <!-- Ambient background glow -->
@@ -106,23 +106,33 @@
     </div>
   </header>
 
-  <!-- POODLE HERO COMMAND CENTER (TRẠM CHỈ HUY CỦA CHÚ CHÓ POODLE) -->
+  <!-- POODLE HERO COMMAND CENTER (TRẠM CHỈ HUY CỦA CHÚ CHÓ POODLE 3D BIẾT NÓI) -->
   <section class="poodle-hero-section">
     <div class="poodle-hero-card">
       <div class="poodle-hero-left">
-        <div class="poodle-portrait-wrap" id="poodle-avatar-touch" title="Bấm vào để em Poodle sủa!">
-          <img src="images/poodle.jpg" alt="Poodle AI Quant Mascot" class="poodle-hero-img">
-          <span class="poodle-halo"></span>
-          <span class="poodle-status-pulse"></span>
+        <!-- 3D INTERACTIVE POODLE STAGE -->
+        <div class="poodle-3d-stage" id="poodle-3d-stage" title="Chạm vào chú chó Poodle 3D để vuốt ve và trò chuyện!">
+          <div id="poodle-3d-canvas-container" class="poodle-canvas-wrap"></div>
+          <span class="poodle-3d-tag">🐩 3D POODLE AI</span>
+          <div class="poodle-soundwave" id="poodle-soundwave" title="Đang trả lời">
+            <span></span><span></span><span></span>
+          </div>
         </div>
+
         <div class="poodle-meta">
           <div class="poodle-name-row">
-            <h2 class="poodle-name">Em Poodle Săn Kèo 🐾</h2>
+            <h2 class="poodle-name">Em Poodle 3D Săn Kèo 🐾</h2>
             <span id="poodle-mood-badge" class="mood-badge mood-hunting">ĐANG LÙNG SỤC 400+ COIN</span>
+            <span class="badge-online" style="font-size:10px; padding:3px 8px;">💬 PHẢN HỒI REAL-TIME</span>
           </div>
           <div class="poodle-speech-box">
             <div class="speech-tail"></div>
-            <p id="poodle-speech">"Gâu gâu! Em Poodle đang lùng sục toàn bộ 400+ coin trên Binance. Khi có kèo ngon nhất thị trường (Điểm ≥ 78), em sẽ tự động ngoạm ngay cho sếp!"</p>
+            <p id="poodle-speech">"Gâu gâu! Em Poodle xin chào sếp! Em đang canh gác và săn kèo Binance 24/7 cho sếp đây!"</p>
+          </div>
+          <div class="poodle-quick-chat">
+            <button class="btn-chat-chip" id="btn-chat-market">💬 Kèo nào thơm nhất?</button>
+            <button class="btn-chat-chip" id="btn-chat-safety">🛡️ Tiền em canh an toàn không?</button>
+            <button class="btn-chat-chip" id="btn-chat-pet">🐾 Vuốt ve Poodle</button>
           </div>
         </div>
       </div>
@@ -354,7 +364,9 @@
   <!-- Hidden toggle auto trading for JS compatibility -->
   <input type="checkbox" id="toggle-auto-trading" checked style="display:none;">
 
-  <!-- Scripts -->
-  <script src="dashboard.js"></script>
+  <!-- Three.js 3D Engine & Poodle 3D Mascot -->
+  <script src="vendor/three.min.js"></script>
+  <script src="poodle3d.js?v=2.1"></script>
+  <script src="dashboard.js?v=2.1"></script>
 </body>
 </html>

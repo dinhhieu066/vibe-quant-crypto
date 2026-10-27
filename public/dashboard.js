@@ -204,6 +204,13 @@ function unlockTerminal() {
   pinErrorMsg.classList.add('hidden');
   currentPinBuffer = '';
   updatePinDots();
+  if (window.poodle3D && !window.poodle3D.hasGreeted) {
+    window.poodle3D.hasGreeted = true;
+    window.poodle3D.ensureAudioContext();
+    setTimeout(() => {
+      window.poodle3D.speak('Gâu gâu! Em Poodle 3D xin chào sếp! Em đang canh gác và săn kèo Binance 24 trên 7 cho sếp đây!');
+    }, 400);
+  }
 }
 
 function lockTerminal() {
@@ -360,6 +367,9 @@ function handleWsMessage(payload) {
     case 'POSITION_OPENED':
       state.trading.activePosition = payload.data;
       renderPosition();
+      if (window.poodle3D && payload.data && payload.data.symbol) {
+        window.poodle3D.speak(`Gâu gâu! Sếp ơi, em vừa phát hiện kèo thơm và đã ngoạm lệnh ${payload.data.symbol} ${payload.data.side || 'LONG'} rồi nè sếp!`);
+      }
       break;
 
     case 'POSITION_CLOSED':
@@ -374,6 +384,14 @@ function handleWsMessage(payload) {
       renderPosition();
       renderPerformance();
       renderTradesHistory();
+      if (window.poodle3D && payload.data && payload.data.trade) {
+        const tr = payload.data.trade;
+        if (tr.pnlUSD > 0) {
+          window.poodle3D.speak(`Gâu gâu! Chúc mừng sếp, em vừa chốt lãi thành công cộng thêm ${tr.pnlUSD.toFixed(2)} đô vào ví sếp rồi nha!`);
+        } else {
+          window.poodle3D.speak(`Em đã kích hoạt cắt lỗ thông minh để bảo vệ an toàn vốn cho sếp rồi ạ!`);
+        }
+      }
       break;
 
     case 'LOG_ENTRY':
@@ -985,33 +1003,82 @@ function updatePoodleMood(type, positions = []) {
   }
 }
 
-function setupPoodleInteractions() {
-  const poodleTouch = document.getElementById('poodle-avatar-touch');
-  const poodleSpeech = document.getElementById('poodle-speech');
-  if (!poodleTouch || !poodleSpeech) return;
+function initPoodle3D() {
+  const container = document.getElementById('poodle-3d-canvas-container');
+  if (!container || typeof Poodle3D === 'undefined') return;
 
-  const poodleQuotes = [
-    '"Gâu gâu! Em Poodle đang canh tiền cho sếp 24/7, vốn an toàn 100%!"',
-    '"Em Poodle chỉ cắn những kèo siêu thơm có điểm ≥ 78 thôi nha sếp!"',
-    '"Khi lãi đạt +1%, em tự động dời Stop Loss về hòa vốn để sếp không bao giờ lỗ!"',
-    '"Thị trường đang chạy, sếp cứ thảnh thơi đi chơi, mọi việc cứ để em lo!"',
-    '"Gâu gâu! Lãi kép đang nhảy từng giây, em yêu sếp nhất trên đời! 🐾"'
-  ];
+  try {
+    window.poodle3D = new Poodle3D('poodle-3d-canvas-container');
+  } catch (err) {
+    console.error('Error creating Poodle3D:', err);
+  }
 
-  let quoteIdx = 0;
-  poodleTouch.onclick = () => {
-    quoteIdx = (quoteIdx + 1) % poodleQuotes.length;
-    poodleSpeech.innerHTML = poodleQuotes[quoteIdx];
-    poodleTouch.classList.add('poodle-bounce');
-    setTimeout(() => poodleTouch.classList.remove('poodle-bounce'), 600);
-  };
+  // Voice toggle button
+  const btnVoice = document.getElementById('btn-toggle-voice');
+  if (btnVoice) {
+    const isMuted = window.poodle3D ? window.poodle3D.isMuted : false;
+    btnVoice.textContent = isMuted ? '🔇 BẬT GIỌNG NÓI' : '🔊 TẮT GIỌNG NÓI';
+    btnVoice.classList.toggle('active', !isMuted);
+
+    btnVoice.onclick = () => {
+      if (window.poodle3D) {
+        const muted = window.poodle3D.toggleMute();
+        btnVoice.textContent = muted ? '🔇 BẬT GIỌNG NÓI' : '🔊 TẮT GIỌNG NÓI';
+        btnVoice.classList.toggle('active', !muted);
+      }
+    };
+  }
+
+  // Quick Chat buttons
+  const btnChatMarket = document.getElementById('btn-chat-market');
+  if (btnChatMarket) {
+    btnChatMarket.onclick = () => {
+      if (!window.poodle3D) return;
+      window.poodle3D.ensureAudioContext();
+      const radar = state.marketRadar || [];
+      if (radar.length > 0) {
+        const top = [...radar].sort((a, b) => (b.opportunityScore || 0) - (a.opportunityScore || 0))[0];
+        const speech = `Gâu gâu! Hiện tại đồng ${top.symbol} đang có điểm tiềm năng cao nhất thị trường với ${top.opportunityScore} trên 100 điểm. Em đang theo dõi sát sao nè sếp!`;
+        const speechEl = document.getElementById('poodle-speech');
+        if (speechEl) speechEl.innerHTML = `"${speech}"`;
+        window.poodle3D.speak(speech);
+      } else {
+        const speech = 'Gâu gâu! Em đang lùng sục toàn bộ hơn bốn trăm đồng coin trên Binance, sếp đợi em chút xíu nhé!';
+        const speechEl = document.getElementById('poodle-speech');
+        if (speechEl) speechEl.innerHTML = `"${speech}"`;
+        window.poodle3D.speak(speech);
+      }
+    };
+  }
+
+  const btnChatSafety = document.getElementById('btn-chat-safety');
+  if (btnChatSafety) {
+    btnChatSafety.onclick = () => {
+      if (!window.poodle3D) return;
+      window.poodle3D.ensureAudioContext();
+      const speech = 'Vốn của sếp đang an toàn tuyệt đối 100%! Em phân bổ tối đa 18% mỗi lệnh và có cắt lỗ tự động, nên không bao giờ cháy ví đâu sếp yên tâm nha!';
+      const speechEl = document.getElementById('poodle-speech');
+      if (speechEl) speechEl.innerHTML = `"${speech}"`;
+      window.poodle3D.speak(speech);
+    };
+  }
+
+  const btnChatPet = document.getElementById('btn-chat-pet');
+  if (btnChatPet) {
+    btnChatPet.onclick = () => {
+      if (window.poodle3D) {
+        window.poodle3D.ensureAudioContext();
+        window.poodle3D.petPoodle();
+      }
+    };
+  }
 }
 
 setupPinKeypad();
 setupCapitalButtons();
 setupLeverageButtons();
 setupSettingsModal();
-setupPoodleInteractions();
+initPoodle3D();
 
 // If we already have a saved token, verify it silently
 if (authToken) {

@@ -294,65 +294,129 @@ body {
 .poodle-hero-left {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
   flex: 1;
 }
 
-.poodle-portrait-wrap {
+/* 3D TALKING POODLE STAGE */
+/* 3D AUTHENTIC POODLE STAGE */
+.poodle-3d-stage {
   position: relative;
-  width: 82px;
-  height: 82px;
+  width: 165px;
+  height: 165px;
   flex-shrink: 0;
   cursor: pointer;
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border-radius: 24px;
+  background: radial-gradient(circle at center, rgba(255, 176, 59, 0.16) 0%, rgba(7, 10, 20, 0.7) 80%);
+  border: 1px solid rgba(255, 176, 59, 0.4);
+  box-shadow: 0 0 30px rgba(255, 176, 59, 0.28), inset 0 0 25px rgba(0, 242, 254, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
 }
 
-.poodle-portrait-wrap:hover {
-  transform: scale(1.08) rotate(-2deg);
+.poodle-3d-stage:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 40px rgba(255, 176, 59, 0.5), inset 0 0 30px rgba(0, 242, 254, 0.25);
 }
 
-.poodle-hero-img {
-  width: 82px;
-  height: 82px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #ffb03b;
-  box-shadow: 0 0 25px rgba(255, 176, 59, 0.4);
-  position: relative;
-  z-index: 2;
+.poodle-canvas-wrap {
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+  overflow: hidden;
 }
 
-.poodle-halo {
+.poodle-canvas-wrap canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+.poodle-3d-tag {
   position: absolute;
-  top: -4px;
-  left: -4px;
-  right: -4px;
-  bottom: -4px;
-  border-radius: 50%;
-  background: conic-gradient(from 0deg, #ffb03b, #00f2fe, #ffb03b);
-  z-index: 1;
-  animation: rotatePoodleHalo 6s linear infinite;
-  opacity: 0.8;
-  filter: blur(2px);
+  bottom: -10px;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: #ffb03b;
+  color: #000;
+  box-shadow: 0 0 12px rgba(255, 176, 59, 0.6);
+  white-space: nowrap;
 }
 
-@keyframes rotatePoodleHalo {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.poodle-status-pulse {
+/* Animated Real-time Typing Indicator (Active when Poodle types response) */
+.poodle-soundwave {
   position: absolute;
-  bottom: 2px;
-  right: 2px;
-  width: 16px;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
   height: 16px;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  background: rgba(10, 15, 29, 0.7);
+  padding: 3px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 242, 254, 0.35);
+  backdrop-filter: blur(4px);
+}
+
+.poodle-soundwave.active {
+  opacity: 1;
+}
+
+.poodle-soundwave span {
+  width: 5px;
+  height: 5px;
+  background: #00f2fe;
   border-radius: 50%;
-  background: var(--success);
-  border: 3px solid #0d111c;
-  z-index: 3;
-  box-shadow: 0 0 10px var(--success);
-  animation: pulse 1.5s infinite;
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.poodle-soundwave.active span:nth-child(1) { animation: typePulse 0.6s infinite alternate; }
+.poodle-soundwave.active span:nth-child(2) { animation: typePulse 0.6s infinite alternate 0.2s; }
+.poodle-soundwave.active span:nth-child(3) { animation: typePulse 0.6s infinite alternate 0.4s; }
+
+@keyframes typePulse {
+  0% { transform: translateY(0); opacity: 0.3; }
+  100% { transform: translateY(-3px); opacity: 1; background: #ffb03b; }
+}
+
+.type-cursor {
+  display: inline-block;
+  color: var(--primary);
+  margin-left: 2px;
+  animation: cursorBlink 0.6s infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.btn-voice {
+  background: rgba(0, 242, 254, 0.15);
+  border: 1px solid rgba(0, 242, 254, 0.4);
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  padding: 3px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-voice:hover {
+  background: rgba(0, 242, 254, 0.3);
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
 }
 
 .poodle-meta {
@@ -404,6 +468,7 @@ body {
   padding: 10px 16px;
   max-width: 680px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  margin-bottom: 8px;
 }
 
 .speech-tail {
@@ -426,6 +491,36 @@ body {
 
 #poodle-speech strong {
   color: #ffb03b;
+}
+
+/* Poodle Quick Chat Chips */
+.poodle-quick-chat {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-chat-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-chat-chip:hover {
+  background: rgba(255, 176, 59, 0.15);
+  border-color: #ffb03b;
+  color: #ffb03b;
+  transform: translateY(-1px);
+}
+
+.btn-chat-chip:active {
+  transform: scale(0.96);
 }
 
 .poodle-hero-stats {
