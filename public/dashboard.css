@@ -98,10 +98,54 @@ body {
   gap: 14px;
 }
 
-.brand-badge {
+.poodle-brand-badge {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+}
+
+.avatar-aura {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+}
+
+.brand-poodle-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ffb03b;
+  box-shadow: 0 0 15px rgba(255, 176, 59, 0.4);
+}
+
+.online-indicator {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 11px;
+  height: 11px;
+  background: var(--success);
+  border: 2px solid var(--bg-dark);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--success);
+}
+
+.brand-title {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #fff, #ffb03b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-sub {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-weight: 500;
 }
 
 .pulse-dot {
@@ -125,27 +169,6 @@ body {
 @keyframes pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.4; transform: scale(0.85); }
-}
-
-.brand-title {
-  font-family: var(--font-mono);
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  background: linear-gradient(135deg, #fff, var(--primary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.mode-badge {
-  font-size: 11px;
-  font-family: var(--font-mono);
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 6px;
-  background: rgba(0, 242, 254, 0.1);
-  color: var(--primary);
-  border: 1px solid rgba(0, 242, 254, 0.3);
 }
 
 .header-center {
@@ -231,6 +254,216 @@ body {
   color: var(--text-dim);
   font-weight: 600;
   font-size: 11px;
+}
+
+/* ====================================================
+   POODLE HERO COMMAND CENTER (TRẠM CHỈ HUY POODLE)
+   ==================================================== */
+.poodle-hero-section {
+  max-width: 1440px;
+  margin: 16px auto 0 auto;
+  padding: 0 24px;
+}
+
+.poodle-hero-card {
+  background: linear-gradient(135deg, rgba(20, 26, 43, 0.85) 0%, rgba(13, 17, 28, 0.95) 100%);
+  border: 1px solid rgba(255, 176, 59, 0.25);
+  border-radius: var(--radius-md);
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+}
+
+.poodle-hero-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -10%;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(255, 176, 59, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.poodle-hero-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+}
+
+.poodle-portrait-wrap {
+  position: relative;
+  width: 82px;
+  height: 82px;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.poodle-portrait-wrap:hover {
+  transform: scale(1.08) rotate(-2deg);
+}
+
+.poodle-hero-img {
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ffb03b;
+  box-shadow: 0 0 25px rgba(255, 176, 59, 0.4);
+  position: relative;
+  z-index: 2;
+}
+
+.poodle-halo {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #ffb03b, #00f2fe, #ffb03b);
+  z-index: 1;
+  animation: rotatePoodleHalo 6s linear infinite;
+  opacity: 0.8;
+  filter: blur(2px);
+}
+
+@keyframes rotatePoodleHalo {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.poodle-status-pulse {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--success);
+  border: 3px solid #0d111c;
+  z-index: 3;
+  box-shadow: 0 0 10px var(--success);
+  animation: pulse 1.5s infinite;
+}
+
+.poodle-meta {
+  flex: 1;
+}
+
+.poodle-name-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.poodle-name {
+  font-size: 17px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+
+.mood-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.5px;
+}
+
+.mood-hunting {
+  background: rgba(255, 176, 59, 0.15);
+  color: #ffb03b;
+  border: 1px solid rgba(255, 176, 59, 0.4);
+}
+
+.mood-active {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--success);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  animation: pulse 1.5s infinite;
+}
+
+.poodle-speech-box {
+  position: relative;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 10px 16px;
+  max-width: 680px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.speech-tail {
+  position: absolute;
+  left: -7px;
+  top: 14px;
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-right: 7px solid rgba(255, 255, 255, 0.1);
+}
+
+#poodle-speech {
+  font-size: 13.5px;
+  color: #e2e8f0;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+#poodle-speech strong {
+  color: #ffb03b;
+}
+
+.poodle-hero-stats {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 12px 18px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.poodle-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.poodle-bounce {
+  animation: poodleBounce 0.5s ease-in-out;
+}
+
+@keyframes poodleBounce {
+  0%, 100% { transform: scale(1); }
+  30% { transform: scale(1.18) rotate(4deg); }
+  60% { transform: scale(0.95) rotate(-3deg); }
+}
+
+@media (max-width: 860px) {
+  .poodle-hero-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .poodle-hero-stats {
+    width: 100%;
+    justify-content: space-around;
+  }
 }
 
 /* Financial Performance Strip (3 Main Cards) */
@@ -1139,52 +1372,68 @@ input:checked + .slider:before {
   overflow: hidden;
 }
 
-.pin-shield-icon {
-  position: relative;
-  width: 64px;
-  height: 64px;
+.pin-poodle-wrap {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
+  text-align: center;
 }
 
-.shield-emoji {
-  font-size: 38px;
-  z-index: 2;
+.poodle-avatar-ring {
+  position: relative;
+  width: 86px;
+  height: 86px;
+  margin-bottom: 12px;
 }
 
-.shield-pulse {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+.pin-poodle-img {
+  width: 86px;
+  height: 86px;
   border-radius: 50%;
-  background: rgba(0, 242, 254, 0.2);
-  animation: shieldPulse 2s infinite ease-out;
+  object-fit: cover;
+  border: 3px solid #ffb03b;
+  box-shadow: 0 0 30px rgba(255, 176, 59, 0.5);
 }
 
-@keyframes shieldPulse {
-  0% { transform: scale(0.8); opacity: 0.8; }
-  100% { transform: scale(1.6); opacity: 0; }
+.poodle-badge-glow {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 20px;
+  filter: drop-shadow(0 0 6px #ffb03b);
+}
+
+.pin-poodle-tip {
+  font-size: 12px;
+  color: #ffb03b;
+  margin-top: 6px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.idle-poodle-icon {
+  font-size: 38px;
+  filter: drop-shadow(0 0 10px #ffb03b);
 }
 
 .pin-title {
   font-family: var(--font-mono);
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 800;
-  letter-spacing: 1.5px;
-  margin: 0 0 6px 0;
-  background: linear-gradient(135deg, #fff, var(--primary));
+  letter-spacing: 1px;
+  margin: 0 0 4px 0;
+  background: linear-gradient(135deg, #fff, #ffb03b);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-align: center;
 }
 
 .pin-subtitle {
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
   color: var(--text-dim);
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
   margin: 0 0 24px 0;
   text-align: center;
 }

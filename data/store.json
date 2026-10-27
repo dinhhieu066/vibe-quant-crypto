@@ -1,6 +1,6 @@
 {
   "owner": "Personal Terminal (Private)",
-  "publicUrl": "https://gmc-texture-mathematical-proceeds.trycloudflare.com",
+  "publicUrl": "https://importantly-diary-sponsors-atmospheric.trycloudflare.com",
   "config": {
     "exchangeRate": 25400,
     "dailyTargetUSD": 10,
@@ -113,6 +113,96 @@
   },
   "dailyPnlRecords": [],
   "logs": [
+    {
+      "timestamp": "2026-10-27T17:43:36.322Z",
+      "level": "SUCCESS",
+      "source": "PoodleRadar",
+      "message": "🐩 Radar Poodle: Đang quét 410 đồng coin Binance 24/7 tìm kèo thơm cho sếp."
+    },
+    {
+      "timestamp": "2026-10-27T17:43:32.205Z",
+      "level": "SUCCESS",
+      "source": "Security",
+      "message": "Xác thực thành công. Đã cấp quyền truy cập trạm điều hành."
+    },
+    {
+      "timestamp": "2026-10-27T17:41:39.746Z",
+      "level": "SUCCESS",
+      "source": "Tunnel",
+      "message": "Cổng truy cập riêng đã online tại: https://importantly-diary-sponsors-atmospheric.trycloudflare.com"
+    },
+    {
+      "timestamp": "2026-10-27T17:41:36.256Z",
+      "level": "SUCCESS",
+      "source": "QuantEngine",
+      "message": "Đã kết nối luồng dữ liệu toàn bộ thị trường Binance thời gian thực."
+    },
+    {
+      "timestamp": "2026-10-27T17:41:35.613Z",
+      "level": "INFO",
+      "source": "Tunnel",
+      "message": "Đang thiết lập cổng bảo mật Cloudflare Tunnel truy cập riêng từ điện thoại..."
+    },
+    {
+      "timestamp": "2026-10-27T17:40:55.907Z",
+      "level": "SUCCESS",
+      "source": "QuantRadar",
+      "message": "Radar toàn thị trường: Đang quét 411 đồng coin Binance 24/7 tìm cơ hội số 1."
+    },
+    {
+      "timestamp": "2026-10-27T17:39:55.869Z",
+      "level": "SUCCESS",
+      "source": "QuantRadar",
+      "message": "Radar toàn thị trường: Đang quét 411 đồng coin Binance 24/7 tìm cơ hội số 1."
+    },
+    {
+      "timestamp": "2026-10-27T17:37:55.896Z",
+      "level": "SUCCESS",
+      "source": "QuantRadar",
+      "message": "Radar toàn thị trường: Đang quét 410 đồng coin Binance 24/7 tìm cơ hội số 1."
+    },
+    {
+      "timestamp": "2026-10-27T17:34:55.794Z",
+      "level": "SUCCESS",
+      "source": "QuantRadar",
+      "message": "Radar toàn thị trường: Đang quét 409 đồng coin Binance 24/7 tìm cơ hội số 1."
+    },
+    {
+      "timestamp": "2026-10-27T17:30:55.949Z",
+      "level": "SUCCESS",
+      "source": "QuantRadar",
+      "message": "Radar toàn thị trường: Đang quét 409 đồng coin Binance 24/7 tìm cơ hội số 1."
+    },
+    {
+      "timestamp": "2026-10-27T17:22:55.691Z",
+      "level": "SUCCESS",
+      "source": "QuantRadar",
+      "message": "Radar toàn thị trường: Đang quét 408 đồng coin Binance 24/7 tìm cơ hội số 1."
+    },
+    {
+      "timestamp": "2026-10-27T17:20:55.698Z",
+      "level": "SUCCESS",
+      "source": "QuantRadar",
+      "message": "Radar toàn thị trường: Đang quét 408 đồng coin Binance 24/7 tìm cơ hội số 1."
+    },
+    {
+      "timestamp": "2026-10-27T17:18:55.693Z",
+      "level": "SUCCESS",
+      "source": "QuantRadar",
+      "message": "Radar toàn thị trường: Đang quét 408 đồng coin Binance 24/7 tìm cơ hội số 1."
+    },
+    {
+      "timestamp": "2026-10-27T17:18:24.491Z",
+      "level": "SUCCESS",
+      "source": "Security",
+      "message": "Xác thực thành công. Đã cấp quyền truy cập trạm điều hành."
+    },
+    {
+      "timestamp": "2026-10-27T17:17:56.107Z",
+      "level": "SUCCESS",
+      "source": "QuantRadar",
+      "message": "Radar toàn thị trường: Đang quét 408 đồng coin Binance 24/7 tìm cơ hội số 1."
+    },
     {
       "timestamp": "2026-10-27T17:17:06.861Z",
       "level": "SUCCESS",

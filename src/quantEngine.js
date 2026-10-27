@@ -170,8 +170,8 @@ class QuantEngine {
         if (totalTracked > 0 && Math.random() < 0.25) {
           db.addLog(
             'SUCCESS',
-            'QuantRadar',
-            `Radar toàn thị trường: Đang quét ${totalTracked} đồng coin Binance 24/7 tìm cơ hội số 1.`
+            'PoodleRadar',
+            `🐩 Radar Poodle: Đang quét ${totalTracked} đồng coin Binance 24/7 tìm kèo thơm cho sếp.`
           );
         }
       }
@@ -509,8 +509,8 @@ class QuantEngine {
       const volFormatted = (bestCoin.volume / 1000000).toFixed(1) + 'M';
       db.addLog(
         'INFO',
-        'QuantRadar',
-        `[All-Market Radar] Đã dò ${candidates.length} đồng coin Binance (Đang giữ ${activePositions.length}/${this.maxConcurrentPositions} vị thế). Cơ hội số 1: ${bestCoin.symbol} (Điểm: ${bestCoin.opportunityScore}/100, RSI: ${bestCoin.rsi}, 24h: ${bestCoin.change24h > 0 ? '+' : ''}${bestCoin.change24h}%, Vol: $${volFormatted}, Setup: ${bestCoin.setupType}).`
+        'PoodleRadar',
+        `🐩 [Poodle 24/7] Đã dò ${candidates.length} đồng coin Binance (Đang cắn ${activePositions.length}/${this.maxConcurrentPositions} kèo). Kèo ngon nhất: ${bestCoin.symbol} (Điểm: ${bestCoin.opportunityScore}/100, RSI: ${bestCoin.rsi}, 24h: ${bestCoin.change24h > 0 ? '+' : ''}${bestCoin.change24h}%, Vol: $${volFormatted}, Setup: ${bestCoin.setupType}).`
       );
     }
 
@@ -595,8 +595,8 @@ class QuantEngine {
 
     db.addLog(
       'INFO',
-      'QuantAI',
-      `⚡ [TỰ ĐỘNG DÔ LỆNH ${side}] ${position.icon} ${symbol} @ $${currentPrice.toLocaleString('en-US')}. Đòn bẩy x${leverage}, Ký quỹ $${marginUSD} (18% vốn). SL: $${stopLoss}, TP: $${takeProfit} | Tổng vị thế: ${activePositions.length}/${this.maxConcurrentPositions} (Dò từ ${Object.keys(this.marketData).length}+ coin)`
+      'PoodleAI',
+      `🐩⚡ [POODLE VÀO LỆNH ${side}] ${position.icon} ${symbol} @ $${currentPrice.toLocaleString('en-US')}. Đòn bẩy x${leverage}, Ký quỹ $${marginUSD} (18% vốn). SL: $${stopLoss}, TP: $${takeProfit} | Poodle đang giữ: ${activePositions.length}/${this.maxConcurrentPositions} kèo (Dò từ ${Object.keys(this.marketData).length}+ coin)`
     );
 
     this.broadcast({

@@ -338,7 +338,7 @@ function startCloudflareTunnel(port) {
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`====================================================`);
-  console.log(`💎 VIBE-QUANT // PERSONAL AUTONOMOUS CRYPTO TERMINAL`);
+  console.log(`🐩 POODLE QUANT // PERSONAL AUTONOMOUS CRYPTO TERMINAL`);
   console.log(`👑 Private Dashboard: http://localhost:${PORT}`);
   console.log(`🛡️ Multi-Layer Security Shield: ACTIVE (PIN Protected)`);
   console.log(`====================================================`);

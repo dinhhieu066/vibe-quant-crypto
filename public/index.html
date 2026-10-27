@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VibeQuant AI // Private Passive Crypto Terminal</title>
+  <title>🐩 POODLE QUANT // Chú Chó AI Kiếm Tiền Thụ Động 24/7</title>
+  <link rel="icon" type="image/jpeg" href="images/poodle.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -17,12 +18,15 @@
   <!-- SECURITY SHIELD PIN GATE (LOCK SCREEN OVERLAY) -->
   <div id="pin-gate" class="pin-gate-overlay">
     <div class="pin-gate-box">
-      <div class="pin-shield-icon">
-        <span class="shield-pulse"></span>
-        <span class="shield-emoji">🛡️</span>
+      <div class="pin-poodle-wrap">
+        <div class="poodle-avatar-ring">
+          <img src="images/poodle.jpg" alt="Poodle Guard" class="pin-poodle-img">
+          <span class="poodle-badge-glow">🐾</span>
+        </div>
+        <h2 class="pin-title">POODLE QUANT AI 🐩</h2>
+        <p class="pin-subtitle">BẢO VỆ ĐA TẦNG &bull; XÁC THỰC MÃ PIN CHỦ NHÂN</p>
+        <p class="pin-poodle-tip">"Gâu! Em đang canh tiền cho sếp. Nhập mã PIN để vào thăm em nhé!"</p>
       </div>
-      <h2 class="pin-title">VIBE-QUANT AI // SECURITY SHIELD</h2>
-      <p class="pin-subtitle">BẢO VỆ ĐA TẦNG &bull; XÁC THỰC MÃ PIN CHỦ NHÂN</p>
       
       <!-- Visual Pin Dots -->
       <div class="pin-dots-wrap" id="pin-dots">
@@ -52,12 +56,12 @@
         <button class="key-btn" data-val="9">9</button>
         <button class="key-btn key-clear" id="key-clear">XÓA</button>
         <button class="key-btn" data-val="0">0</button>
-        <button class="key-btn key-unlock" id="key-unlock">MỞ</button>
+        <button class="key-btn key-unlock" id="key-unlock">MỞ 🔓</button>
       </div>
 
       <div class="pin-footer-tip">
-        <span>🔑 Mặc định ban đầu: <strong>888888</strong> (Có thể đổi trong Cài Đặt)</span>
-        <small class="lock-policy">Chống dò mật khẩu: Tự động khóa 15 phút nếu nhập sai 5 lần.</small>
+        <span>🔑 Mã PIN mặc định: <strong>888888</strong> (Có thể đổi trong Cài Đặt)</span>
+        <small class="lock-policy">Tự động khóa 15 phút nếu nhập sai 5 lần.</small>
       </div>
     </div>
   </div>
@@ -65,19 +69,24 @@
   <!-- Top Main Header Navigation -->
   <header class="header">
     <div class="header-left">
-      <div class="brand-badge">
-        <span class="pulse-dot"></span>
-        <span class="brand-title">💎 VIBE-QUANT AI // PRIVATE PASSIVE TERMINAL</span>
+      <div class="poodle-brand-badge">
+        <div class="avatar-aura">
+          <img src="images/poodle.jpg" alt="Poodle Mascot" class="brand-poodle-avatar">
+          <span class="online-indicator"></span>
+        </div>
+        <div>
+          <div class="brand-title">POODLE QUANT AI 🐩</div>
+          <div class="brand-sub">Trợ lý săn lãi 400+ Coin Binance 24/7 của chủ nhân</div>
+        </div>
       </div>
-      <div class="mode-badge" id="quant-mode-badge">👑 DÀNH RIÊNG CHO CHỦ NHÂN</div>
     </div>
 
     <!-- Private Mobile Web Link Pill -->
     <div class="header-center">
       <div class="public-url-pill">
-        <span class="globe-icon">🔐</span>
+        <span class="globe-icon">📱</span>
         <span class="pill-label">TRUY CẬP TỪ ĐIỆN THOẠI:</span>
-        <a id="public-web-link" href="#" target="_blank" class="public-link mono">Đang kết nối Cloudflare...</a>
+        <a id="public-web-link" href="#" target="_blank" class="public-link mono">Đang kết nối...</a>
         <button id="btn-copy-public-url" class="btn-copy-icon" title="Sao chép link riêng">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
         </button>
@@ -85,42 +94,63 @@
     </div>
 
     <div class="header-right">
-      <div class="auto-switch-wrap">
-        <span class="ctrl-label">AI TỰ ĐỘNG KIẾM TIỀN:</span>
-        <label class="switch">
-          <input type="checkbox" id="toggle-auto-trading" checked>
-          <span class="slider round"></span>
-        </label>
+      <div class="system-stat">
+        <span id="ws-badge" class="badge-online">⚡ 400+ COINS LIVE</span>
       </div>
-      <button id="btn-open-settings" class="btn btn-sm btn-outline" title="Cài đặt mục tiêu thụ động">
+      <button id="btn-open-settings" class="btn btn-sm btn-outline" title="Cài đặt mục tiêu">
         ⚙️ Cài Đặt
       </button>
-      <button id="btn-lock-terminal" class="btn btn-sm btn-ghost" title="Khóa trạm điều hành ngay">
+      <button id="btn-lock-terminal" class="btn btn-sm btn-ghost" title="Khóa trạm">
         🔒 Khóa
       </button>
-      <div class="system-stat">
-        <span class="label">BINANCE FEED:</span>
-        <span id="ws-badge" class="badge-online">⚡ 350+ COINS ALL-MARKET</span>
-      </div>
-      <div class="system-stat">
-        <span class="label">UPTIME:</span>
-        <span id="stat-uptime" class="value mono">00:00:00</span>
-      </div>
     </div>
   </header>
 
-  <!-- Financial Performance Strip (4 Key Cards) -->
+  <!-- POODLE HERO COMMAND CENTER (TRẠM CHỈ HUY CỦA CHÚ CHÓ POODLE) -->
+  <section class="poodle-hero-section">
+    <div class="poodle-hero-card">
+      <div class="poodle-hero-left">
+        <div class="poodle-portrait-wrap" id="poodle-avatar-touch" title="Bấm vào để em Poodle sủa!">
+          <img src="images/poodle.jpg" alt="Poodle AI Quant Mascot" class="poodle-hero-img">
+          <span class="poodle-halo"></span>
+          <span class="poodle-status-pulse"></span>
+        </div>
+        <div class="poodle-meta">
+          <div class="poodle-name-row">
+            <h2 class="poodle-name">Em Poodle Săn Kèo 🐾</h2>
+            <span id="poodle-mood-badge" class="mood-badge mood-hunting">ĐANG LÙNG SỤC 400+ COIN</span>
+          </div>
+          <div class="poodle-speech-box">
+            <div class="speech-tail"></div>
+            <p id="poodle-speech">"Gâu gâu! Em Poodle đang lùng sục toàn bộ 400+ coin trên Binance. Khi có kèo ngon nhất thị trường (Điểm ≥ 78), em sẽ tự động ngoạm ngay cho sếp!"</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="poodle-hero-stats">
+        <div class="poodle-stat-item">
+          <span class="stat-num mono highlight-green" id="hero-winrate">100%</span>
+          <span class="stat-lbl">Tỷ Lệ Thắng</span>
+        </div>
+        <div class="poodle-stat-item">
+          <span class="stat-num mono text-accent" id="hero-coins-count">407</span>
+          <span class="stat-lbl">Coin Quét 24/7</span>
+        </div>
+        <div class="poodle-stat-item">
+          <span class="stat-num mono text-cyan" id="stat-uptime">00:00:00</span>
+          <span class="stat-lbl">Thời Gian Canh Gác</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Financial Performance Strip (3 Luxury Cards) -->
   <section class="performance-strip">
     <!-- Card 1: Trading Capital -->
     <div class="perf-card">
       <div class="p-top">
-        <span class="p-title">VỐN GIAO DỊCH RIÊNG</span>
-        <div class="capital-selector">
-          <button class="btn-cap active" data-vnd="500000" id="btn-cap-500k">500k</button>
-          <button class="btn-cap" data-vnd="1000000" id="btn-cap-1000k">1Tr</button>
-          <button class="btn-cap" data-vnd="2000000" id="btn-cap-2000k">2Tr</button>
-          <button class="btn-cap" data-vnd="5000000" id="btn-cap-5000k">5Tr</button>
-        </div>
+        <span class="p-title">💼 VỐN & SỐ DƯ HIỆN TẠI</span>
+        <span class="badge-mini text-accent">BẢO TOÀN 100%</span>
       </div>
       <div id="trade-balance-vnd" class="p-main-val mono">500.000 đ</div>
       <div id="trade-balance-usd" class="p-sub-val mono">≈ $19.68 USD</div>
@@ -129,17 +159,17 @@
     <!-- Card 2: Realized Passive Profit -->
     <div class="perf-card">
       <div class="p-top">
-        <span class="p-title">LỢI NHUẬN THỤ ĐỘNG RÒNG (NET PROFIT)</span>
-        <span class="badge-mini">ĐÃ CHỐT</span>
+        <span class="p-title">💰 LỢI NHUẬN RÒNG ĐÃ CHỐT</span>
+        <span class="badge-mini highlight-green">LÃI KÉP TỰ ĐỘNG</span>
       </div>
       <div id="trade-pnl-usd" class="p-main-val mono highlight-green">+$0.00</div>
-      <div id="trade-pnl-vnd" class="p-sub-val mono">≈ 0 đ (Tự động cộng dồn lãi kép)</div>
+      <div id="trade-pnl-vnd" class="p-sub-val mono">≈ 0 đ (Tự cộng dồn vào vốn)</div>
     </div>
 
     <!-- Card 3: Passive Income Goal Progress -->
     <div class="perf-card">
       <div class="p-top">
-        <span class="p-title">MỤC TIÊU THU NHẬP HÔM NAY</span>
+        <span class="p-title">🎯 MỤC TIÊU THU NHẬP HÔM NAY</span>
         <span id="goal-target-label" class="badge-mini">$10.00 (~254k đ)</span>
       </div>
       <div class="goal-progress-wrap">
@@ -158,40 +188,36 @@
   <!-- MAIN CONTAINER -->
   <main class="terminal-main">
 
-    <!-- ACTIVE POSITION HERO MONITOR -->
+    <!-- ACTIVE POSITION MONITOR (CÁC KÈO POODLE ĐANG CẮN GIỮ) -->
     <section class="card position-hero-card">
       <div class="card-header">
         <div class="card-title">
           <span class="pulse-dot-cyan"></span>
-          <span>TRẠNG THÁI VỊ THẾ HIỆN TẠI (REAL-TIME POSITION MONITOR)</span>
+          <span>🐾 CÁC VỊ THẾ POODLE ĐANG CẮN GIỮ (REAL-TIME POSITION MONITOR)</span>
         </div>
-        <div id="pos-status-badge" class="badge-status-idle">CHƯA MỞ LỆNH</div>
+        <div id="pos-status-badge" class="badge-status-idle">CHƯA MỞ LỆNH (0/3)</div>
       </div>
 
       <!-- Position Content Box -->
       <div id="position-container" class="position-box idle">
         <div class="pos-idle-msg">
-          <span class="idle-icon">📡</span>
+          <span class="idle-poodle-icon">🐩</span>
           <div>
-            <strong>Chưa có vị thế mở — Vốn của bạn đang an toàn 100%</strong>
-            <p>Hệ thống AI All-Market Scanner đang quét tự động toàn bộ 350+ đồng coin trên Binance thời gian thực. Khi phát hiện cơ hội đẹp nhất thị trường (Điểm tiềm năng &ge; 78/100), AI sẽ tự động kích hoạt lệnh tối ưu để kiếm lãi thụ động.</p>
+            <strong>Vốn của sếp đang an toàn tuyệt đối 100%</strong>
+            <p>Em Poodle đang quét liên tục 400+ coin trên Binance. Khi có coin đạt điểm tiềm năng &ge; 78/100, em sẽ tự động vào lệnh đẹp nhất và kéo Stop Loss hòa vốn bảo vệ sếp!</p>
           </div>
-        </div>
-        <div class="quick-order-btns">
-          <button class="btn btn-sm btn-long" id="btn-sample-long">▲ Lệnh Mẫu LONG (BTC)</button>
-          <button class="btn btn-sm btn-short" id="btn-sample-short">▼ Lệnh Mẫu SHORT (BTC)</button>
         </div>
       </div>
     </section>
 
-    <!-- AI ALL-MARKET RADAR (350+ COINS) -->
+    <!-- AI ALL-MARKET RADAR (400+ COINS) -->
     <section class="card radar-card">
       <div class="card-header">
         <div class="card-title">
           <span class="pulse-dot"></span>
-          <span>⚡ BẢNG RADAR QUÉT TOÀN BỘ THỊ TRƯỜNG BINANCE (350+ COINS ALL-MARKET SCANNER)</span>
+          <span>⚡ BẢNG RADAR TOP KÈO THƠM (POODLE ĐANG QUÉT 400+ COIN BINANCE 24/7)</span>
         </div>
-        <div class="radar-tag" id="radar-scan-status">AI đang quét toàn bộ 350+ coin Binance thời gian thực • Dò cơ hội số 1</div>
+        <div class="radar-tag" id="radar-scan-status">Poodle đang quét 400+ coin Binance thời gian thực • Top cơ hội điểm cao nhất</div>
       </div>
 
       <div class="table-container">
@@ -199,21 +225,20 @@
           <thead>
             <tr>
               <th>Coin</th>
-              <th>Giá Trực Tiếp (USDT)</th>
+              <th>Giá Hiện Tại (USDT)</th>
               <th>Biến Động 24h</th>
               <th>Cao / Thấp 24h</th>
               <th>Volume 24h</th>
               <th>RSI (14)</th>
               <th>Điểm Tiềm Năng AI</th>
-              <th>Mô Hình / Thiết Lập</th>
+              <th>Thiết Lập Kỹ Thuật</th>
               <th>Tín Hiệu AI</th>
-              <th style="text-align:center;">Vào Lệnh Riêng</th>
             </tr>
           </thead>
           <tbody id="radar-tbody">
             <tr>
-              <td colspan="10" style="text-align:center; padding:30px; color:var(--text-dim);">
-                Đang kết nối luồng giá thời gian thực từ Binance WebSocket...
+              <td colspan="9" style="text-align:center; padding:30px; color:var(--text-dim);">
+                🐩 Em Poodle đang kết nối luồng giá thời gian thực từ Binance WebSocket...
               </td>
             </tr>
           </tbody>
@@ -221,13 +246,13 @@
       </div>
     </section>
 
-    <!-- DUAL BOTTOM GRID: CLOSED TRADES & LIVE TELEMETRY -->
+    <!-- DUAL BOTTOM GRID: CLOSED TRADES & POODLE ACTIVITY -->
     <div class="bottom-dual-grid">
 
       <!-- CLOSED TRADES HISTORY -->
       <section class="card trades-history-card">
         <div class="card-header">
-          <div class="card-title">📋 LỊCH SỬ CHỐT LÃI THỤ ĐỘNG (GẦN NHẤT)</div>
+          <div class="card-title">📋 LỊCH SỬ CHỐT LÃI THỤ ĐỘNG CỦA POODLE</div>
           <span class="card-sub-info">Tự động chốt lời / bảo vệ hòa vốn</span>
         </div>
         <div class="table-container trades-scroll">
@@ -251,14 +276,14 @@
         </div>
       </section>
 
-      <!-- LIVE AI TELEMETRY STREAM -->
+      <!-- LIVE POODLE TELEMETRY STREAM -->
       <section class="card telemetry-card">
         <div class="card-header">
           <div class="card-title">
             <span class="terminal-dots">
               <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
             </span>
-            <span>NHẬT KÝ AI QUANT TELEMETRY 24/7</span>
+            <span>🐾 NHẬT KÝ HOẠT ĐỘNG POODLE 24/7</span>
           </div>
           <button id="btn-clear-logs" class="btn btn-xs btn-ghost">Xóa Log</button>
         </div>
@@ -266,8 +291,8 @@
           <!-- Logs injected by JS -->
           <div class="log-line info">
             <span class="log-time">[00:00:00]</span>
-            <span class="log-source">[QuantAI]</span>
-            <span class="log-msg">Khởi tạo động cơ Quantitative Trading kiếm tiền thụ động...</span>
+            <span class="log-source">[PoodleAI]</span>
+            <span class="log-msg">🐩 Em Poodle sẵn sàng canh tiền và săn kèo 400+ coin cho sếp 24/7...</span>
           </div>
         </div>
       </section>
@@ -281,7 +306,7 @@
     <div class="modal-backdrop"></div>
     <div class="modal-box">
       <div class="modal-header">
-        <h3>⚙️ CÀI ĐẶT MỤC TIÊU & BẢO MẬT CÁ NHÂN</h3>
+        <h3>⚙️ CÀI ĐẶT MỤC TIÊU & BẢO MẬT CỦA SẾP</h3>
         <button id="btn-close-settings" class="btn-close">&times;</button>
       </div>
       <div class="modal-body">
@@ -325,6 +350,9 @@
       </div>
     </div>
   </div>
+
+  <!-- Hidden toggle auto trading for JS compatibility -->
+  <input type="checkbox" id="toggle-auto-trading" checked style="display:none;">
 
   <!-- Scripts -->
   <script src="dashboard.js"></script>

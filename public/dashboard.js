@@ -526,28 +526,21 @@ function renderPosition() {
     positionContainer.className = 'position-box idle';
     positionContainer.innerHTML = `
       <div class="pos-idle-msg">
-        <span class="idle-icon">📡</span>
+        <span class="idle-poodle-icon">🐩</span>
         <div>
-          <strong>Chưa có vị thế mở — Vốn của bạn đang an toàn 100%</strong>
-          <p>Hệ thống AI Multi-Coin Radar đang quét liên tục 10 đồng coin hàng đầu Binance. AI có thể mở đồng thời tối đa <strong>3 vị thế đa coin</strong> (mỗi lệnh 18% vốn theo chuẩn Kelly Criterion) khi phát hiện điểm tiềm năng &ge; 78/100.</p>
+          <strong>Vốn của sếp đang an toàn tuyệt đối 100%</strong>
+          <p>Em Poodle đang quét liên tục 400+ coin trên Binance. AI chỉ tự động kích hoạt lệnh khi phát hiện cơ hội đẹp nhất thị trường (Điểm tiềm năng &ge; 78/100).</p>
         </div>
       </div>
-      <div class="quick-order-btns">
-        <button class="btn btn-sm btn-long" id="btn-sample-long">▲ Lệnh Mẫu LONG (BTC)</button>
-        <button class="btn btn-sm btn-short" id="btn-sample-short">▼ Lệnh Mẫu SHORT (BTC)</button>
-      </div>
     `;
-
-    const bLong = document.getElementById('btn-sample-long');
-    const bShort = document.getElementById('btn-sample-short');
-    if (bLong) bLong.onclick = () => triggerOrder('BTCUSDT', 'LONG');
-    if (bShort) bShort.onclick = () => triggerOrder('BTCUSDT', 'SHORT');
+    updatePoodleMood('hunting');
     return;
   }
 
   // Active Positions Open
-  posStatusBadge.textContent = `ĐANG GIỮ ${positions.length}/3 VỊ THẾ ĐA COIN`;
+  posStatusBadge.textContent = `POODLE ĐANG CẮN ${positions.length}/3 KÈO`;
   posStatusBadge.className = 'badge-status-safe';
+  updatePoodleMood('active', positions);
 
   positionContainer.className = 'position-box active-multi';
   positionContainer.innerHTML = `
@@ -702,12 +695,6 @@ function renderRadarTable() {
         </td>
         <td class="font-xs setup-text">${escapeHtml(coin.setupType || 'Rà soát tín hiệu...')}</td>
         <td>${signalBadge}</td>
-        <td style="text-align:center;">
-          <div class="table-actions">
-            <button class="btn btn-table btn-table-long" onclick="triggerOrder('${coin.symbol}', 'LONG')" title="Vào lệnh LONG cho ${coin.symbol}">▲ LONG</button>
-            <button class="btn btn-table btn-table-short" onclick="triggerOrder('${coin.symbol}', 'SHORT')" title="Vào lệnh SHORT cho ${coin.symbol}">▼ SHORT</button>
-          </div>
-        </td>
       </tr>
     `;
   }).join('');
@@ -957,10 +944,74 @@ btnClearLogs.onclick = async () => {
 };
 
 // Initial bootstrap
+// --- POODLE MASCOT MOOD & SPEECH SYSTEM ---
+function updatePoodleMood(type, positions = []) {
+  const poodleSpeech = document.getElementById('poodle-speech');
+  const poodleMoodBadge = document.getElementById('poodle-mood-badge');
+  const heroWinrate = document.getElementById('hero-winrate');
+  const heroCoinsCount = document.getElementById('hero-coins-count');
+
+  if (state.trading && state.trading.stats && heroWinrate) {
+    const wr = state.trading.stats.winRate;
+    heroWinrate.textContent = `${wr > 0 ? wr : 100}%`;
+  }
+  if (state.totalCoinsScanned && heroCoinsCount) {
+    heroCoinsCount.textContent = state.totalCoinsScanned;
+  }
+
+  if (!poodleSpeech || !poodleMoodBadge) return;
+
+  if (type === 'active' && positions.length > 0) {
+    poodleMoodBadge.textContent = `🐩 ĐANG CẮN ${positions.length} KÈO THƠM`;
+    poodleMoodBadge.className = 'mood-badge mood-active';
+
+    const symbols = positions.map(p => {
+      const pnl = p.unrealizedPnlPercent || 0;
+      const sign = pnl >= 0 ? '+' : '';
+      return `${p.symbol} (${sign}${pnl}%)`;
+    }).join(', ');
+
+    const anyLocked = positions.some(p => p.isProfitLocked || p.isBreakevenProtected);
+    if (anyLocked) {
+      poodleSpeech.innerHTML = `"Gâu gâu! Em Poodle đã <strong>khóa hòa vốn & bảo vệ lãi</strong> ở kèo [${symbols}]. Tiền trong ví chỉ có tăng, không thể lỗ!"`;
+    } else {
+      poodleSpeech.innerHTML = `"Gâu! Em Poodle đang cắn chặt các kèo [<strong>${symbols}</strong>]. Em đang bám sát từng giây để kéo Stop Loss và chốt lãi cho sếp!"`;
+    }
+  } else {
+    poodleMoodBadge.textContent = `🐾 ĐANG LÙNG SỤC 400+ COIN`;
+    poodleMoodBadge.className = 'mood-badge mood-hunting';
+    const total = state.totalCoinsScanned || 407;
+    poodleSpeech.innerHTML = `"Gâu gâu! Em Poodle đang lùng sục toàn bộ <strong>${total}+ coin</strong> trên Binance. Khi có kèo ngon nhất thị trường (Điểm ≥ 78), em sẽ tự động ngoạm ngay cho sếp!"`;
+  }
+}
+
+function setupPoodleInteractions() {
+  const poodleTouch = document.getElementById('poodle-avatar-touch');
+  const poodleSpeech = document.getElementById('poodle-speech');
+  if (!poodleTouch || !poodleSpeech) return;
+
+  const poodleQuotes = [
+    '"Gâu gâu! Em Poodle đang canh tiền cho sếp 24/7, vốn an toàn 100%!"',
+    '"Em Poodle chỉ cắn những kèo siêu thơm có điểm ≥ 78 thôi nha sếp!"',
+    '"Khi lãi đạt +1%, em tự động dời Stop Loss về hòa vốn để sếp không bao giờ lỗ!"',
+    '"Thị trường đang chạy, sếp cứ thảnh thơi đi chơi, mọi việc cứ để em lo!"',
+    '"Gâu gâu! Lãi kép đang nhảy từng giây, em yêu sếp nhất trên đời! 🐾"'
+  ];
+
+  let quoteIdx = 0;
+  poodleTouch.onclick = () => {
+    quoteIdx = (quoteIdx + 1) % poodleQuotes.length;
+    poodleSpeech.innerHTML = poodleQuotes[quoteIdx];
+    poodleTouch.classList.add('poodle-bounce');
+    setTimeout(() => poodleTouch.classList.remove('poodle-bounce'), 600);
+  };
+}
+
 setupPinKeypad();
 setupCapitalButtons();
 setupLeverageButtons();
 setupSettingsModal();
+setupPoodleInteractions();
 
 // If we already have a saved token, verify it silently
 if (authToken) {
