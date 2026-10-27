@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VibeQuant AI // Private Passive Crypto Income Terminal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <!-- Ambient background glow -->
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-2"></div>
+
+  <!-- Top Main Header Navigation -->
+  <header class="header">
+    <div class="header-left">
+      <div class="brand-badge">
+        <span class="pulse-dot"></span>
+        <span class="brand-title">💎 VIBE-QUANT AI // PRIVATE PASSIVE TERMINAL</span>
+      </div>
+      <div class="mode-badge" id="quant-mode-badge">👑 DÀNH RIÊNG CHO CHỦ NHÂN</div>
+    </div>
+
+    <!-- Private Mobile Web Link Pill -->
+    <div class="header-center">
+      <div class="public-url-pill">
+        <span class="globe-icon">🔐</span>
+        <span class="pill-label">TRUY CẬP TỪ ĐIỆN THOẠI:</span>
+        <a id="public-web-link" href="#" target="_blank" class="public-link mono">Đang kết nối Cloudflare...</a>
+        <button id="btn-copy-public-url" class="btn-copy-icon" title="Sao chép link riêng">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <div class="auto-switch-wrap">
+        <span class="ctrl-label">AI TỰ ĐỘNG KIẾM TIỀN:</span>
+        <label class="switch">
+          <input type="checkbox" id="toggle-auto-trading" checked>
+          <span class="slider round"></span>
+        </label>
+      </div>
+      <button id="btn-open-settings" class="btn btn-sm btn-outline" title="Cài đặt mục tiêu thụ động">
+        ⚙️ Cài Đặt Mục Tiêu
+      </button>
+      <div class="system-stat">
+        <span class="label">BINANCE FEED:</span>
+        <span id="ws-badge" class="badge-online">10 COINS LIVE</span>
+      </div>
+      <div class="system-stat">
+        <span class="label">UPTIME:</span>
+        <span id="stat-uptime" class="value mono">00:00:00</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Financial Performance Strip (4 Key Cards) -->
+  <section class="performance-strip">
+    <!-- Card 1: Trading Capital -->
+    <div class="perf-card">
+      <div class="p-top">
+        <span class="p-title">VỐN GIAO DỊCH RIÊNG</span>
+        <div class="capital-selector">
+          <button class="btn-cap active" data-vnd="500000" id="btn-cap-500k">500k</button>
+          <button class="btn-cap" data-vnd="1000000" id="btn-cap-1000k">1Tr</button>
+          <button class="btn-cap" data-vnd="2000000" id="btn-cap-2000k">2Tr</button>
+          <button class="btn-cap" data-vnd="5000000" id="btn-cap-5000k">5Tr</button>
+        </div>
+      </div>
+      <div id="trade-balance-vnd" class="p-main-val mono">500.000 đ</div>
+      <div id="trade-balance-usd" class="p-sub-val mono">≈ $19.68 USD</div>
+    </div>
+
+    <!-- Card 2: Realized Passive Profit -->
+    <div class="perf-card">
+      <div class="p-top">
+        <span class="p-title">LỢI NHUẬN THỤ ĐỘNG RÒNG (NET PROFIT)</span>
+        <span class="badge-mini">ĐÃ CHỐT</span>
+      </div>
+      <div id="trade-pnl-usd" class="p-main-val mono highlight-green">+$0.00</div>
+      <div id="trade-pnl-vnd" class="p-sub-val mono">≈ 0 đ (Tự động cộng dồn lãi kép)</div>
+    </div>
+
+    <!-- Card 3: Passive Income Goal Progress -->
+    <div class="perf-card">
+      <div class="p-top">
+        <span class="p-title">MỤC TIÊU THU NHẬP HÔM NAY</span>
+        <span id="goal-target-label" class="badge-mini">$10.00 (~254k đ)</span>
+      </div>
+      <div class="goal-progress-wrap">
+        <div class="goal-progress-bar">
+          <div id="goal-progress-fill" class="goal-progress-fill" style="width: 0%;"></div>
+        </div>
+        <div class="goal-progress-meta mono">
+          <span id="goal-progress-pct">0% Đạt</span>
+          <span id="goal-progress-rem">Còn thiếu $10.00</span>
+        </div>
+      </div>
+      <div id="trade-counts" class="p-sub-val mono">0 Thắng / 0 Thua (Tỷ lệ thắng: 0%)</div>
+    </div>
+
+    <!-- Card 4: Risk Shield & Leverage -->
+    <div class="perf-card risk-card">
+      <div class="p-top">
+        <span class="p-title">KHIÊN BẢO VỆ VỐN (RISK GUARD)</span>
+        <div class="leverage-selector">
+          <button class="btn-lev" data-lev="1" id="btn-lev-1">x1</button>
+          <button class="btn-lev" data-lev="2" id="btn-lev-2">x2</button>
+          <button class="btn-lev active" data-lev="3" id="btn-lev-3">x3</button>
+          <button class="btn-lev" data-lev="5" id="btn-lev-5">x5</button>
+        </div>
+      </div>
+      <div class="risk-summary mono">
+        <span class="text-accent" id="lev-display">Đòn bẩy x3</span> &bull; 
+        <span class="highlight-red">SL -1.2%</span> &bull; 
+        <span class="highlight-green">TP +2.2%</span>
+      </div>
+      <div class="p-sub-val">🛡️ Trailing Breakeven: Tự dời SL về hòa vốn khi lãi &ge; +1%</div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTAINER -->
+  <main class="terminal-main">
+
+    <!-- ACTIVE POSITION HERO MONITOR -->
+    <section class="card position-hero-card">
+      <div class="card-header">
+        <div class="card-title">
+          <span class="pulse-dot-cyan"></span>
+          <span>TRẠNG THÁI VỊ THẾ HIỆN TẠI (REAL-TIME POSITION MONITOR)</span>
+        </div>
+        <div id="pos-status-badge" class="badge-status-idle">CHƯA MỞ LỆNH</div>
+      </div>
+
+      <!-- Position Content Box -->
+      <div id="position-container" class="position-box idle">
+        <div class="pos-idle-msg">
+          <span class="idle-icon">📡</span>
+          <div>
+            <strong>Chưa có vị thế mở — Vốn của bạn đang an toàn 100%</strong>
+            <p>Hệ thống AI Multi-Coin Radar đang quét liên tục 10 đồng coin hàng đầu Binance. Khi phát hiện coin có điểm tiềm năng &ge; 78/100, AI sẽ tự động kích hoạt lệnh để kiếm lãi thụ động.</p>
+          </div>
+        </div>
+        <div class="quick-order-btns">
+          <button class="btn btn-sm btn-long" id="btn-sample-long">▲ Lệnh Mẫu LONG (BTC)</button>
+          <button class="btn btn-sm btn-short" id="btn-sample-short">▼ Lệnh Mẫu SHORT (BTC)</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI MULTI-COIN MARKET RADAR (10 TOP COINS) -->
+    <section class="card radar-card">
+      <div class="card-header">
+        <div class="card-title">
+          <span class="pulse-dot"></span>
+          <span>⚡ BẢNG RADAR THỊ TRƯỜNG 10 COIN HÀNG ĐẦU (AI MULTI-ASSET SCANNER)</span>
+        </div>
+        <div class="radar-tag" id="radar-scan-status">AI đang giám sát trực tiếp 10 đồng coin từ Binance 24/7</div>
+      </div>
+
+      <div class="table-container">
+        <table class="market-radar-table">
+          <thead>
+            <tr>
+              <th>Coin</th>
+              <th>Giá Trực Tiếp (USDT)</th>
+              <th>Biến Động 24h</th>
+              <th>Cao / Thấp 24h</th>
+              <th>Volume 24h</th>
+              <th>RSI (14)</th>
+              <th>Điểm Tiềm Năng AI</th>
+              <th>Mô Hình / Thiết Lập</th>
+              <th>Tín Hiệu AI</th>
+              <th style="text-align:center;">Vào Lệnh Riêng</th>
+            </tr>
+          </thead>
+          <tbody id="radar-tbody">
+            <tr>
+              <td colspan="10" style="text-align:center; padding:30px; color:var(--text-dim);">
+                Đang kết nối luồng giá thời gian thực từ Binance WebSocket...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- DUAL BOTTOM GRID: CLOSED TRADES & LIVE TELEMETRY -->
+    <div class="bottom-dual-grid">
+
+      <!-- CLOSED TRADES HISTORY -->
+      <section class="card trades-history-card">
+        <div class="card-header">
+          <div class="card-title">📋 LỊCH SỬ CHỐT LÃI THỤ ĐỘNG (GẦN NHẤT)</div>
+          <span class="card-sub-info">Tự động chốt lời / bảo vệ hòa vốn</span>
+        </div>
+        <div class="table-container trades-scroll">
+          <table class="trades-table">
+            <thead>
+              <tr>
+                <th>Lệnh</th>
+                <th>Coin</th>
+                <th>Giá Vào</th>
+                <th>Giá Đóng</th>
+                <th>Ký Quỹ</th>
+                <th>Lãi Thụ Động ($ / %)</th>
+                <th>Lý Do Đóng</th>
+                <th>Thời Gian</th>
+              </tr>
+            </thead>
+            <tbody id="trades-tbody">
+              <tr><td colspan="8" style="text-align:center; color:var(--text-dim); padding:20px;">Chưa có lệnh nào được đóng. Lãi thụ động sẽ hiển thị tại đây khi chốt.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- LIVE AI TELEMETRY STREAM -->
+      <section class="card telemetry-card">
+        <div class="card-header">
+          <div class="card-title">
+            <span class="terminal-dots">
+              <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+            </span>
+            <span>NHẬT KÝ AI QUANT TELEMETRY 24/7</span>
+          </div>
+          <button id="btn-clear-logs" class="btn btn-xs btn-ghost">Xóa Log</button>
+        </div>
+        <div class="terminal-body" id="terminal-logs">
+          <!-- Logs injected by JS -->
+          <div class="log-line info">
+            <span class="log-time">[00:00:00]</span>
+            <span class="log-source">[QuantAI]</span>
+            <span class="log-msg">Khởi tạo động cơ Quantitative Trading kiếm tiền thụ động...</span>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- Modal Cài Đặt Mục Tiêu Cá Nhân -->
+  <div id="modal-settings" class="modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>⚙️ CÀI ĐẶT MỤC TIÊU KIẾM TIỀN THỤ ĐỘNG CÁ NHÂN</h3>
+        <button id="btn-close-settings" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Mục tiêu lãi thụ động mỗi ngày ($ USD):</label>
+          <input type="number" id="input-daily-target" class="form-input" min="1" max="1000" step="1" value="10">
+          <small class="text-dim">Ví dụ: $10/ngày tương đương ~254.000 VNĐ / ngày thụ động (~7.6 triệu/tháng).</small>
+        </div>
+        <div class="form-group">
+          <label>Mục tiêu lãi thụ động mỗi tháng ($ USD):</label>
+          <input type="number" id="input-monthly-target" class="form-input" min="10" max="50000" step="10" value="300">
+          <small class="text-dim">Mục tiêu tổng kết tháng để tự động tích luỹ dòng tiền tự do.</small>
+        </div>
+        <div class="form-group">
+          <label>Chiến lược phân bổ rủi ro:</label>
+          <select id="select-risk-profile" class="form-input">
+            <option value="safe">An Toàn Tuyệt Đối (Đòn bẩy x1, Ưu tiên bảo toàn vốn)</option>
+            <option value="balanced" selected>Cân Bằng Tiêu Chuẩn (Đòn bẩy x3, Khuyên dùng)</option>
+            <option value="aggressive">Tăng Trưởng Nhanh (Đòn bẩy x5, Tận dụng biến động)</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-cancel-settings" class="btn btn-ghost">Hủy</button>
+        <button id="btn-save-settings" class="btn btn-primary">Lưu Cấu Hình</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="dashboard.js"></script>
+</body>
+</html>

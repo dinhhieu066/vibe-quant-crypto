@@ -1,0 +1,98 @@
+{
+  "owner": "Personal Terminal (Private)",
+  "publicUrl": "https://prescribed-processor-declined-instructors.trycloudflare.com",
+  "config": {
+    "exchangeRate": 25400,
+    "dailyTargetUSD": 10,
+    "monthlyTargetUSD": 300,
+    "autoCompound": true,
+    "riskProfile": "balanced"
+  },
+  "trading": {
+    "initialCapitalVND": 500000,
+    "initialCapitalUSD": 19.68,
+    "balanceVND": 500000,
+    "balanceUSD": 19.68,
+    "realizedPnlUSD": 0,
+    "realizedPnlVND": 0,
+    "todayPnlUSD": 0,
+    "todayPnlVND": 0,
+    "leverage": 3,
+    "mode": "paper",
+    "symbol": "BTCUSDT",
+    "activePosition": {
+      "id": "POS-9243",
+      "symbol": "BTCUSDT",
+      "name": "Bitcoin",
+      "icon": "₿",
+      "side": "SHORT",
+      "entryPrice": 80624.54,
+      "currentPrice": 80578.94,
+      "marginUSD": 4.92,
+      "sizeUSD": 14.76,
+      "leverage": 3,
+      "stopLoss": 81592.03,
+      "takeProfit": 78850.8,
+      "unrealizedPnlUSD": 0.008,
+      "unrealizedPnlPercent": 0.16,
+      "isBreakevenProtected": false,
+      "reason": "AI Radar: Điểm tiềm năng 95/100 [🔻 Siêu Quá Mua (Overbought Pullback)]",
+      "openTime": "2026-10-27T16:20:59.243Z"
+    },
+    "tradesHistory": [],
+    "stats": {
+      "totalTrades": 0,
+      "wins": 0,
+      "losses": 0,
+      "winRate": 0,
+      "profitFactor": 0,
+      "bestTradeUSD": 0,
+      "worstTradeUSD": 0
+    }
+  },
+  "dailyPnlRecords": [],
+  "logs": [
+    {
+      "timestamp": "2026-10-27T16:20:59.328Z",
+      "level": "INFO",
+      "source": "QuantAI",
+      "message": "⚡ [TỰ ĐỘNG LÊN LỆNH SHORT] ₿ BTCUSDT @ $80,624.54. Đòn bẩy x3, Ký quỹ $4.92 (Size $14.76). SL: $81592.03, TP: $78850.8 (AI Radar: Điểm tiềm năng 95/100 [🔻 Siêu Quá Mua (Overbought Pullback)])"
+    },
+    {
+      "timestamp": "2026-10-27T16:20:51.235Z",
+      "level": "INFO",
+      "source": "QuantRadar",
+      "message": "[Multi-Radar Scan] Đã quét 10 coin: Điểm tiềm năng cao nhất thuộc về BTCUSDT (Score: 50/100, RSI: 51, Setup: Đang theo dõi biến động...)."
+    },
+    {
+      "timestamp": "2026-10-27T16:20:46.853Z",
+      "level": "SUCCESS",
+      "source": "Tunnel",
+      "message": "Cổng truy cập riêng đã online tại: https://prescribed-processor-declined-instructors.trycloudflare.com"
+    },
+    {
+      "timestamp": "2026-10-27T16:20:43.538Z",
+      "level": "SUCCESS",
+      "source": "QuantEngine",
+      "message": "Kết nối thành công luồng WebSocket 10 Coin trực tiếp từ Binance."
+    },
+    {
+      "timestamp": "2026-10-27T16:20:43.213Z",
+      "level": "SUCCESS",
+      "source": "QuantRadar",
+      "message": "Đã nạp dữ liệu 10 đồng coin top Binance (BTC, ETH, SOL, BNB, DOGE, XRP, SUI, LINK, NEAR, AVAX)."
+    },
+    {
+      "timestamp": "2026-10-27T16:20:42.928Z",
+      "level": "INFO",
+      "source": "Tunnel",
+      "message": "Đang thiết lập cổng bảo mật Cloudflare Tunnel truy cập riêng từ điện thoại..."
+    },
+    {
+      "timestamp": "2026-10-27T16:17:10.259Z",
+      "level": "INFO",
+      "source": "System",
+      "message": "Private Autonomous Crypto Terminal khởi tạo thành công. Chế độ kiếm tiền thụ động 24/7 kích hoạt."
+    }
+  ]
+}
