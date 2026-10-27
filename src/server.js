@@ -327,11 +327,35 @@ function startCloudflareTunnel(port) {
     });
 
     tunnelProcess.on('exit', code => {
-      console.warn('[Tunnel] Process exited with code', code);
+      console.warn('[Tunnel] Cổng Cloudflare ngắt (code', code, '). Đang tự động kết nối lại sau 5s để duy trì 24/7...');
+      setTimeout(() => startCloudflareTunnel(port), 5000);
     });
   } catch (err) {
     console.error('[Tunnel Launch Failed]', err.message);
+    setTimeout(() => startCloudflareTunnel(port), 10000);
   }
+}
+
+// --- 24/7 CLOUD KEEP-ALIVE SYSTEM (PREVENTS SLEEP ON CLOUD HOSTS) ---
+function startKeepAlive(port) {
+  const INTERVAL_MS = 8 * 60 * 1000; // 8 minutes
+  setInterval(async () => {
+    try {
+      // 1. Self-ping local server
+      await fetch(`http://127.0.0.1:${port}/api/trading/status`).catch(() => {});
+
+      // 2. Self-ping public tunnel URL to keep it hot
+      const publicUrl = db.getPublicUrl();
+      if (publicUrl && publicUrl.startsWith('http')) {
+        await fetch(`${publicUrl}/api/trading/status`).catch(() => {});
+      }
+
+      // 3. Self-ping Render URL if deployed
+      if (process.env.RENDER_EXTERNAL_URL) {
+        await fetch(`${process.env.RENDER_EXTERNAL_URL}/api/trading/status`).catch(() => {});
+      }
+    } catch {}
+  }, INTERVAL_MS);
 }
 
 // Start server
@@ -341,8 +365,10 @@ server.listen(PORT, '0.0.0.0', () => {
   console.log(`🐩 POODLE QUANT // PERSONAL AUTONOMOUS CRYPTO TERMINAL`);
   console.log(`👑 Private Dashboard: http://localhost:${PORT}`);
   console.log(`🛡️ Multi-Layer Security Shield: ACTIVE (PIN Protected)`);
+  console.log(`⚡ 24/7 Resilience Watchdog & Keep-Alive: ENABLED`);
   console.log(`====================================================`);
   
   quantEngine.start();
   startCloudflareTunnel(PORT);
+  startKeepAlive(PORT);
 });

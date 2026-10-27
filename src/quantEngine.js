@@ -92,21 +92,33 @@ class QuantEngine {
     this.maxConcurrentPositions = 3; // Tối đa 3 lệnh đồng thời
     this.positionMarginRatio = 0.18; // Mỗi lệnh phân bổ tối đa 18% vốn (Fractional Kelly)
     this.maxPortfolioMargin = 0.54;  // Tổng ký quỹ tối đa 54%, giữ an toàn 46% tiền mặt
+    this.lastMessageTime = Date.now();
+    this.watchdogInterval = null;
   }
 
   async start() {
-    console.log('[QuantEngine] Khởi động động cơ All-Market Radar quét toàn bộ coin Binance...');
+    console.log('[QuantEngine] Khởi động động cơ All-Market Radar quét toàn bộ coin Binance 24/7...');
     await this.preloadInitialData();
     this.connectAllMarketStream();
 
-    // Autonomous Radar Scan every 4 seconds across ALL 350+ coins
+    // Autonomous Radar Scan every 4 seconds across ALL 400+ coins
     this.scanInterval = setInterval(() => this.autonomousRadarScan(), 4000);
 
     // Periodic 60s REST re-sync to guarantee complete market coverage
     this.restSyncInterval = setInterval(() => this.preloadInitialData(), 60000);
+
+    // 24/7 Watchdog: Auto-detects silent socket drops and recovers instantly
+    this.watchdogInterval = setInterval(() => {
+      const silenceSec = (Date.now() - this.lastMessageTime) / 1000;
+      if (silenceSec > 25) {
+        console.warn(`[QuantEngine 24/7 Watchdog] Không nhận dữ liệu trong ${silenceSec.toFixed(0)}s. Tự động phục hồi kết nối...`);
+        db.addLog('WARN', 'Watchdog', `Tự động tái lập kết nối luồng Binance sau ${silenceSec.toFixed(0)}s để đảm bảo hoạt động 24/7.`);
+        this.connectAllMarketStream();
+      }
+    }, 12000);
   }
 
-  // Preload ALL active liquid USDT tickers from Binance REST API (~350+ coins)
+  // Preload ALL active liquid USDT tickers from Binance REST API (~400+ coins)
   async preloadInitialData() {
     try {
       const res = await fetch('https://api.binance.com/api/v3/ticker/24hr');
@@ -183,19 +195,25 @@ class QuantEngine {
   // Connect to Binance All-Market MiniTicker Array WebSocket stream
   connectAllMarketStream() {
     if (this.ws) {
-      try { this.ws.terminate(); } catch {}
+      try {
+        this.ws.removeAllListeners();
+        this.ws.terminate();
+      } catch {}
     }
 
     const url = 'wss://stream.binance.com:9443/ws/!miniTicker@arr';
     console.log('[QuantEngine] Đang kết nối All-Market WebSocket:', url);
     this.ws = new WebSocket(url);
+    this.lastMessageTime = Date.now();
 
     this.ws.on('open', () => {
       console.log('[QuantEngine] ✅ Đã kết nối luồng Binance All-Market MiniTicker!');
+      this.lastMessageTime = Date.now();
       db.addLog('SUCCESS', 'QuantEngine', 'Đã kết nối luồng dữ liệu toàn bộ thị trường Binance thời gian thực.');
     });
 
     this.ws.on('message', raw => {
+      this.lastMessageTime = Date.now();
       try {
         const arr = JSON.parse(raw);
         if (Array.isArray(arr)) {

@@ -114,6 +114,18 @@
   "dailyPnlRecords": [],
   "logs": [
     {
+      "timestamp": "2026-10-27T18:11:36.576Z",
+      "level": "SUCCESS",
+      "source": "PoodleRadar",
+      "message": "🐩 Radar Poodle: Đang quét 410 đồng coin Binance 24/7 tìm kèo thơm cho sếp."
+    },
+    {
+      "timestamp": "2026-10-27T18:09:36.412Z",
+      "level": "SUCCESS",
+      "source": "PoodleRadar",
+      "message": "🐩 Radar Poodle: Đang quét 410 đồng coin Binance 24/7 tìm kèo thơm cho sếp."
+    },
+    {
       "timestamp": "2026-10-27T18:08:36.544Z",
       "level": "SUCCESS",
       "source": "PoodleRadar",
