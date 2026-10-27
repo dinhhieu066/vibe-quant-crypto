@@ -36,9 +36,11 @@ const defaultData = {
     todayPnlUSD: 0,
     todayPnlVND: 0,
     leverage: 3,
+    maxConcurrentPositions: 3,
     mode: 'paper', // 'paper' (an toàn 100% kiểm chứng thuật toán) hoặc 'live'
     symbol: 'BTCUSDT',
     activePosition: null,
+    activePositions: [],
     tradesHistory: [],
     stats: {
       totalTrades: 0,
@@ -188,6 +190,10 @@ class DB {
     const data = this.load();
     if (!data.trading) {
       data.trading = defaultData.trading;
+      this.save(data);
+    }
+    if (!Array.isArray(data.trading.activePositions)) {
+      data.trading.activePositions = data.trading.activePosition ? [data.trading.activePosition] : [];
       this.save(data);
     }
     return data.trading;

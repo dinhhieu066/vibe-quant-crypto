@@ -502,13 +502,15 @@ function renderLeverage() {
   }
 }
 
-// Render Position Monitor Card
+// Render Position Monitor Card (Supports Single or Multi-Position Portfolio)
 function renderPosition() {
   const t = state.trading || {};
-  const pos = t.activePosition;
+  const positions = Array.isArray(t.activePositions) && t.activePositions.length > 0
+    ? t.activePositions
+    : (t.activePosition ? [t.activePosition] : []);
 
-  if (!pos) {
-    posStatusBadge.textContent = 'CHƯA MỞ LỆNH';
+  if (positions.length === 0) {
+    posStatusBadge.textContent = 'CHƯA MỞ LỆNH (0/3)';
     posStatusBadge.className = 'badge-status-idle';
     positionContainer.className = 'position-box idle';
     positionContainer.innerHTML = `
@@ -516,7 +518,7 @@ function renderPosition() {
         <span class="idle-icon">📡</span>
         <div>
           <strong>Chưa có vị thế mở — Vốn của bạn đang an toàn 100%</strong>
-          <p>Hệ thống AI Multi-Coin Radar đang quét liên tục 10 đồng coin hàng đầu Binance. Khi phát hiện coin có điểm tiềm năng &ge; 78/100, AI sẽ tự động kích hoạt lệnh để kiếm lãi thụ động.</p>
+          <p>Hệ thống AI Multi-Coin Radar đang quét liên tục 10 đồng coin hàng đầu Binance. AI có thể mở đồng thời tối đa <strong>3 vị thế đa coin</strong> (mỗi lệnh 18% vốn theo chuẩn Kelly Criterion) khi phát hiện điểm tiềm năng &ge; 78/100.</p>
         </div>
       </div>
       <div class="quick-order-btns">
@@ -532,75 +534,103 @@ function renderPosition() {
     return;
   }
 
-  // Active Position Open
-  const isLong = pos.side === 'LONG';
-  posStatusBadge.textContent = `ĐANG MỞ ${pos.side} [${pos.symbol}]`;
-  posStatusBadge.className = isLong ? 'badge-status-safe' : 'badge-status-danger';
+  // Active Positions Open
+  posStatusBadge.textContent = `ĐANG GIỮ ${positions.length}/3 VỊ THẾ ĐA COIN`;
+  posStatusBadge.className = 'badge-status-safe';
 
-  const isProfit = (pos.unrealizedPnlUSD || 0) >= 0;
-  const pnlClass = isProfit ? 'highlight-green' : 'highlight-red';
-  const pnlSign = isProfit ? '+' : '';
-  const pnlVND = Math.round((pos.unrealizedPnlUSD || 0) * (state.config.exchangeRate || 25400));
-
-  positionContainer.className = 'position-box active';
+  positionContainer.className = 'position-box active-multi';
   positionContainer.innerHTML = `
-    <div class="pos-active-grid">
-      <div class="pos-col-main">
-        <div class="pos-asset-header">
-          <span class="pos-coin-icon">${pos.icon || '🪙'}</span>
-          <div>
-            <div class="pos-coin-name">${escapeHtml(pos.name || pos.symbol)} <span class="mono">${pos.symbol}</span></div>
-            <div class="pos-side-pill ${isLong ? 'long' : 'short'}">${pos.side} &bull; Đòn bẩy x${pos.leverage}</div>
+    <div class="multi-pos-header">
+      <span class="multi-pos-title">DANH MỤC CÁC VỊ THẾ ĐANG MỞ (${positions.length}/3)</span>
+      <button id="btn-panic-close-all" class="btn btn-xs btn-panic">🚨 ĐÓNG TOÀN BỘ VỊ THẾ (PANIC CLOSE)</button>
+    </div>
+    <div class="multi-pos-grid">
+      ${positions.map(pos => {
+        const isLong = pos.side === 'LONG';
+        const isProfit = (pos.unrealizedPnlUSD || 0) >= 0;
+        const pnlClass = isProfit ? 'highlight-green' : 'highlight-red';
+        const pnlSign = isProfit ? '+' : '';
+        const pnlVND = Math.round((pos.unrealizedPnlUSD || 0) * (state.config.exchangeRate || 25400));
+        
+        let protectionTag = '<span class="status-chip chip-watch">⏳ Trailing SL</span>';
+        if (pos.isProfitLocked) protectionTag = '<span class="status-chip chip-locked">🔒 ĐÃ KHÓA LÃI (+1.0%)</span>';
+        else if (pos.isBreakevenProtected) protectionTag = '<span class="status-chip chip-safe">🛡️ ĐÃ BẢO VỆ HÒA VỐN</span>';
+
+        return `
+          <div class="pos-item-card">
+            <div class="pos-item-top">
+              <div class="pos-item-coin">
+                <span class="pos-coin-icon">${pos.icon || '🪙'}</span>
+                <div>
+                  <div class="pos-coin-name">${escapeHtml(pos.name || pos.symbol)} <span class="mono">${pos.symbol}</span></div>
+                  <div class="pos-side-pill ${isLong ? 'long' : 'short'}">${pos.side} &bull; x${pos.leverage}</div>
+                </div>
+              </div>
+              <div class="pos-item-action">
+                <button class="btn btn-xs btn-danger" onclick="closeSinglePosition('${pos.id}')">Đóng Lệnh</button>
+              </div>
+            </div>
+
+            <div class="pos-reason-box" style="margin: 8px 0;">
+              <span class="reason-label">CHIẾN LƯỢC:</span>
+              <span class="reason-text">${escapeHtml(pos.reason || 'AI Quantitative Setup')}</span>
+            </div>
+
+            <div class="pos-item-prices">
+              <div class="price-row">
+                <span class="p-lbl">Giá vào:</span>
+                <span class="p-val mono">${formatPrice(pos.entryPrice)}</span>
+              </div>
+              <div class="price-row">
+                <span class="p-lbl">Giá hiện tại:</span>
+                <span class="p-val mono highlight-cyan">${formatPrice(pos.currentPrice || pos.entryPrice)}</span>
+              </div>
+              <div class="price-row">
+                <span class="p-lbl">Cắt lỗ (SL):</span>
+                <span class="p-val mono highlight-red">${formatPrice(pos.stopLoss)}</span>
+              </div>
+              <div class="price-row">
+                <span class="p-lbl">Chốt lời (TP):</span>
+                <span class="p-val mono highlight-green">${formatPrice(pos.takeProfit)}</span>
+              </div>
+            </div>
+
+            <div class="pos-item-bottom">
+              <div>
+                <div class="pnl-amount mono ${pnlClass}">
+                  ${pnlSign}$${(pos.unrealizedPnlUSD || 0).toFixed(2)} (${pnlSign}${(pos.unrealizedPnlPercent || 0).toFixed(2)}%)
+                </div>
+                <div class="pnl-sub mono ${pnlClass}">≈ ${pnlSign}${pnlVND.toLocaleString('vi-VN')} đ (Ký quỹ $${pos.marginUSD})</div>
+              </div>
+              <div class="pos-item-chip">
+                ${protectionTag}
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="pos-reason-box">
-          <span class="reason-label">LÝ DO VÀO LỆNH:</span>
-          <span class="reason-text">${escapeHtml(pos.reason || 'AI Autonomous Entry')}</span>
-        </div>
-      </div>
-
-      <div class="pos-col-prices">
-        <div class="price-row">
-          <span class="p-lbl">Giá vào lệnh:</span>
-          <span class="p-val mono">${formatPrice(pos.entryPrice)}</span>
-        </div>
-        <div class="price-row">
-          <span class="p-lbl">Giá hiện tại:</span>
-          <span class="p-val mono highlight-cyan">${formatPrice(pos.currentPrice || pos.entryPrice)}</span>
-        </div>
-        <div class="price-row">
-          <span class="p-lbl">Cắt lỗ (SL):</span>
-          <span class="p-val mono highlight-red">${formatPrice(pos.stopLoss)}</span>
-        </div>
-        <div class="price-row">
-          <span class="p-lbl">Chốt lời (TP):</span>
-          <span class="p-val mono highlight-green">${formatPrice(pos.takeProfit)}</span>
-        </div>
-      </div>
-
-      <div class="pos-col-pnl">
-        <div class="pnl-title">LÃI / LỖ TẠM TÍNH (PNL)</div>
-        <div class="pnl-amount mono ${pnlClass}">
-          ${pnlSign}$${(pos.unrealizedPnlUSD || 0).toFixed(2)}
-        </div>
-        <div class="pnl-sub mono ${pnlClass}">
-          ${pnlSign}${(pos.unrealizedPnlPercent || 0).toFixed(2)}% (≈ ${pnlSign}${pnlVND.toLocaleString('vi-VN')} đ)
-        </div>
-        <div class="breakeven-status">
-          ${pos.isBreakevenProtected ? '🛡️ [ĐÃ BẢO VỆ HÒA VỐN]' : '⏳ Đang theo dõi trailing SL'}
-        </div>
-      </div>
-
-      <div class="pos-col-actions">
-        <button id="btn-panic-close" class="btn btn-panic">
-          🚨 ĐÓNG KHẨN CẤP (PANIC CLOSE)
-        </button>
-      </div>
+        `;
+      }).join('')}
     </div>
   `;
 
-  const btnPanic = document.getElementById('btn-panic-close');
-  if (btnPanic) btnPanic.onclick = panicClose;
+  const btnPanicAll = document.getElementById('btn-panic-close-all');
+  if (btnPanicAll) btnPanicAll.onclick = () => panicClose();
+}
+
+async function closeSinglePosition(id) {
+  if (!confirm('Bạn có chắc muốn đóng vị thế này ngay lập tức?')) return;
+  try {
+    const res = await authFetch('/api/trading/close', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, reason: 'MANUAL_CLOSE' })
+    });
+    const result = await res.json();
+    if (!result.success) {
+      alert(result.error || 'Lỗi đóng vị thế.');
+    }
+  } catch (err) {
+    alert('Lỗi: ' + err.message);
+  }
 }
 
 // Render 10 Coins Multi-Asset Market Radar

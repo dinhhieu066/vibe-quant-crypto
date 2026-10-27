@@ -234,7 +234,10 @@ app.post('/api/trading/order', requireAuth, (req, res) => {
 });
 
 app.post('/api/trading/close', requireAuth, (req, res) => {
-  const result = quantEngine.closePosition('MANUAL_PANIC_CLOSE');
+  const { id, symbol, reason } = req.body || {};
+  const target = id || symbol || 'ALL';
+  const closeReason = reason || 'MANUAL_PANIC_CLOSE';
+  const result = quantEngine.closePosition(target, closeReason);
   res.json(result);
 });
 

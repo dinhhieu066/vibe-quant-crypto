@@ -1318,3 +1318,111 @@ input:checked + .slider:before {
   color: #94a3b8;
   opacity: 0.8;
 }
+
+/* ====================================================
+   MULTI-POSITION PORTFOLIO HERO GRID
+   ==================================================== */
+.active-multi {
+  padding: 16px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(0, 242, 254, 0.2);
+  border-radius: 12px;
+}
+
+.multi-pos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.multi-pos-title {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+}
+
+.multi-pos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 14px;
+}
+
+.pos-item-card {
+  background: rgba(7, 10, 19, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.pos-item-card:hover {
+  border-color: rgba(0, 242, 254, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 242, 254, 0.1);
+}
+
+.pos-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.pos-item-coin {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pos-item-prices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin: 6px 0 10px 0;
+}
+
+.pos-item-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.status-chip {
+  font-size: 10px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.chip-safe {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--success);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.chip-locked {
+  background: rgba(0, 242, 254, 0.2);
+  color: var(--primary);
+  border: 1px solid rgba(0, 242, 254, 0.4);
+}
+
+.chip-watch {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-dim);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}

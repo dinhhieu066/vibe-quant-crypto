@@ -1,6 +1,6 @@
 {
   "owner": "Personal Terminal (Private)",
-  "publicUrl": "https://addressed-inches-commands-senior.trycloudflare.com",
+  "publicUrl": "https://mercy-counting-solutions-astrology.trycloudflare.com",
   "config": {
     "exchangeRate": 25400,
     "dailyTargetUSD": 10,
@@ -27,14 +27,14 @@
       "icon": "₿",
       "side": "SHORT",
       "entryPrice": 80624.54,
-      "currentPrice": 80567.19,
+      "currentPrice": 80664.59,
       "marginUSD": 4.92,
       "sizeUSD": 14.76,
       "leverage": 3,
       "stopLoss": 81592.03,
       "takeProfit": 78850.8,
-      "unrealizedPnlUSD": 0.01,
-      "unrealizedPnlPercent": 0.2,
+      "unrealizedPnlUSD": -0.007,
+      "unrealizedPnlPercent": -0.14,
       "isBreakevenProtected": false,
       "reason": "AI Radar: Điểm tiềm năng 95/100 [🔻 Siêu Quá Mua (Overbought Pullback)]",
       "openTime": "2026-10-27T16:20:59.243Z"
@@ -48,10 +48,143 @@
       "profitFactor": 0,
       "bestTradeUSD": 0,
       "worstTradeUSD": 0
-    }
+    },
+    "activePositions": [
+      {
+        "id": "POS-9243",
+        "symbol": "BTCUSDT",
+        "name": "Bitcoin",
+        "icon": "₿",
+        "side": "SHORT",
+        "entryPrice": 80624.54,
+        "currentPrice": 80664.59,
+        "marginUSD": 4.92,
+        "sizeUSD": 14.76,
+        "leverage": 3,
+        "stopLoss": 81592.03,
+        "takeProfit": 78850.8,
+        "unrealizedPnlUSD": -0.007,
+        "unrealizedPnlPercent": -0.14,
+        "isBreakevenProtected": false,
+        "reason": "AI Radar: Điểm tiềm năng 95/100 [🔻 Siêu Quá Mua (Overbought Pullback)]",
+        "openTime": "2026-10-27T16:20:59.243Z"
+      },
+      {
+        "id": "POS-7890",
+        "symbol": "SOLUSDT",
+        "name": "Solana",
+        "icon": "◎",
+        "side": "LONG",
+        "entryPrice": 100.99,
+        "currentPrice": 101.05,
+        "marginUSD": 7.09,
+        "sizeUSD": 21.27,
+        "leverage": 3,
+        "stopLoss": 99.78,
+        "takeProfit": 103.21,
+        "unrealizedPnlUSD": 0.013,
+        "unrealizedPnlPercent": 0.18,
+        "isBreakevenProtected": false,
+        "isProfitLocked": false,
+        "reason": "AI Multi-Radar: Điểm tiềm năng 97/100 [🔥 Siêu Quá Bán (Mean-Reversion Rebound)]",
+        "openTime": "2026-10-27T16:58:27.890Z"
+      },
+      {
+        "id": "POS-1443",
+        "symbol": "ETHUSDT",
+        "name": "Ethereum",
+        "icon": "Ξ",
+        "side": "SHORT",
+        "entryPrice": 2348.36,
+        "currentPrice": 2350.8,
+        "marginUSD": 7.09,
+        "sizeUSD": 21.27,
+        "leverage": 3,
+        "stopLoss": 2376.54,
+        "takeProfit": 2296.7,
+        "unrealizedPnlUSD": -0.022,
+        "unrealizedPnlPercent": -0.31,
+        "isBreakevenProtected": false,
+        "isProfitLocked": false,
+        "reason": "Manual Private Click",
+        "openTime": "2026-10-27T16:58:31.443Z"
+      }
+    ]
   },
   "dailyPnlRecords": [],
   "logs": [
+    {
+      "timestamp": "2026-10-27T16:58:31.564Z",
+      "level": "INFO",
+      "source": "QuantAI",
+      "message": "⚡ [TỰ ĐỘNG LÊN LỆNH SHORT] Ξ ETHUSDT @ $2,348.36. Đòn bẩy x3, Ký quỹ $7.09 (18% vốn). SL: $2376.54, TP: $2296.7 | Vị thế: 3/3"
+    },
+    {
+      "timestamp": "2026-10-27T16:58:31.274Z",
+      "level": "SUCCESS",
+      "source": "Security",
+      "message": "Xác thực thành công. Đã cấp quyền truy cập trạm điều hành."
+    },
+    {
+      "timestamp": "2026-10-27T16:58:27.976Z",
+      "level": "INFO",
+      "source": "QuantAI",
+      "message": "⚡ [TỰ ĐỘNG LÊN LỆNH LONG] ◎ SOLUSDT @ $100.99. Đòn bẩy x3, Ký quỹ $7.09 (18% vốn). SL: $99.78, TP: $103.21 | Vị thế: 2/3"
+    },
+    {
+      "timestamp": "2026-10-27T16:58:17.699Z",
+      "level": "INFO",
+      "source": "QuantRadar",
+      "message": "[Multi-Radar 24/7] Đang giữ 1/3 vị thế. Điểm cao nhất: ETHUSDT (Score: 50/100, RSI: 54, Setup: Đang theo dõi biến động...)."
+    },
+    {
+      "timestamp": "2026-10-27T16:58:16.940Z",
+      "level": "SUCCESS",
+      "source": "Tunnel",
+      "message": "Cổng truy cập riêng đã online tại: https://mercy-counting-solutions-astrology.trycloudflare.com"
+    },
+    {
+      "timestamp": "2026-10-27T16:58:13.015Z",
+      "level": "SUCCESS",
+      "source": "QuantEngine",
+      "message": "Kết nối thành công luồng WebSocket 10 Coin trực tiếp từ Binance."
+    },
+    {
+      "timestamp": "2026-10-27T16:58:12.688Z",
+      "level": "SUCCESS",
+      "source": "QuantRadar",
+      "message": "Đã nạp dữ liệu 10 đồng coin top Binance (BTC, ETH, SOL, BNB, DOGE, XRP, SUI, LINK, NEAR, AVAX)."
+    },
+    {
+      "timestamp": "2026-10-27T16:58:12.462Z",
+      "level": "INFO",
+      "source": "Tunnel",
+      "message": "Đang thiết lập cổng bảo mật Cloudflare Tunnel truy cập riêng từ điện thoại..."
+    },
+    {
+      "timestamp": "2026-10-27T16:48:08.810Z",
+      "level": "SUCCESS",
+      "source": "Security",
+      "message": "Xác thực thành công. Đã cấp quyền truy cập trạm điều hành."
+    },
+    {
+      "timestamp": "2026-10-27T16:48:06.027Z",
+      "level": "WARN",
+      "source": "Security",
+      "message": "Phát hiện nhập sai mã PIN (Còn 2 lần thử trước khi khóa)."
+    },
+    {
+      "timestamp": "2026-10-27T16:48:05.013Z",
+      "level": "WARN",
+      "source": "Security",
+      "message": "Phát hiện nhập sai mã PIN (Còn 3 lần thử trước khi khóa)."
+    },
+    {
+      "timestamp": "2026-10-27T16:48:03.620Z",
+      "level": "WARN",
+      "source": "Security",
+      "message": "Phát hiện nhập sai mã PIN (Còn 4 lần thử trước khi khóa)."
+    },
     {
       "timestamp": "2026-10-27T16:44:05.429Z",
       "level": "INFO",
