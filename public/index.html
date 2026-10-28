@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🐩 POODLE QUANT // Chú Chó AI Kiếm Tiền Thụ Động 24/7</title>
+  <title>🐩 POODLE QUANT AI // Trạm Giao Dịch & Thu Nhập Thụ Động 24/7</title>
   <link rel="icon" type="image/jpeg" href="images/poodle.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="dashboard.css?v=2.1">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dashboard.css?v=3.0">
 </head>
 <body>
-  <!-- Ambient background glow -->
+  <!-- Ambient subtle background glow -->
   <div class="bg-glow glow-1"></div>
   <div class="bg-glow glow-2"></div>
 
@@ -25,9 +25,9 @@
         </div>
         <h2 class="pin-title">POODLE QUANT AI 🐩</h2>
         <p class="pin-subtitle">BẢO VỆ ĐA TẦNG &bull; XÁC THỰC MÃ PIN CHỦ NHÂN</p>
-        <p class="pin-poodle-tip">"Gâu! Em đang canh tiền cho sếp. Nhập mã PIN để vào thăm em nhé!"</p>
+        <p class="pin-poodle-tip">"Gâu! Em đang canh tiền cho sếp. Nhập mã PIN để mở bảng điều khiển siêu nét nhé!"</p>
       </div>
-      
+
       <!-- Visual Pin Dots -->
       <div class="pin-dots-wrap" id="pin-dots">
         <span class="pin-dot"></span>
@@ -60,13 +60,13 @@
       </div>
 
       <div class="pin-footer-tip">
-        <span>🔑 Mã PIN mặc định: <strong>888888</strong> (Có thể đổi trong Cài Đặt)</span>
+        <span>🔑 Mã PIN mặc định: <strong>888888</strong> (Đổi trong Cài Đặt)</span>
         <small class="lock-policy">Tự động khóa 15 phút nếu nhập sai 5 lần.</small>
       </div>
     </div>
   </div>
 
-  <!-- Top Main Header Navigation -->
+  <!-- TOP NAVIGATION HEADER -->
   <header class="header">
     <div class="header-left">
       <div class="poodle-brand-badge">
@@ -76,16 +76,15 @@
         </div>
         <div>
           <div class="brand-title">POODLE QUANT AI 🐩</div>
-          <div class="brand-sub">Trợ lý săn lãi 400+ Coin Binance 24/7 của chủ nhân</div>
+          <div class="brand-sub">Trạm Giao Dịch Định Lượng 4 Trụ Cột &bull; Tự Động 24/7</div>
         </div>
       </div>
     </div>
 
-    <!-- Private Mobile Web Link Pill -->
     <div class="header-center">
       <div class="public-url-pill">
         <span class="globe-icon">📱</span>
-        <span class="pill-label">TRUY CẬP TỪ ĐIỆN THOẠI:</span>
+        <span class="pill-label">LINK ĐIỆN THOẠI:</span>
         <a id="public-web-link" href="#" target="_blank" class="public-link mono">Đang kết nối...</a>
         <button id="btn-copy-public-url" class="btn-copy-icon" title="Sao chép link riêng">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
@@ -94,10 +93,17 @@
     </div>
 
     <div class="header-right">
+      <div class="auto-switch-pill" title="Bật/Tắt AI tự động vào lệnh 24/7">
+        <span class="ctrl-label">AI AUTO 24/7:</span>
+        <label class="cyber-switch">
+          <input type="checkbox" id="toggle-auto-trading" checked>
+          <span class="cyber-slider"></span>
+        </label>
+      </div>
       <div class="system-stat">
         <span id="ws-badge" class="badge-online">⚡ 400+ COINS LIVE</span>
       </div>
-      <button id="btn-open-settings" class="btn btn-sm btn-outline" title="Cài đặt mục tiêu">
+      <button id="btn-open-settings" class="btn btn-sm btn-outline" title="Cài đặt mục tiêu & Mã PIN">
         ⚙️ Cài Đặt
       </button>
       <button id="btn-lock-terminal" class="btn btn-sm btn-ghost" title="Khóa trạm">
@@ -106,7 +112,72 @@
     </div>
   </header>
 
-  <!-- POODLE HERO COMMAND CENTER (TRẠM CHỈ HUY CỦA CHÚ CHÓ POODLE 3D BIẾT NÓI) -->
+  <!-- EXECUTIVE 4-CARD KPI STRIP (SIÊU RÕ RÀNG, DỄ NHÌN NHẤT) -->
+  <section class="performance-strip">
+    <!-- CARD 1: TỔNG VỐN & ĐÒN BẨY -->
+    <div class="perf-card card-accent-gold">
+      <div class="p-top">
+        <span class="p-title">💼 1. TỔNG VỐN &amp; SỐ DƯ VÍ</span>
+        <span class="badge-safe">BẢO TOÀN VỐN</span>
+      </div>
+      <div id="trade-balance-vnd" class="p-main-val mono">500.000 đ</div>
+      <div id="trade-balance-usd" class="p-sub-val mono">≈ $19.68 USD</div>
+      <div class="card-inline-controls">
+        <div class="capital-selector" title="Chọn nhanh mức vốn">
+          <button class="btn-cap" id="btn-cap-500k" data-vnd="500000">500K</button>
+          <button class="btn-cap" id="btn-cap-1000k" data-vnd="1000000">1M</button>
+          <button class="btn-cap" id="btn-cap-2000k" data-vnd="2000000">2M</button>
+          <button class="btn-cap" id="btn-cap-5000k" data-vnd="5000000">5M</button>
+        </div>
+        <div class="capital-selector" title="Chọn đòn bẩy">
+          <button class="btn-cap" id="btn-lev-1" data-lev="1">x1</button>
+          <button class="btn-cap" id="btn-lev-2" data-lev="2">x2</button>
+          <button class="btn-cap active" id="btn-lev-3" data-lev="3">x3</button>
+          <button class="btn-cap" id="btn-lev-5" data-lev="5">x5</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 2: THU NHẬP HÔM NAY (TỰ ĐỘNG RESET 00:00 HẰNG NGÀY) -->
+    <div class="perf-card card-accent-green">
+      <div class="p-top">
+        <span class="p-title">🌅 2. THU NHẬP HÔM NAY (RESET 00:00)</span>
+        <span class="badge-reset-clock mono" id="midnight-countdown" title="Tự động chốt sổ & reset về $0.00 lúc 00:00 mỗi đêm">🕛 00:00:00</span>
+      </div>
+      <div class="daily-income-row">
+        <div>
+          <div id="today-pnl-usd" class="p-main-val mono highlight-green">+$0.00</div>
+          <div id="today-pnl-vnd" class="p-sub-val mono">≈ +0 đ hôm nay</div>
+        </div>
+        <button id="btn-manual-daily-reset" class="btn btn-xs btn-outline" title="Chốt sổ hôm nay vào lịch sử và đặt lại bộ đếm ngày về 0 ngay lập tức">
+          🔄 Reset Ngày
+        </button>
+      </div>
+      <div class="lifetime-profit-bar mono">
+        <span>🏆 Tổng lãi tích lũy: <strong id="trade-pnl-usd" class="highlight-green">+$0.00</strong> (<span id="trade-pnl-vnd">+0 đ</span>)</span>
+      </div>
+    </div>
+
+    <!-- CARD 3: TIẾN ĐỘ MỤC TIÊU THU NHẬP NGÀY -->
+    <div class="perf-card card-accent-cyan">
+      <div class="p-top">
+        <span class="p-title">🎯 3. MỤC TIÊU THU NHẬP NGÀY</span>
+        <span id="goal-target-label" class="badge-mini mono">$10.00 (~254k đ)</span>
+      </div>
+      <div class="goal-progress-wrap">
+        <div class="goal-progress-bar">
+          <div id="goal-progress-fill" class="goal-progress-fill" style="width: 0%;"></div>
+        </div>
+        <div class="goal-progress-meta mono">
+          <span id="goal-progress-pct" class="font-bold">0% Hoàn thành</span>
+          <span id="goal-progress-rem">Còn thiếu $10.00</span>
+        </div>
+      </div>
+      <div id="trade-counts" class="p-sub-val mono" style="margin-top:6px;">Hôm nay: 0 Thắng / 0 Thua &bull; Tổng Winrate: 100%</div>
+    </div>
+  </section>
+
+  <!-- POODLE 3D INTERACTIVE COMMAND BANNER -->
   <section class="poodle-hero-section">
     <div class="poodle-hero-card">
       <div class="poodle-hero-left">
@@ -121,13 +192,13 @@
 
         <div class="poodle-meta">
           <div class="poodle-name-row">
-            <h2 class="poodle-name">Em Poodle 3D Săn Kèo 🐾</h2>
+            <h2 class="poodle-name">Trợ Lý Poodle 3D Săn Kèo 🐾</h2>
             <span id="poodle-mood-badge" class="mood-badge mood-hunting">ĐANG LÙNG SỤC 400+ COIN</span>
-            <span class="badge-online" style="font-size:10px; padding:3px 8px;">💬 PHẢN HỒI REAL-TIME</span>
+            <span class="badge-online" style="font-size:11px; padding:4px 10px;">🕛 TỰ ĐỘNG RESET LÃI 00:00</span>
           </div>
           <div class="poodle-speech-box">
             <div class="speech-tail"></div>
-            <p id="poodle-speech">"Gâu gâu! Em Poodle xin chào sếp! Em đang canh gác và săn kèo Binance 24/7 cho sếp đây!"</p>
+            <p id="poodle-speech">"Gâu gâu! Em Poodle xin chào sếp! Giao diện mới siêu nét đã sẵn sàng, thu nhập ngày sẽ tự động chốt sổ và reset mỗi 00:00 đêm cho sếp nhé!"</p>
           </div>
           <div class="poodle-quick-chat">
             <button class="btn-chat-chip" id="btn-chat-market">💬 Kèo nào thơm nhất?</button>
@@ -149,62 +220,35 @@
         </div>
         <div class="poodle-stat-item">
           <span class="stat-num mono text-cyan" id="stat-uptime">00:00:00</span>
-          <span class="stat-lbl">Thời Gian Canh Gác</span>
+          <span class="stat-lbl">Uptime Canh Gác</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Financial Performance Strip (3 Luxury Cards) -->
-  <section class="performance-strip">
-    <!-- Card 1: Trading Capital -->
-    <div class="perf-card">
-      <div class="p-top">
-        <span class="p-title">💼 VỐN & SỐ DƯ HIỆN TẠI</span>
-        <span class="badge-mini text-accent">BẢO TOÀN 100%</span>
-      </div>
-      <div id="trade-balance-vnd" class="p-main-val mono">500.000 đ</div>
-      <div id="trade-balance-usd" class="p-sub-val mono">≈ $19.68 USD</div>
+  <!-- SMART WORKSPACE VIEW SWITCHER (CHẾ ĐỘ XEM GỌN GÀNG, DỄ NHÌN) -->
+  <nav class="workspace-nav-bar">
+    <div class="workspace-tabs" id="workspace-tabs">
+      <button class="ws-tab active" data-view="all">🌟 Tất Cả (Tổng Quan)</button>
+      <button class="ws-tab" data-view="positions">🐾 Vị Thế Đang Mở (<span id="nav-pos-count">0/3</span>)</button>
+      <button class="ws-tab" data-view="radar">⚡ Bảng Radar 400+ Coin</button>
+      <button class="ws-tab" data-view="knowledge">🧠 AI Phân Tích Nhân Quả (4 Trụ Cột)</button>
+      <button class="ws-tab" data-view="history">📋 Lịch Sử Lệnh &amp; Sổ Ngày 00:00</button>
     </div>
-
-    <!-- Card 2: Realized Passive Profit -->
-    <div class="perf-card">
-      <div class="p-top">
-        <span class="p-title">💰 LỢI NHUẬN RÒNG ĐÃ CHỐT</span>
-        <span class="badge-mini highlight-green">LÃI KÉP TỰ ĐỘNG</span>
-      </div>
-      <div id="trade-pnl-usd" class="p-main-val mono highlight-green">+$0.00</div>
-      <div id="trade-pnl-vnd" class="p-sub-val mono">≈ 0 đ (Tự cộng dồn vào vốn)</div>
+    <div class="workspace-date-info mono">
+      <span>📅 Phiên ngày: <strong id="current-session-date">--/--/----</strong></span>
     </div>
-
-    <!-- Card 3: Passive Income Goal Progress -->
-    <div class="perf-card">
-      <div class="p-top">
-        <span class="p-title">🎯 MỤC TIÊU THU NHẬP HÔM NAY</span>
-        <span id="goal-target-label" class="badge-mini">$10.00 (~254k đ)</span>
-      </div>
-      <div class="goal-progress-wrap">
-        <div class="goal-progress-bar">
-          <div id="goal-progress-fill" class="goal-progress-fill" style="width: 0%;"></div>
-        </div>
-        <div class="goal-progress-meta mono">
-          <span id="goal-progress-pct">0% Đạt</span>
-          <span id="goal-progress-rem">Còn thiếu $10.00</span>
-        </div>
-      </div>
-      <div id="trade-counts" class="p-sub-val mono">0 Thắng / 0 Thua (Tỷ lệ thắng: 0%)</div>
-    </div>
-  </section>
+  </nav>
 
   <!-- MAIN CONTAINER -->
   <main class="terminal-main">
 
-    <!-- ACTIVE POSITION MONITOR (CÁC KÈO POODLE ĐANG CẮN GIỮ) -->
-    <section class="card position-hero-card">
+    <!-- 1. ACTIVE POSITION MONITOR (CÁC KÈO POODLE ĐANG CẮN GIỮ) -->
+    <section class="card position-hero-card ws-section" data-section="positions">
       <div class="card-header">
         <div class="card-title">
           <span class="pulse-dot-cyan"></span>
-          <span>🐾 CÁC VỊ THẾ POODLE ĐANG CẮN GIỮ (REAL-TIME POSITION MONITOR)</span>
+          <span>🐾 CÁC VỊ THẾ ĐANG MỞ (REAL-TIME POSITION &amp; KELLY/ATR MONITOR)</span>
         </div>
         <div id="pos-status-badge" class="badge-status-idle">CHƯA MỞ LỆNH (0/3)</div>
       </div>
@@ -215,41 +259,41 @@
           <span class="idle-poodle-icon">🐩</span>
           <div>
             <strong>Vốn của sếp đang an toàn tuyệt đối 100%</strong>
-            <p>Em Poodle đang quét liên tục 400+ coin trên Binance. Khi có coin đạt điểm tiềm năng &ge; 78/100, em sẽ tự động vào lệnh đẹp nhất và kéo Stop Loss hòa vốn bảo vệ sếp!</p>
+            <p>Em Poodle đang quét liên tục 400+ coin trên Binance. Khi có coin hội tụ đủ 4 trụ cột (Điểm &ge; 75/100), em sẽ tự động vào lệnh theo công thức Kelly/ATR và kéo Stop Loss hòa vốn bảo vệ sếp!</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- AI ALL-MARKET RADAR (400+ COINS) -->
-    <section class="card radar-card">
+    <!-- 2. AI ALL-MARKET RADAR (400+ COINS) -->
+    <section class="card radar-card ws-section" data-section="radar">
       <div class="card-header">
         <div class="card-title">
           <span class="pulse-dot"></span>
-          <span>⚡ BẢNG RADAR TOP KÈO THƠM (POODLE ĐANG QUÉT 400+ COIN BINANCE 24/7)</span>
+          <span>⚡ BẢNG RADAR TOP KÈO THƠM (QUÉT 400+ COIN BINANCE THỜI GIAN THỰC)</span>
         </div>
-        <div class="radar-tag" id="radar-scan-status">Poodle đang quét 400+ coin Binance thời gian thực • Top cơ hội điểm cao nhất</div>
+        <div class="radar-tag mono" id="radar-scan-status">Đang đồng bộ 400+ coin...</div>
       </div>
 
       <div class="table-container">
         <table class="market-radar-table">
           <thead>
             <tr>
-              <th>Coin</th>
-              <th>Giá Hiện Tại (USDT)</th>
+              <th>Đồng Coin</th>
+              <th>Giá Hiện Tại</th>
               <th>Biến Động 24h</th>
-              <th>Cao / Thấp 24h</th>
+              <th>Biên Độ 24h (H/L)</th>
               <th>Volume 24h</th>
               <th>RSI (14)</th>
-              <th>Điểm Tiềm Năng AI</th>
+              <th>Điểm AI</th>
               <th>Thiết Lập Nhân Quả (4 Trụ Cột)</th>
-              <th>Tín Hiệu AI</th>
-              <th>Truy Xuất RAG</th>
+              <th>Tín Hiệu</th>
+              <th>Phân Tích</th>
             </tr>
           </thead>
           <tbody id="radar-tbody">
             <tr>
-              <td colspan="10" style="text-align:center; padding:30px; color:var(--text-dim);">
+              <td colspan="10" style="text-align:center; padding:32px; color:var(--text-muted); font-size:14px;">
                 🐩 Em Poodle đang kết nối luồng giá thời gian thực từ Binance WebSocket...
               </td>
             </tr>
@@ -258,33 +302,33 @@
       </div>
     </section>
 
-    <!-- QUANT KNOWLEDGE BASE & AI CAUSAL CONTEXT RETRIEVER (4 PILLARS) -->
-    <section class="card kb-card" id="kb-section">
+    <!-- 3. QUANT KNOWLEDGE BASE & AI CAUSAL CONTEXT RETRIEVER (4 PILLARS) -->
+    <section class="card kb-card ws-section" id="kb-section" data-section="knowledge">
       <div class="card-header kb-header-wrap">
         <div class="card-title">
           <span class="pulse-dot-cyan"></span>
-          <span>🧠 TRUNG TÂM TRI THỨC QUANT &amp; BỘ TRUY XUẤT NGỮ CẢNH NHÂN QUẢ (CAUSAL RAG ENGINE)</span>
+          <span>🧠 TRUNG TÂM TRI THỨC QUANT &amp; BỘ TRUY XUẤT NGỮ CẢNH NHÂN QUẢ (4 TRỤ CỘT FUTURES)</span>
         </div>
         <div class="kb-stats-pills">
-          <span class="badge-mini text-accent" id="kb-stat-pillars">4 Trụ Cột Cốt Lõi</span>
+          <span class="badge-mini text-accent" id="kb-stat-pillars">4 Trụ Cột</span>
           <span class="badge-mini highlight-green" id="kb-stat-rules">9 Quy Tắc Nhân Quả</span>
-          <span class="badge-mini" id="kb-stat-chunks">RAG Context Ready</span>
+          <span class="badge-mini" id="kb-stat-chunks">29 Phân Đoạn RAG</span>
         </div>
       </div>
 
-      <!-- LIVE CAUSAL REASONING ANALYZER (CONTEXT RETRIEVER IN ACTION) -->
+      <!-- LIVE CAUSAL REASONING ANALYZER -->
       <div class="causal-analyzer-box">
         <div class="causal-analyzer-toolbar">
           <div class="causal-toolbar-left">
             <span class="causal-badge-live">⚡ AI CONTEXT RETRIEVER</span>
-            <strong>Phân Tích Nhân Quả Thời Gian Thực (Bối Cảnh &rarr; Dấu Hiệu &rarr; Hành Vi Cá Mập &rarr; Hành Động &amp; Kelly/ATR)</strong>
+            <strong>Chuỗi Suy Luận Nhân Quả Thời Gian Thực (Bối Cảnh &rarr; Dấu Hiệu &rarr; Hành Vi Cá Mập &rarr; Hành Động)</strong>
           </div>
           <div class="causal-toolbar-controls">
             <select id="select-causal-coin" class="form-input form-input-sm mono">
               <option value="">-- Tự động chọn Top 1 Kèo Thơm --</option>
             </select>
-            <button id="btn-run-causal-analyzer" class="btn btn-sm btn-primary">🔍 Truy Xuất Ngữ Cảnh &amp; Phân Tích</button>
-            <button id="btn-toggle-llm-prompt" class="btn btn-sm btn-outline">📄 Xem LLM RAG Prompt</button>
+            <button id="btn-run-causal-analyzer" class="btn btn-sm btn-primary">🔍 Phân Tích Ngay</button>
+            <button id="btn-toggle-llm-prompt" class="btn btn-sm btn-outline">📄 Xem LLM Prompt</button>
           </div>
         </div>
 
@@ -311,31 +355,31 @@
         <!-- Mathematical Kelly Criterion & ATR Stop-Loss Telemetry Strip -->
         <div id="causal-sizing-strip" class="causal-sizing-strip mono">
           <div class="sizing-metric">
-            <span class="s-lbl">QUY TẮC KHỚP:</span>
+            <span class="s-lbl">QUY TẮC:</span>
             <span class="s-val text-accent" id="sizing-rule-id">SMC-01</span>
           </div>
           <div class="sizing-metric">
-            <span class="s-lbl">WIN RATE KỲ VỌNG (W):</span>
+            <span class="s-lbl">WIN RATE (W):</span>
             <span class="s-val highlight-green" id="sizing-winrate">65%</span>
           </div>
           <div class="sizing-metric">
-            <span class="s-lbl">TỶ LỆ R:R TỐI ƯU:</span>
+            <span class="s-lbl">TỶ LỆ R:R:</span>
             <span class="s-val" id="sizing-rr">1 : 2.2</span>
           </div>
           <div class="sizing-metric">
-            <span class="s-lbl">FRACTIONAL KELLY (0.25x):</span>
+            <span class="s-lbl">QUARTER-KELLY:</span>
             <span class="s-val text-cyan" id="sizing-kelly">18.0% Vốn</span>
           </div>
           <div class="sizing-metric">
-            <span class="s-lbl">BIẾN ĐỘNG ATR(14):</span>
+            <span class="s-lbl">ATR(14):</span>
             <span class="s-val" id="sizing-atr">0.55%</span>
           </div>
           <div class="sizing-metric">
-            <span class="s-lbl">STOP LOSS CHUẨN ATR:</span>
+            <span class="s-lbl">ATR STOP LOSS:</span>
             <span class="s-val highlight-red" id="sizing-sl">--</span>
           </div>
           <div class="sizing-metric">
-            <span class="s-lbl">TAKE PROFIT MỤC TIÊU:</span>
+            <span class="s-lbl">TAKE PROFIT:</span>
             <span class="s-val highlight-green" id="sizing-tp">--</span>
           </div>
         </div>
@@ -355,22 +399,20 @@
         <div class="kb-pillar-tabs" id="kb-pillar-tabs">
           <button class="kb-tab active" data-pillar="ALL">📚 Tất Cả (4 Trụ Cột)</button>
           <button class="kb-tab" data-pillar="SMC">🎯 1. SMC &amp; Price Action</button>
-          <button class="kb-tab" data-pillar="DERIVATIVES">📊 2. Dữ Liệu Phái Sinh (OI/CVD/Funding)</button>
+          <button class="kb-tab" data-pillar="DERIVATIVES">📊 2. Phái Sinh (OI/CVD/Funding)</button>
           <button class="kb-tab" data-pillar="WYCKOFF_VSA">🏛️ 3. Wyckoff &amp; VSA</button>
-          <button class="kb-tab" data-pillar="RISK_SIZING">🛡️ 4. Quản Lý Rủi Ro (Kelly &amp; ATR)</button>
+          <button class="kb-tab" data-pillar="RISK_SIZING">🛡️ 4. Quản Lý Rủi Ro (Kelly/ATR)</button>
         </div>
         <div class="kb-search-wrap">
-          <input type="text" id="input-kb-search" class="form-input form-input-sm" placeholder="🔍 Tìm quy tắc: BOS, CHoCH, FVG, Liquidity Sweep, OI, CVD, Funding, Spring, UTAD, Kelly, ATR...">
-          <button id="btn-view-pillar-doc" class="btn btn-sm btn-outline" title="Đọc tài liệu Markdown gốc của trụ cột">📖 Tài Liệu Chuyên Sâu (.MD)</button>
+          <input type="text" id="input-kb-search" class="form-input form-input-sm" placeholder="🔍 Tìm kiếm quy tắc: BOS, CHoCH, FVG, Sweep, OI, CVD, Spring, UTAD, Kelly...">
+          <button id="btn-view-pillar-doc" class="btn btn-sm btn-outline">📖 Đọc Tài Liệu (.MD)</button>
         </div>
       </div>
 
       <!-- CAUSAL RULES CARDS GRID -->
-      <div id="kb-rules-grid" class="kb-rules-grid">
-        <!-- Populated dynamically by dashboard.js -->
-      </div>
+      <div id="kb-rules-grid" class="kb-rules-grid"></div>
 
-      <!-- MARKDOWN DOCUMENT VIEWER MODAL / DRAWER -->
+      <!-- MARKDOWN DOCUMENT VIEWER -->
       <div id="kb-markdown-viewer" class="kb-markdown-viewer hidden">
         <div class="kb-md-hdr">
           <strong id="kb-md-title">📖 TÀI LIỆU CHUẨN HÓA (.MD)</strong>
@@ -380,31 +422,35 @@
       </div>
     </section>
 
-    <!-- DUAL BOTTOM GRID: CLOSED TRADES & POODLE ACTIVITY -->
-    <div class="bottom-dual-grid">
+    <!-- 4. DUAL BOTTOM GRID: CLOSED TRADES, DAILY 00:00 ARCHIVE & POODLE LOGS -->
+    <div class="bottom-dual-grid ws-section" data-section="history">
 
-      <!-- CLOSED TRADES HISTORY -->
+      <!-- CLOSED TRADES HISTORY & DAILY ARCHIVE -->
       <section class="card trades-history-card">
         <div class="card-header">
-          <div class="card-title">📋 LỊCH SỬ CHỐT LÃI THỤ ĐỘNG CỦA POODLE</div>
-          <span class="card-sub-info">Tự động chốt lời / bảo vệ hòa vốn</span>
+          <div class="card-title">📋 LỊCH SỬ CHỐT LÃI &amp; SỔ CHỐT NGÀY 00:00</div>
+          <span class="card-sub-info" id="daily-archive-summary">Tự động lưu trữ mỗi 00:00 đêm</span>
         </div>
+
+        <!-- Daily 00:00 Reset Archive Strip -->
+        <div id="daily-records-strip" class="daily-records-strip"></div>
+
         <div class="table-container trades-scroll">
           <table class="trades-table">
             <thead>
               <tr>
-                <th>Lệnh</th>
+                <th>Vị Thế</th>
                 <th>Coin</th>
                 <th>Giá Vào</th>
                 <th>Giá Đóng</th>
                 <th>Ký Quỹ</th>
-                <th>Lãi Thụ Động ($ / %)</th>
+                <th>Lợi Nhuận ($ / %)</th>
                 <th>Lý Do Đóng</th>
                 <th>Thời Gian</th>
               </tr>
             </thead>
             <tbody id="trades-tbody">
-              <tr><td colspan="8" style="text-align:center; color:var(--text-dim); padding:20px;">Chưa có lệnh nào được đóng. Lãi thụ động sẽ hiển thị tại đây khi chốt.</td></tr>
+              <tr><td colspan="8" style="text-align:center; color:var(--text-muted); padding:24px;">Chưa có lệnh nào được đóng.</td></tr>
             </tbody>
           </table>
         </div>
@@ -422,7 +468,6 @@
           <button id="btn-clear-logs" class="btn btn-xs btn-ghost">Xóa Log</button>
         </div>
         <div class="terminal-body" id="terminal-logs">
-          <!-- Logs injected by JS -->
           <div class="log-line info">
             <span class="log-time">[00:00:00]</span>
             <span class="log-source">[PoodleAI]</span>
@@ -440,19 +485,18 @@
     <div class="modal-backdrop"></div>
     <div class="modal-box">
       <div class="modal-header">
-        <h3>⚙️ CÀI ĐẶT MỤC TIÊU & BẢO MẬT CỦA SẾP</h3>
+        <h3>⚙️ CÀI ĐẶT MỤC TIÊU &amp; BẢO MẬT CỦA SẾP</h3>
         <button id="btn-close-settings" class="btn-close">&times;</button>
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label>Mục tiêu lãi thụ động mỗi ngày ($ USD):</label>
+          <label>Mục tiêu lãi thụ động mỗi ngày ($ USD - Reset lúc 00:00):</label>
           <input type="number" id="input-daily-target" class="form-input" min="1" max="1000" step="1" value="10">
-          <small class="text-dim">Ví dụ: $10/ngày tương đương ~254.000 VNĐ / ngày thụ động (~7.6 triệu/tháng).</small>
+          <small class="text-dim">Ví dụ: $10/ngày tương đương ~254.000 VNĐ / ngày thụ động.</small>
         </div>
         <div class="form-group">
           <label>Mục tiêu lãi thụ động mỗi tháng ($ USD):</label>
           <input type="number" id="input-monthly-target" class="form-input" min="10" max="50000" step="10" value="300">
-          <small class="text-dim">Mục tiêu tổng kết tháng để tự động tích luỹ dòng tiền tự do.</small>
         </div>
         <div class="form-group">
           <label>Chiến lược phân bổ rủi ro:</label>
@@ -463,7 +507,7 @@
           </select>
         </div>
 
-        <hr style="border:none; border-top:1px solid rgba(255,255,255,0.08); margin:10px 0;">
+        <hr style="border:none; border-top:1px solid rgba(255,255,255,0.1); margin:12px 0;">
 
         <!-- Change PIN Section -->
         <div class="form-group">
@@ -472,7 +516,7 @@
             <input type="password" id="input-current-pin" class="form-input" placeholder="Mã PIN cũ (mặc định 888888)" maxlength="12" style="flex:1;">
             <input type="password" id="input-new-pin" class="form-input" placeholder="Mã PIN mới" maxlength="12" style="flex:1;">
           </div>
-          <button id="btn-change-pin" class="btn btn-sm btn-outline" style="margin-top:6px; align-self:flex-start;">
+          <button id="btn-change-pin" class="btn btn-sm btn-outline" style="margin-top:8px; align-self:flex-start;">
             Cập Nhật Mã PIN Mới
           </button>
           <small id="pin-change-status" class="text-dim"></small>
@@ -485,12 +529,9 @@
     </div>
   </div>
 
-  <!-- Hidden toggle auto trading for JS compatibility -->
-  <input type="checkbox" id="toggle-auto-trading" checked style="display:none;">
-
   <!-- Three.js 3D Engine & Poodle 3D Mascot -->
   <script src="vendor/three.min.js"></script>
-  <script src="poodle3d.js?v=2.1"></script>
-  <script src="dashboard.js?v=2.1"></script>
+  <script src="poodle3d.js?v=3.0"></script>
+  <script src="dashboard.js?v=3.0"></script>
 </body>
 </html>

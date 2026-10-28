@@ -713,14 +713,22 @@ class QuantEngine {
       activePosition: this.activePositions[0] || null
     });
 
+    const updatedTrading = db.getTrading();
     this.broadcast({
       type: 'POSITION_CLOSED',
       data: {
         trade,
         activePositions: this.activePositions,
         activePosition: this.activePositions[0] || null,
-        stats: db.getTrading().stats,
-        balanceUSD: db.getTrading().balanceUSD
+        stats: updatedTrading.stats,
+        balanceUSD: updatedTrading.balanceUSD,
+        balanceVND: updatedTrading.balanceVND,
+        realizedPnlUSD: updatedTrading.realizedPnlUSD,
+        todayPnlUSD: updatedTrading.todayPnlUSD,
+        todayPnlVND: updatedTrading.todayPnlVND,
+        todayTrades: updatedTrading.todayTrades,
+        todayWins: updatedTrading.todayWins,
+        todayLosses: updatedTrading.todayLosses
       }
     });
 
@@ -787,6 +795,12 @@ class QuantEngine {
         balanceUSD: trading.balanceUSD,
         balanceVND: trading.balanceVND,
         realizedPnlUSD: trading.realizedPnlUSD,
+        todayPnlUSD: trading.todayPnlUSD,
+        todayPnlVND: trading.todayPnlVND,
+        todayTrades: trading.todayTrades,
+        todayWins: trading.todayWins,
+        todayLosses: trading.todayLosses,
+        currentDateKey: trading.currentDateKey,
         stats: trading.stats
       }
     });

@@ -9,6 +9,12 @@ function hashPin(pin) {
   return crypto.createHash('sha256').update(String(pin).trim() + '_vibe_salt_2026').digest('hex');
 }
 
+// Helper: Get current YYYY-MM-DD in Vietnam Timezone (UTC+7) for 00:00 Daily Reset
+function getVietnamDateKey(dateObj = new Date()) {
+  const vnTime = new Date(dateObj.getTime() + 7 * 3600 * 1000);
+  return vnTime.toISOString().slice(0, 10);
+}
+
 // Private Passive Crypto Trading Database Schema
 const defaultData = {
   owner: 'Personal Terminal (Private)',
@@ -35,6 +41,11 @@ const defaultData = {
     realizedPnlVND: 0,
     todayPnlUSD: 0,
     todayPnlVND: 0,
+    todayTrades: 0,
+    todayWins: 0,
+    todayLosses: 0,
+    currentDateKey: getVietnamDateKey(),
+    lastDailyResetAt: new Date().toISOString(),
     leverage: 3,
     maxConcurrentPositions: 3,
     mode: 'paper', // 'paper' (an toàn 100% kiểm chứng thuật toán) hoặc 'live'
@@ -205,6 +216,7 @@ class DB {
   }
 
   getTrading() {
+    this.checkDailyReset();
     const data = this.load();
     if (!data.trading) {
       data.trading = defaultData.trading;
@@ -215,6 +227,82 @@ class DB {
       this.save(data);
     }
     return data.trading;
+  }
+
+  getDailyPnlRecords() {
+    const data = this.load();
+    return data.dailyPnlRecords || [];
+  }
+
+  // Automatic 00:00 Midnight (UTC+7) Daily Income Reset
+  checkDailyReset(forceReset = false) {
+    const data = this.load();
+    if (!data.trading) return { resetOccurred: false };
+
+    const todayKey = getVietnamDateKey();
+    const prevKey = data.trading.currentDateKey;
+
+    if (!prevKey) {
+      data.trading.currentDateKey = todayKey;
+      data.trading.lastDailyResetAt = new Date().toISOString();
+      this.save(data);
+      return { resetOccurred: false, currentDateKey: todayKey };
+    }
+
+    if (forceReset || prevKey !== todayKey) {
+      const archivedUSD = parseFloat((data.trading.todayPnlUSD || 0).toFixed(2));
+      const archivedVND = Math.round(data.trading.todayPnlVND || 0);
+      const archivedTrades = data.trading.todayTrades || 0;
+      const archivedWins = data.trading.todayWins || 0;
+      const archivedLosses = data.trading.todayLosses || 0;
+
+      if (!Array.isArray(data.dailyPnlRecords)) {
+        data.dailyPnlRecords = [];
+      }
+
+      // Archive previous day's record if there was activity or if transitioning day
+      data.dailyPnlRecords.unshift({
+        date: prevKey,
+        pnlUSD: archivedUSD,
+        pnlVND: archivedVND,
+        trades: archivedTrades,
+        wins: archivedWins,
+        losses: archivedLosses,
+        closedAt: new Date().toISOString()
+      });
+
+      if (data.dailyPnlRecords.length > 60) {
+        data.dailyPnlRecords = data.dailyPnlRecords.slice(0, 60);
+      }
+
+      // Reset daily income counters for the new day (00:00)
+      data.trading.todayPnlUSD = 0;
+      data.trading.todayPnlVND = 0;
+      data.trading.todayTrades = 0;
+      data.trading.todayWins = 0;
+      data.trading.todayLosses = 0;
+      data.trading.currentDateKey = todayKey;
+      data.trading.lastDailyResetAt = new Date().toISOString();
+
+      this.save(data);
+      this.addLog(
+        'SUCCESS',
+        'DailyReset',
+        `🕛 [RESET THU NHẬP 00:00] Đã chốt sổ ngày ${prevKey} (${archivedUSD >= 0 ? '+' : ''}$${archivedUSD.toFixed(2)} ≈ ${archivedVND.toLocaleString('vi-VN')} đ) và làm mới bộ đếm thu nhập ngày ${todayKey} về $0.00!`
+      );
+
+      return {
+        resetOccurred: true,
+        previousDate: prevKey,
+        archivedUSD,
+        archivedVND,
+        currentDateKey: todayKey,
+        trading: data.trading,
+        dailyPnlRecords: data.dailyPnlRecords
+      };
+    }
+
+    return { resetOccurred: false, currentDateKey: todayKey };
   }
 
   updateTrading(updates) {
@@ -272,11 +360,18 @@ class DB {
       worstTradeUSD: parseFloat(worstTrade.toFixed(2))
     };
 
-    // Compounding realized PnL
+    // Compounding realized PnL & Daily 00:00 PnL tracking
+    this.checkDailyReset();
     data.trading.realizedPnlUSD = parseFloat((data.trading.realizedPnlUSD + trade.pnlUSD).toFixed(2));
     data.trading.realizedPnlVND = Math.round(data.trading.realizedPnlUSD * rate);
     data.trading.todayPnlUSD = parseFloat(((data.trading.todayPnlUSD || 0) + trade.pnlUSD).toFixed(2));
     data.trading.todayPnlVND = Math.round(data.trading.todayPnlUSD * rate);
+    data.trading.todayTrades = (data.trading.todayTrades || 0) + 1;
+    if (trade.pnlUSD > 0) {
+      data.trading.todayWins = (data.trading.todayWins || 0) + 1;
+    } else {
+      data.trading.todayLosses = (data.trading.todayLosses || 0) + 1;
+    }
 
     data.trading.balanceUSD = parseFloat((data.trading.initialCapitalUSD + data.trading.realizedPnlUSD).toFixed(2));
     data.trading.balanceVND = Math.round(data.trading.balanceUSD * rate);

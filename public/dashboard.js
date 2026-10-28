@@ -373,10 +373,17 @@ function handleWsMessage(payload) {
       break;
 
     case 'POSITION_CLOSED':
-      state.trading.activePosition = null;
+      state.trading.activePosition = payload.data.activePosition || null;
+      state.trading.activePositions = payload.data.activePositions || [];
       state.trading.stats = payload.data.stats;
       state.trading.balanceUSD = payload.data.balanceUSD;
-      state.trading.balanceVND = Math.round(payload.data.balanceUSD * (state.config.exchangeRate || 25400));
+      state.trading.balanceVND = payload.data.balanceVND || Math.round(payload.data.balanceUSD * (state.config.exchangeRate || 25400));
+      if (payload.data.realizedPnlUSD !== undefined) state.trading.realizedPnlUSD = payload.data.realizedPnlUSD;
+      if (payload.data.todayPnlUSD !== undefined) state.trading.todayPnlUSD = payload.data.todayPnlUSD;
+      if (payload.data.todayPnlVND !== undefined) state.trading.todayPnlVND = payload.data.todayPnlVND;
+      if (payload.data.todayTrades !== undefined) state.trading.todayTrades = payload.data.todayTrades;
+      if (payload.data.todayWins !== undefined) state.trading.todayWins = payload.data.todayWins;
+      if (payload.data.todayLosses !== undefined) state.trading.todayLosses = payload.data.todayLosses;
       if (payload.data.trade) {
         state.trading.tradesHistory = state.trading.tradesHistory || [];
         state.trading.tradesHistory.unshift(payload.data.trade);
@@ -387,10 +394,20 @@ function handleWsMessage(payload) {
       if (window.poodle3D && payload.data && payload.data.trade) {
         const tr = payload.data.trade;
         if (tr.pnlUSD > 0) {
-          window.poodle3D.speak(`Gâu gâu! Chúc mừng sếp, em vừa chốt lãi thành công cộng thêm ${tr.pnlUSD.toFixed(2)} đô vào ví sếp rồi nha!`);
+          window.poodle3D.speak(`Gâu gâu! Chúc mừng sếp, em vừa chốt lãi thành công cộng thêm ${tr.pnlUSD.toFixed(2)} đô vào thu nhập hôm nay của sếp rồi nha!`);
         } else {
           window.poodle3D.speak(`Em đã kích hoạt cắt lỗ thông minh để bảo vệ an toàn vốn cho sếp rồi ạ!`);
         }
+      }
+      break;
+
+    case 'DAILY_INCOME_RESET':
+      if (payload.data.trading) state.trading = payload.data.trading;
+      if (payload.data.dailyPnlRecords) state.dailyPnlRecords = payload.data.dailyPnlRecords;
+      renderPerformance();
+      renderDailyRecords();
+      if (window.poodle3D) {
+        window.poodle3D.speak('Gâu gâu! Đã điểm 00 giờ đêm, em Poodle đã chốt sổ thu nhập ngày cũ vào lịch sử và làm mới bộ đếm thu nhập ngày hôm nay về 0 cho sếp rồi nhé!');
       }
       break;
 
@@ -434,6 +451,12 @@ function handleRadarTick(data) {
   if (data.balanceUSD !== undefined) state.trading.balanceUSD = data.balanceUSD;
   if (data.balanceVND !== undefined) state.trading.balanceVND = data.balanceVND;
   if (data.realizedPnlUSD !== undefined) state.trading.realizedPnlUSD = data.realizedPnlUSD;
+  if (data.todayPnlUSD !== undefined) state.trading.todayPnlUSD = data.todayPnlUSD;
+  if (data.todayPnlVND !== undefined) state.trading.todayPnlVND = data.todayPnlVND;
+  if (data.todayTrades !== undefined) state.trading.todayTrades = data.todayTrades;
+  if (data.todayWins !== undefined) state.trading.todayWins = data.todayWins;
+  if (data.todayLosses !== undefined) state.trading.todayLosses = data.todayLosses;
+  if (data.currentDateKey !== undefined) state.trading.currentDateKey = data.currentDateKey;
   if (data.stats) state.trading.stats = data.stats;
 
   renderPosition();
@@ -442,6 +465,7 @@ function handleRadarTick(data) {
 
 function renderAll() {
   renderPerformance();
+  renderDailyRecords();
   renderLeverage();
   renderPosition();
   renderRadarTable();
@@ -489,32 +513,77 @@ function renderPerformance() {
     btn.classList.toggle('active', v === capVND);
   });
 
-  // Realized Net Passive Profit
+  // 1. Today's Passive Profit (Resets every day at 00:00)
+  const todayProfit = t.todayPnlUSD !== undefined ? t.todayPnlUSD : 0;
+  const isTodayProfit = todayProfit >= 0;
+  const todayVND = Math.round(todayProfit * rate);
+
+  const elTodayUsd = document.getElementById('today-pnl-usd');
+  const elTodayVnd = document.getElementById('today-pnl-vnd');
+  if (elTodayUsd) {
+    elTodayUsd.textContent = (isTodayProfit ? '+' : '') + '$' + todayProfit.toFixed(2);
+    elTodayUsd.className = 'p-main-val mono ' + (isTodayProfit ? 'highlight-green' : 'highlight-red');
+  }
+  if (elTodayVnd) {
+    elTodayVnd.textContent = `≈ ${isTodayProfit ? '+' : ''}${todayVND.toLocaleString('vi-VN')} đ (Tự reset lúc 00:00)`;
+  }
+
+  // 2. Lifetime Realized Net Passive Profit
   const pnlUSD = t.realizedPnlUSD || 0;
   const isProfit = pnlUSD >= 0;
   const pnlVND = Math.round(pnlUSD * rate);
 
-  tradePnlUsd.textContent = (isProfit ? '+' : '') + '$' + pnlUSD.toFixed(2);
-  tradePnlUsd.className = 'p-main-val mono ' + (isProfit ? 'highlight-green' : 'highlight-red');
-  tradePnlVnd.textContent = '≈ ' + (isProfit ? '+' : '') + pnlVND.toLocaleString('vi-VN') + ' đ (Tự động cộng dồn lãi kép)';
+  if (tradePnlUsd) {
+    tradePnlUsd.textContent = (isProfit ? '+' : '') + '$' + pnlUSD.toFixed(2);
+    tradePnlUsd.className = isProfit ? 'highlight-green' : 'highlight-red';
+  }
+  if (tradePnlVnd) {
+    tradePnlVnd.textContent = (isProfit ? '+' : '') + pnlVND.toLocaleString('vi-VN') + ' đ';
+  }
 
-  // Daily Passive Income Goal Progress
+  // 3. Daily Passive Income Goal Progress (Based on Today's 00:00 PnL)
   const dailyTarget = cfg.dailyTargetUSD || 10.0;
-  const todayProfit = t.todayPnlUSD !== undefined ? t.todayPnlUSD : Math.max(0, pnlUSD);
   const targetVND = Math.round(dailyTarget * rate);
 
-  goalTargetLabel.textContent = `$${dailyTarget.toFixed(2)} (~${(targetVND / 1000).toFixed(0)}k đ)`;
+  if (goalTargetLabel) {
+    goalTargetLabel.textContent = `$${dailyTarget.toFixed(2)} (~${(targetVND / 1000).toFixed(0)}k đ)`;
+  }
 
-  const pct = Math.min(100, Math.max(0, (todayProfit / dailyTarget) * 100));
-  goalProgressFill.style.width = pct.toFixed(1) + '%';
-  goalProgressPct.textContent = `${pct.toFixed(0)}% Đạt (${todayProfit >= 0 ? '+' : ''}$${todayProfit.toFixed(2)})`;
+  const pct = Math.min(100, Math.max(0, (Math.max(0, todayProfit) / dailyTarget) * 100));
+  if (goalProgressFill) goalProgressFill.style.width = pct.toFixed(1) + '%';
+  if (goalProgressPct) goalProgressPct.textContent = `${pct.toFixed(0)}% Đạt (${todayProfit >= 0 ? '+' : ''}$${todayProfit.toFixed(2)})`;
 
-  const remaining = Math.max(0, dailyTarget - todayProfit);
-  goalProgressRem.textContent = remaining <= 0 ? '🎉 Đạt mục tiêu ngày!' : `Còn thiếu $${remaining.toFixed(2)}`;
+  const remaining = Math.max(0, dailyTarget - Math.max(0, todayProfit));
+  if (goalProgressRem) goalProgressRem.textContent = remaining <= 0 ? '🎉 Đạt mục tiêu ngày!' : `Còn thiếu $${remaining.toFixed(2)}`;
 
-  // Winrate and counts
+  // Winrate and counts (Today + Lifetime)
   const stats = t.stats || {};
-  tradeCounts.textContent = `${stats.wins || 0} Thắng / ${stats.losses || 0} Thua (Tỷ lệ thắng: ${stats.winRate || 0}%)`;
+  const tWins = t.todayWins !== undefined ? t.todayWins : (stats.wins || 0);
+  const tLosses = t.todayLosses !== undefined ? t.todayLosses : (stats.losses || 0);
+  if (tradeCounts) {
+    tradeCounts.textContent = `Hôm nay: ${tWins} Thắng / ${tLosses} Thua • Tổng Winrate: ${stats.winRate || 100}% (${stats.totalTrades || 0} lệnh)`;
+  }
+}
+
+function renderDailyRecords() {
+  const strip = document.getElementById('daily-records-strip');
+  if (!strip) return;
+  const records = state.dailyPnlRecords || [];
+  if (records.length === 0) {
+    strip.innerHTML = `<div class="daily-record-pill"><div class="dr-date">🕛 Sổ Chốt 00:00 Hằng Ngày</div><div class="dr-val highlight-green">Tự động lưu lúc 00:00 đêm</div></div>`;
+    return;
+  }
+  strip.innerHTML = records.slice(0, 10).map(r => {
+    const isPos = (r.pnlUSD || 0) >= 0;
+    const sign = isPos ? '+' : '';
+    const cls = isPos ? 'highlight-green' : 'highlight-red';
+    return `
+      <div class="daily-record-pill mono">
+        <div class="dr-date">📅 Ngày ${escapeHtml(r.date)}</div>
+        <div class="dr-val ${cls}">${sign}$${(r.pnlUSD || 0).toFixed(2)} (${sign}${(r.pnlVND || 0).toLocaleString('vi-VN')} đ)</div>
+      </div>
+    `;
+  }).join('');
 }
 
 // Render Leverage Buttons
@@ -537,6 +606,9 @@ function renderPosition() {
   const positions = Array.isArray(t.activePositions) && t.activePositions.length > 0
     ? t.activePositions
     : (t.activePosition ? [t.activePosition] : []);
+
+  const navPosCount = document.getElementById('nav-pos-count');
+  if (navPosCount) navPosCount.textContent = `${positions.length}/3`;
 
   if (positions.length === 0) {
     posStatusBadge.textContent = 'CHƯA MỞ LỆNH (0/3)';
@@ -1253,6 +1325,8 @@ async function analyzeCoinCausal(symbol, scrollAndSpeak = false) {
     if (elPrompt) elPrompt.textContent = a.llmPromptContext || '';
 
     if (scrollAndSpeak) {
+      // Ensure knowledge section is visible if user is on another workspace tab
+      switchWorkspaceView('all', false);
       const kbSection = document.getElementById('kb-section');
       if (kbSection) kbSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
@@ -1358,11 +1432,95 @@ function setupKnowledgeBaseControls() {
   }
 }
 
+// --- SMART WORKSPACE TABS & 00:00 MIDNIGHT COUNTDOWN TIMER ---
+function switchWorkspaceView(viewName = 'all', updateTabUI = true) {
+  const tabsWrap = document.getElementById('workspace-tabs');
+  if (updateTabUI && tabsWrap) {
+    tabsWrap.querySelectorAll('.ws-tab').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-view') === viewName);
+    });
+  }
+
+  document.querySelectorAll('.ws-section').forEach(sec => {
+    const secName = sec.getAttribute('data-section');
+    if (viewName === 'all' || secName === viewName) {
+      sec.classList.remove('hidden-view');
+    } else {
+      sec.classList.add('hidden-view');
+    }
+  });
+}
+
+function setupWorkspaceAndDailyReset() {
+  const tabsWrap = document.getElementById('workspace-tabs');
+  if (tabsWrap) {
+    tabsWrap.querySelectorAll('.ws-tab').forEach(btn => {
+      btn.onclick = () => {
+        const view = btn.getAttribute('data-view') || 'all';
+        switchWorkspaceView(view, true);
+      };
+    });
+  }
+
+  const btnManualReset = document.getElementById('btn-manual-daily-reset');
+  if (btnManualReset) {
+    btnManualReset.onclick = async () => {
+      if (!confirm('Chốt sổ thu nhập hôm nay vào Lịch sử Sổ Ngày và đặt lại bộ đếm Thu Nhập Hôm Nay về $0.00?')) return;
+      try {
+        const res = await authFetch('/api/trading/reset-daily', { method: 'POST' });
+        const json = await res.json();
+        if (json.success) {
+          if (json.trading) state.trading = json.trading;
+          if (json.dailyPnlRecords) state.dailyPnlRecords = json.dailyPnlRecords;
+          renderPerformance();
+          renderDailyRecords();
+        }
+      } catch (e) {
+        alert('Lỗi reset thu nhập ngày: ' + e.message);
+      }
+    };
+  }
+
+  // Live 1s countdown clock to 00:00:00 (Vietnam Time UTC+7)
+  function updateMidnightClock() {
+    const now = new Date();
+    const vnMs = now.getTime() + 7 * 3600 * 1000;
+    const vnDate = new Date(vnMs);
+
+    const yyyy = vnDate.getUTCFullYear();
+    const mm = String(vnDate.getUTCMonth() + 1).padStart(2, '0');
+    const dd = String(vnDate.getUTCDate()).padStart(2, '0');
+
+    const elSessionDate = document.getElementById('current-session-date');
+    if (elSessionDate) {
+      elSessionDate.textContent = `${dd}/${mm}/${yyyy} (Reset 00:00)`;
+    }
+
+    const hrs = vnDate.getUTCHours();
+    const mins = vnDate.getUTCMinutes();
+    const secs = vnDate.getUTCSeconds();
+
+    const remTotalSec = Math.max(0, 86400 - (hrs * 3600 + mins * 60 + secs));
+    const rH = String(Math.floor(remTotalSec / 3600)).padStart(2, '0');
+    const rM = String(Math.floor((remTotalSec % 3600) / 60)).padStart(2, '0');
+    const rS = String(remTotalSec % 60).padStart(2, '0');
+
+    const elCountdown = document.getElementById('midnight-countdown');
+    if (elCountdown) {
+      elCountdown.textContent = `🕛 Reset 00:00 sau ${rH}:${rM}:${rS}`;
+    }
+  }
+
+  updateMidnightClock();
+  setInterval(updateMidnightClock, 1000);
+}
+
 setupPinKeypad();
 setupCapitalButtons();
 setupLeverageButtons();
 setupSettingsModal();
 setupKnowledgeBaseControls();
+setupWorkspaceAndDailyReset();
 loadKnowledgeBaseUI();
 initPoodle3D();
 

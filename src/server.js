@@ -104,6 +104,7 @@ wss.on('connection', (ws, req) => {
           stats: { totalTrades: 0, wins: 0, losses: 0, winRate: 0 }
         },
         config: db.getConfig(),
+        dailyPnlRecords: isAuth ? db.getDailyPnlRecords() : [],
         knowledgeSummary: contextRetriever.getKnowledgeSummary(),
         marketRadar: Object.values(quantEngine.marketData),
         isAutoTrading: quantEngine.isAutoTrading,
@@ -136,8 +137,23 @@ wss.on('connection', (ws, req) => {
   });
 });
 
-// Periodic system pulse (every 3 seconds)
+// Periodic system pulse (every 3 seconds) + Automatic 00:00 Midnight Daily Income Reset
 setInterval(() => {
+  const resetCheck = db.checkDailyReset(false);
+  if (resetCheck && resetCheck.resetOccurred) {
+    broadcast({
+      type: 'DAILY_INCOME_RESET',
+      data: {
+        previousDate: resetCheck.previousDate,
+        archivedUSD: resetCheck.archivedUSD,
+        archivedVND: resetCheck.archivedVND,
+        currentDateKey: resetCheck.currentDateKey,
+        trading: resetCheck.trading,
+        dailyPnlRecords: resetCheck.dailyPnlRecords
+      }
+    });
+  }
+
   broadcast({
     type: 'SYSTEM_PULSE',
     data: {
@@ -251,6 +267,26 @@ app.post('/api/trading/capital', requireAuth, (req, res) => {
   const { amountVND } = req.body;
   quantEngine.setCapital(amountVND);
   res.json({ success: true, trading: db.getTrading() });
+});
+
+app.post('/api/trading/reset-daily', requireAuth, (req, res) => {
+  const result = db.checkDailyReset(true);
+  broadcast({
+    type: 'DAILY_INCOME_RESET',
+    data: {
+      previousDate: result.previousDate,
+      archivedUSD: result.archivedUSD,
+      archivedVND: result.archivedVND,
+      currentDateKey: result.currentDateKey,
+      trading: db.getTrading(),
+      dailyPnlRecords: db.getDailyPnlRecords()
+    }
+  });
+  res.json({
+    success: true,
+    trading: db.getTrading(),
+    dailyPnlRecords: db.getDailyPnlRecords()
+  });
 });
 
 app.post('/api/trading/leverage', requireAuth, (req, res) => {
