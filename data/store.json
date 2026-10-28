@@ -1,6 +1,6 @@
 {
   "owner": "Personal Terminal (Private)",
-  "publicUrl": "https://amp-surprise-invited-rocks.trycloudflare.com",
+  "publicUrl": "https://affiliation-costumes-transformation-pete.trycloudflare.com",
   "config": {
     "exchangeRate": 25400,
     "dailyTargetUSD": 10,
@@ -11,36 +11,372 @@
   "trading": {
     "initialCapitalVND": 1000000,
     "initialCapitalUSD": 39.37,
-    "balanceVND": 1040638,
-    "balanceUSD": 40.97,
-    "realizedPnlUSD": 1.6,
-    "realizedPnlVND": 40640,
-    "todayPnlUSD": 1.6,
-    "todayPnlVND": 40640,
+    "balanceVND": 1045972,
+    "balanceUSD": 41.18,
+    "realizedPnlUSD": 1.81,
+    "realizedPnlVND": 45974,
+    "todayPnlUSD": 0.03,
+    "todayPnlVND": 762,
     "leverage": 3,
     "mode": "paper",
     "symbol": "BTCUSDT",
     "activePosition": {
-      "id": "POS-5350",
-      "symbol": "SPCXBUSDT",
-      "name": "SPCXB",
+      "id": "POS-8771",
+      "symbol": "USD1USDT",
+      "name": "USD1",
       "icon": "🪙",
       "side": "LONG",
-      "entryPrice": 144.49,
-      "currentPrice": 144.41,
-      "marginUSD": 7.38,
-      "sizeUSD": 22.14,
+      "entryPrice": 1.00008,
+      "currentPrice": 1.00007,
+      "marginUSD": 7.4,
+      "sizeUSD": 22.2,
       "leverage": 3,
-      "stopLoss": 143.33,
-      "takeProfit": 146.22,
-      "unrealizedPnlUSD": -0.013,
-      "unrealizedPnlPercent": -0.17,
+      "stopLoss": 0.99,
+      "takeProfit": 1.01,
+      "unrealizedPnlUSD": 0,
+      "unrealizedPnlPercent": 0,
       "isBreakevenProtected": false,
       "isProfitLocked": false,
-      "reason": "AI All-Market Scanner (Top 1/415 coin): Điểm 99/100 [🔥 Siêu Quá Bán (Mean-Reversion Rebound)]",
-      "openTime": "2026-10-28T15:18:05.350Z"
+      "reason": "AI All-Market Scanner (Top 1/411 coin): Điểm 99/100 [🔥 [DERIV-03 + WYK-01] Capitulation OI Flush & Wyckoff Spring (VSA Stopping Vol)]",
+      "causalRuleId": "DERIV-03",
+      "causalTitle": "Capitulation Leverage Flush & OI Reset V-Bounce",
+      "mmBehavior": "Quá trình dọn dẹp đòn bẩy (Leverage Flush) đã hoàn tất. MM đã gom xong toàn bộ thanh khoản giá rẻ từ các lệnh bị cháy. Khi không còn lệnh Long nào để ép bán tiếp, áp lực cung cưỡng bức biến mất hoàn toàn. Composite Man đã vét sạch nguồn cung bán tháo của đám đông ở dưới hỗ trợ để chuẩn bị đánh thốc vào Pha D (Sign of Strength - SOS). Điểm hút thanh lý: Cụm thanh lý Short (Short Liquidation Cluster) dày đặc phía trên vùng $1.02.",
+      "kellyMarginPct": 18,
+      "atrSlPct": 0.68,
+      "rrRatio": 1.8,
+      "openTime": "2026-10-28T17:20:38.771Z"
     },
     "tradesHistory": [
+      {
+        "id": "POS-2902",
+        "symbol": "HAEDALUSDT",
+        "side": "LONG",
+        "entryPrice": 0.02688,
+        "closePrice": 0.02692,
+        "marginUSD": 7.41,
+        "sizeUSD": 22.23,
+        "leverage": 3,
+        "pnlUSD": 0.033,
+        "pnlPercent": 0.45,
+        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
+        "openTime": "2026-10-28T17:21:42.902Z",
+        "closeTime": "2026-10-28T17:22:43.335Z"
+      },
+      {
+        "id": "POS-8856",
+        "symbol": "ZECUSDT",
+        "side": "LONG",
+        "entryPrice": 1269.3,
+        "closePrice": 1269.23,
+        "marginUSD": 7.4,
+        "sizeUSD": 22.2,
+        "leverage": 3,
+        "pnlUSD": -0.001,
+        "pnlPercent": -0.01,
+        "closeReason": "Cắt lỗ an toàn (Stop Loss)",
+        "openTime": "2026-10-28T17:21:18.856Z",
+        "closeTime": "2026-10-28T17:22:10.338Z"
+      },
+      {
+        "id": "POS-2337",
+        "symbol": "SOLUSDT",
+        "side": "LONG",
+        "entryPrice": 101.01,
+        "closePrice": 101.09,
+        "marginUSD": 7.4,
+        "sizeUSD": 22.2,
+        "leverage": 3,
+        "pnlUSD": 0.018,
+        "pnlPercent": 0.24,
+        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
+        "openTime": "2026-10-28T17:20:02.337Z",
+        "closeTime": "2026-10-28T17:21:39.338Z"
+      },
+      {
+        "id": "POS-8336",
+        "symbol": "HAEDALUSDT",
+        "side": "LONG",
+        "entryPrice": 0.02696,
+        "closePrice": 0.02698,
+        "marginUSD": 7.4,
+        "sizeUSD": 22.2,
+        "leverage": 3,
+        "pnlUSD": 0.016,
+        "pnlPercent": 0.22,
+        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
+        "openTime": "2026-10-28T17:19:38.336Z",
+        "closeTime": "2026-10-28T17:21:16.335Z"
+      },
+      {
+        "id": "POS-6207",
+        "symbol": "CRCLBUSDT",
+        "side": "LONG",
+        "entryPrice": 79.52,
+        "closePrice": 79.54,
+        "marginUSD": 7.39,
+        "sizeUSD": 22.17,
+        "leverage": 3,
+        "pnlUSD": 0.006,
+        "pnlPercent": 0.08,
+        "closeReason": "Xoay vòng vốn (Đổi sang coin có sóng mạnh hơn)",
+        "openTime": "2026-10-28T17:18:06.207Z",
+        "closeTime": "2026-10-28T17:20:36.335Z"
+      },
+      {
+        "id": "POS-0134",
+        "symbol": "XAUTUSDT",
+        "side": "LONG",
+        "entryPrice": 4038.83,
+        "closePrice": 4038.24,
+        "marginUSD": 7.39,
+        "sizeUSD": 22.17,
+        "leverage": 3,
+        "pnlUSD": -0.003,
+        "pnlPercent": -0.04,
+        "closeReason": "Xoay vòng vốn (Đổi sang coin có sóng mạnh hơn)",
+        "openTime": "2026-10-28T17:17:30.134Z",
+        "closeTime": "2026-10-28T17:20:01.336Z"
+      },
+      {
+        "id": "POS-8117",
+        "symbol": "HYPEUSDT",
+        "side": "LONG",
+        "entryPrice": 80.14,
+        "closePrice": 80.2,
+        "marginUSD": 7.38,
+        "sizeUSD": 22.14,
+        "leverage": 3,
+        "pnlUSD": 0.017,
+        "pnlPercent": 0.23,
+        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
+        "openTime": "2026-10-28T17:17:18.117Z",
+        "closeTime": "2026-10-28T17:19:37.340Z"
+      },
+      {
+        "id": "POS-3994",
+        "symbol": "SOXLBUSDT",
+        "side": "SHORT",
+        "entryPrice": 104.84,
+        "closePrice": 104.77,
+        "marginUSD": 7.39,
+        "sizeUSD": 22.17,
+        "leverage": 3,
+        "pnlUSD": 0.015,
+        "pnlPercent": 0.2,
+        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
+        "openTime": "2026-10-28T17:15:53.994Z",
+        "closeTime": "2026-10-28T17:18:04.336Z"
+      },
+      {
+        "id": "POS-3993",
+        "symbol": "PUMPUSDT",
+        "side": "LONG",
+        "entryPrice": 0.004185,
+        "closePrice": 0.004194,
+        "marginUSD": 7.39,
+        "sizeUSD": 22.17,
+        "leverage": 3,
+        "pnlUSD": 0.048,
+        "pnlPercent": 0.65,
+        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
+        "openTime": "2026-10-28T17:16:13.993Z",
+        "closeTime": "2026-10-28T17:17:28.337Z"
+      },
+      {
+        "id": "POS-5779",
+        "symbol": "SPCXBUSDT",
+        "side": "LONG",
+        "entryPrice": 144.6,
+        "closePrice": 144.4,
+        "marginUSD": 7.39,
+        "sizeUSD": 22.17,
+        "leverage": 3,
+        "pnlUSD": -0.031,
+        "pnlPercent": -0.42,
+        "closeReason": "Xoay vòng vốn (Đổi sang coin có sóng mạnh hơn)",
+        "openTime": "2026-10-28T17:14:45.779Z",
+        "closeTime": "2026-10-28T17:17:16.966Z"
+      },
+      {
+        "id": "POS-7685",
+        "symbol": "ZECUSDT",
+        "side": "LONG",
+        "entryPrice": 1266.56,
+        "closePrice": 1267.4,
+        "marginUSD": 7.39,
+        "sizeUSD": 22.17,
+        "leverage": 3,
+        "pnlUSD": 0.015,
+        "pnlPercent": 0.2,
+        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
+        "openTime": "2026-10-28T17:13:57.685Z",
+        "closeTime": "2026-10-28T17:16:13.336Z"
+      },
+      {
+        "id": "POS-1589",
+        "symbol": "SOLUSDT",
+        "side": "LONG",
+        "entryPrice": 101.11,
+        "closePrice": 101.05,
+        "marginUSD": 7.39,
+        "sizeUSD": 22.17,
+        "leverage": 3,
+        "pnlUSD": -0.013,
+        "pnlPercent": -0.18,
+        "closeReason": "Xoay vòng vốn (Đổi sang coin có sóng mạnh hơn)",
+        "openTime": "2026-10-28T17:13:21.589Z",
+        "closeTime": "2026-10-28T17:15:52.425Z"
+      },
+      {
+        "id": "POS-3467",
+        "symbol": "UUSDT",
+        "side": "LONG",
+        "entryPrice": 1.0002,
+        "closePrice": 1.0003,
+        "marginUSD": 7.38,
+        "sizeUSD": 22.14,
+        "leverage": 3,
+        "pnlUSD": 0.002,
+        "pnlPercent": 0.03,
+        "closeReason": "Xoay vòng vốn (Đổi sang coin có sóng mạnh hơn)",
+        "openTime": "2026-10-28T17:12:13.467Z",
+        "closeTime": "2026-10-28T17:14:44.552Z"
+      },
+      {
+        "id": "POS-9468",
+        "symbol": "LTCUSDT",
+        "side": "SHORT",
+        "entryPrice": 59.31,
+        "closePrice": 59.27,
+        "marginUSD": 7.38,
+        "sizeUSD": 22.14,
+        "leverage": 3,
+        "pnlUSD": 0.015,
+        "pnlPercent": 0.2,
+        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
+        "openTime": "2026-10-28T17:12:09.468Z",
+        "closeTime": "2026-10-28T17:13:54.337Z"
+      },
+      {
+        "id": "POS-7483",
+        "symbol": "SOXLBUSDT",
+        "side": "SHORT",
+        "entryPrice": 105.07,
+        "closePrice": 104.99,
+        "marginUSD": 7.38,
+        "sizeUSD": 22.14,
+        "leverage": 3,
+        "pnlUSD": 0.017,
+        "pnlPercent": 0.23,
+        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
+        "openTime": "2026-10-28T17:12:17.483Z",
+        "closeTime": "2026-10-28T17:13:18.461Z"
+      },
+      {
+        "id": "POS-7301",
+        "symbol": "ETHUSDT",
+        "side": "LONG",
+        "entryPrice": 2332.49,
+        "closePrice": 2334.16,
+        "marginUSD": 7.38,
+        "sizeUSD": 22.14,
+        "leverage": 3,
+        "pnlUSD": 0.016,
+        "pnlPercent": 0.22,
+        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
+        "openTime": "2026-10-28T17:10:37.301Z",
+        "closeTime": "2026-10-28T17:12:15.338Z"
+      },
+      {
+        "id": "POS-1189",
+        "symbol": "ZECUSDT",
+        "side": "LONG",
+        "entryPrice": 1269.4,
+        "closePrice": 1268.57,
+        "marginUSD": 7.38,
+        "sizeUSD": 22.14,
+        "leverage": 3,
+        "pnlUSD": -0.014,
+        "pnlPercent": -0.19,
+        "closeReason": "Xoay vòng vốn (Đổi sang coin có sóng mạnh hơn)",
+        "openTime": "2026-10-28T17:09:41.189Z",
+        "closeTime": "2026-10-28T17:12:11.337Z"
+      },
+      {
+        "id": "POS-7181",
+        "symbol": "BTCUSDT",
+        "side": "LONG",
+        "entryPrice": 80514.02,
+        "closePrice": 80514.02,
+        "marginUSD": 7.38,
+        "sizeUSD": 22.14,
+        "leverage": 3,
+        "pnlUSD": 0,
+        "pnlPercent": 0,
+        "closeReason": "Xoay vòng vốn (Đổi sang coin có sóng mạnh hơn)",
+        "openTime": "2026-10-28T17:09:37.181Z",
+        "closeTime": "2026-10-28T17:12:07.336Z"
+      },
+      {
+        "id": "POS-3172",
+        "symbol": "SOXLBUSDT",
+        "side": "SHORT",
+        "entryPrice": 105.29,
+        "closePrice": 105.16,
+        "marginUSD": 7.38,
+        "sizeUSD": 22.14,
+        "leverage": 3,
+        "pnlUSD": 0.027,
+        "pnlPercent": 0.37,
+        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
+        "openTime": "2026-10-28T17:09:33.172Z",
+        "closeTime": "2026-10-28T17:10:33.335Z"
+      },
+      {
+        "id": "POS-9351",
+        "symbol": "XRPUSDT",
+        "side": "LONG",
+        "entryPrice": 1.3146,
+        "closePrice": 1.3132,
+        "marginUSD": 7.38,
+        "sizeUSD": 22.14,
+        "leverage": 3,
+        "pnlUSD": -0.024,
+        "pnlPercent": -0.33,
+        "closeReason": "Xoay vòng vốn (Đổi sang coin có sóng mạnh hơn)",
+        "openTime": "2026-10-28T15:18:09.351Z",
+        "closeTime": "2026-10-28T17:09:30.692Z"
+      },
+      {
+        "id": "POS-5350",
+        "symbol": "SPCXBUSDT",
+        "side": "LONG",
+        "entryPrice": 144.49,
+        "closePrice": 144.66,
+        "marginUSD": 7.38,
+        "sizeUSD": 22.14,
+        "leverage": 3,
+        "pnlUSD": 0.026,
+        "pnlPercent": 0.35,
+        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
+        "openTime": "2026-10-28T15:18:05.350Z",
+        "closeTime": "2026-10-28T17:09:30.669Z"
+      },
+      {
+        "id": "POS-7595",
+        "symbol": "USD1USDT",
+        "side": "LONG",
+        "entryPrice": 1.00014,
+        "closePrice": 1.00008,
+        "marginUSD": 7.37,
+        "sizeUSD": 22.11,
+        "leverage": 3,
+        "pnlUSD": -0.001,
+        "pnlPercent": -0.01,
+        "closeReason": "Xoay vòng vốn (Đổi sang coin có sóng mạnh hơn)",
+        "openTime": "2026-10-28T15:20:17.595Z",
+        "closeTime": "2026-10-28T17:09:30.339Z"
+      },
       {
         "id": "POS-3456",
         "symbol": "SOLUSDT",
@@ -1210,398 +1546,28 @@
         "closeReason": "Xoay vòng vốn (Đổi sang coin có sóng mạnh hơn)",
         "openTime": "2026-10-28T14:31:14.244Z",
         "closeTime": "2026-10-28T14:33:44.344Z"
-      },
-      {
-        "id": "POS-6338",
-        "symbol": "SOLUSDT",
-        "side": "LONG",
-        "entryPrice": 100.63,
-        "closePrice": 100.7,
-        "marginUSD": 7.28,
-        "sizeUSD": 21.84,
-        "leverage": 3,
-        "pnlUSD": 0.015,
-        "pnlPercent": 0.21,
-        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
-        "openTime": "2026-10-28T14:32:06.338Z",
-        "closeTime": "2026-10-28T14:33:35.340Z"
-      },
-      {
-        "id": "POS-6162",
-        "symbol": "SKHYBUSDT",
-        "side": "SHORT",
-        "entryPrice": 160.73,
-        "closePrice": 160.55,
-        "marginUSD": 7.26,
-        "sizeUSD": 21.78,
-        "leverage": 3,
-        "pnlUSD": 0.024,
-        "pnlPercent": 0.33,
-        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
-        "openTime": "2026-10-28T14:30:46.162Z",
-        "closeTime": "2026-10-28T14:32:16.338Z"
-      },
-      {
-        "id": "POS-2198",
-        "symbol": "SNDKBUSDT",
-        "side": "SHORT",
-        "entryPrice": 1363.96,
-        "closePrice": 1362.88,
-        "marginUSD": 7.26,
-        "sizeUSD": 21.78,
-        "leverage": 3,
-        "pnlUSD": 0.017,
-        "pnlPercent": 0.23,
-        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
-        "openTime": "2026-10-28T14:30:42.198Z",
-        "closeTime": "2026-10-28T14:32:04.338Z"
-      },
-      {
-        "id": "POS-0043",
-        "symbol": "ENAUSDT",
-        "side": "LONG",
-        "entryPrice": 0.194,
-        "closePrice": 0.1944,
-        "marginUSD": 7.26,
-        "sizeUSD": 21.78,
-        "leverage": 3,
-        "pnlUSD": 0.045,
-        "pnlPercent": 0.62,
-        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
-        "openTime": "2026-10-28T14:30:10.043Z",
-        "closeTime": "2026-10-28T14:31:10.528Z"
-      },
-      {
-        "id": "POS-9900",
-        "symbol": "XRPUSDT",
-        "side": "LONG",
-        "entryPrice": 1.3119,
-        "closePrice": 1.3128,
-        "marginUSD": 7.25,
-        "sizeUSD": 21.75,
-        "leverage": 3,
-        "pnlUSD": 0.015,
-        "pnlPercent": 0.21,
-        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
-        "openTime": "2026-10-28T14:28:49.900Z",
-        "closeTime": "2026-10-28T14:30:42.337Z"
-      },
-      {
-        "id": "POS-9963",
-        "symbol": "BTCUSDT",
-        "side": "LONG",
-        "entryPrice": 80551.85,
-        "closePrice": 80604.86,
-        "marginUSD": 7.26,
-        "sizeUSD": 21.78,
-        "leverage": 3,
-        "pnlUSD": 0.014,
-        "pnlPercent": 0.19,
-        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
-        "openTime": "2026-10-28T14:29:29.963Z",
-        "closeTime": "2026-10-28T14:30:40.336Z"
-      },
-      {
-        "id": "POS-5926",
-        "symbol": "ZECUSDT",
-        "side": "LONG",
-        "entryPrice": 1272.2,
-        "closePrice": 1273.69,
-        "marginUSD": 7.25,
-        "sizeUSD": 21.75,
-        "leverage": 3,
-        "pnlUSD": 0.025,
-        "pnlPercent": 0.34,
-        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
-        "openTime": "2026-10-28T14:29:05.926Z",
-        "closeTime": "2026-10-28T14:30:06.335Z"
-      },
-      {
-        "id": "POS-3827",
-        "symbol": "SKHYBUSDT",
-        "side": "SHORT",
-        "entryPrice": 160.67,
-        "closePrice": 160.54,
-        "marginUSD": 7.24,
-        "sizeUSD": 21.72,
-        "leverage": 3,
-        "pnlUSD": 0.018,
-        "pnlPercent": 0.25,
-        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
-        "openTime": "2026-10-28T14:28:13.827Z",
-        "closeTime": "2026-10-28T14:29:26.335Z"
-      },
-      {
-        "id": "POS-1802",
-        "symbol": "NEARUSDT",
-        "side": "LONG",
-        "entryPrice": 4.545,
-        "closePrice": 4.556,
-        "marginUSD": 7.24,
-        "sizeUSD": 21.72,
-        "leverage": 3,
-        "pnlUSD": 0.053,
-        "pnlPercent": 0.73,
-        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
-        "openTime": "2026-10-28T14:28:01.802Z",
-        "closeTime": "2026-10-28T14:29:02.335Z"
-      },
-      {
-        "id": "POS-5765",
-        "symbol": "ETHUSDT",
-        "side": "LONG",
-        "entryPrice": 2327.45,
-        "closePrice": 2330.15,
-        "marginUSD": 7.24,
-        "sizeUSD": 21.72,
-        "leverage": 3,
-        "pnlUSD": 0.025,
-        "pnlPercent": 0.35,
-        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
-        "openTime": "2026-10-28T14:27:45.765Z",
-        "closeTime": "2026-10-28T14:28:46.334Z"
-      },
-      {
-        "id": "POS-5541",
-        "symbol": "XRPUSDT",
-        "side": "LONG",
-        "entryPrice": 1.3104,
-        "closePrice": 1.3115,
-        "marginUSD": 7.25,
-        "sizeUSD": 21.75,
-        "leverage": 3,
-        "pnlUSD": 0.018,
-        "pnlPercent": 0.25,
-        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
-        "openTime": "2026-10-28T14:26:45.541Z",
-        "closeTime": "2026-10-28T14:28:12.334Z"
-      },
-      {
-        "id": "POS-9389",
-        "symbol": "NEARUSDT",
-        "side": "LONG",
-        "entryPrice": 4.553,
-        "closePrice": 4.545,
-        "marginUSD": 7.25,
-        "sizeUSD": 21.75,
-        "leverage": 3,
-        "pnlUSD": -0.038,
-        "pnlPercent": -0.52,
-        "closeReason": "Xoay vòng vốn (Đổi sang coin có sóng mạnh hơn)",
-        "openTime": "2026-10-28T14:25:29.389Z",
-        "closeTime": "2026-10-28T14:28:00.444Z"
-      },
-      {
-        "id": "POS-3320",
-        "symbol": "ETHUSDT",
-        "side": "LONG",
-        "entryPrice": 2329.24,
-        "closePrice": 2327.45,
-        "marginUSD": 7.24,
-        "sizeUSD": 21.72,
-        "leverage": 3,
-        "pnlUSD": -0.017,
-        "pnlPercent": -0.23,
-        "closeReason": "Xoay vòng vốn (Đổi sang coin có sóng mạnh hơn)",
-        "openTime": "2026-10-28T14:25:13.320Z",
-        "closeTime": "2026-10-28T14:27:43.334Z"
-      },
-      {
-        "id": "POS-3160",
-        "symbol": "USD1USDT",
-        "side": "LONG",
-        "entryPrice": 1.00016,
-        "closePrice": 1.00016,
-        "marginUSD": 7.23,
-        "sizeUSD": 21.69,
-        "leverage": 3,
-        "pnlUSD": 0,
-        "pnlPercent": 0,
-        "closeReason": "Xoay vòng vốn (Đổi sang coin có sóng mạnh hơn)",
-        "openTime": "2026-10-28T14:24:13.160Z",
-        "closeTime": "2026-10-28T14:26:43.277Z"
-      },
-      {
-        "id": "POS-9201",
-        "symbol": "SOXLBUSDT",
-        "side": "SHORT",
-        "entryPrice": 103.84,
-        "closePrice": 103.68,
-        "marginUSD": 7.24,
-        "sizeUSD": 21.72,
-        "leverage": 3,
-        "pnlUSD": 0.033,
-        "pnlPercent": 0.46,
-        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
-        "openTime": "2026-10-28T14:24:29.201Z",
-        "closeTime": "2026-10-28T14:25:29.345Z"
-      },
-      {
-        "id": "POS-9162",
-        "symbol": "SUIUSDT",
-        "side": "LONG",
-        "entryPrice": 0.9176,
-        "closePrice": 0.9185,
-        "marginUSD": 7.24,
-        "sizeUSD": 21.72,
-        "leverage": 3,
-        "pnlUSD": 0.021,
-        "pnlPercent": 0.29,
-        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
-        "openTime": "2026-10-28T14:24:09.162Z",
-        "closeTime": "2026-10-28T14:25:09.477Z"
-      },
-      {
-        "id": "POS-2612",
-        "symbol": "ETHUSDT",
-        "side": "LONG",
-        "entryPrice": 2327.13,
-        "closePrice": 2329.07,
-        "marginUSD": 7.24,
-        "sizeUSD": 21.72,
-        "leverage": 3,
-        "pnlUSD": 0.018,
-        "pnlPercent": 0.25,
-        "closeReason": "Chốt lãi nhanh Scalp (+Lãi tươi)",
-        "openTime": "2026-10-28T14:22:32.612Z",
-        "closeTime": "2026-10-28T14:24:28.335Z"
-      },
-      {
-        "id": "POS-0433",
-        "symbol": "SOLUSDT",
-        "side": "LONG",
-        "entryPrice": 100.62,
-        "closePrice": 100.54,
-        "marginUSD": 7.24,
-        "sizeUSD": 21.72,
-        "leverage": 3,
-        "pnlUSD": -0.017,
-        "pnlPercent": -0.23,
-        "closeReason": "Xoay vòng vốn (Đổi sang coin có sóng mạnh hơn)",
-        "openTime": "2026-10-28T14:21:40.433Z",
-        "closeTime": "2026-10-28T14:24:10.553Z"
-      },
-      {
-        "id": "POS-6426",
-        "symbol": "BTCUSDT",
-        "side": "LONG",
-        "entryPrice": 80542.79,
-        "closePrice": 80510.52,
-        "marginUSD": 7.24,
-        "sizeUSD": 21.72,
-        "leverage": 3,
-        "pnlUSD": -0.009,
-        "pnlPercent": -0.12,
-        "closeReason": "Xoay vòng vốn (Đổi sang coin có sóng mạnh hơn)",
-        "openTime": "2026-10-28T14:21:36.426Z",
-        "closeTime": "2026-10-28T14:24:07.337Z"
-      },
-      {
-        "id": "POS-9983",
-        "symbol": "TRXUSDT",
-        "side": "SHORT",
-        "entryPrice": 0.332,
-        "closePrice": 0.3318,
-        "marginUSD": 7.26,
-        "sizeUSD": 21.78,
-        "leverage": 3,
-        "pnlUSD": 0.013,
-        "pnlPercent": 0.18,
-        "closeReason": "Xoay vòng vốn (Đổi sang coin có sóng mạnh hơn)",
-        "openTime": "2026-10-28T14:19:59.983Z",
-        "closeTime": "2026-10-28T14:22:30.343Z"
-      },
-      {
-        "id": "POS-7883",
-        "symbol": "SOXLBUSDT",
-        "side": "SHORT",
-        "entryPrice": 103.51,
-        "closePrice": 103.62,
-        "marginUSD": 7.25,
-        "sizeUSD": 21.75,
-        "leverage": 3,
-        "pnlUSD": -0.023,
-        "pnlPercent": -0.32,
-        "closeReason": "Xoay vòng vốn (Đổi sang coin có sóng mạnh hơn)",
-        "openTime": "2026-10-28T14:19:07.883Z",
-        "closeTime": "2026-10-28T14:21:38.335Z"
-      },
-      {
-        "id": "POS-3842",
-        "symbol": "QNTUSDT",
-        "side": "LONG",
-        "entryPrice": 194.28,
-        "closePrice": 193.5,
-        "marginUSD": 7.24,
-        "sizeUSD": 21.72,
-        "leverage": 3,
-        "pnlUSD": -0.087,
-        "pnlPercent": -1.2,
-        "closeReason": "Xoay vòng vốn (Đổi sang coin có sóng mạnh hơn)",
-        "openTime": "2026-10-28T14:19:03.842Z",
-        "closeTime": "2026-10-28T14:21:34.433Z"
       }
     ],
     "stats": {
       "totalTrades": 100,
-      "wins": 64,
-      "losses": 30,
-      "winRate": 64,
-      "profitFactor": 2.26,
+      "wins": 63,
+      "losses": 31,
+      "winRate": 63,
+      "profitFactor": 2.58,
       "bestTradeUSD": 0.06,
-      "worstTradeUSD": -0.09
+      "worstTradeUSD": -0.05
     },
     "activePositions": [
       {
-        "id": "POS-5350",
-        "symbol": "SPCXBUSDT",
-        "name": "SPCXB",
-        "icon": "🪙",
-        "side": "LONG",
-        "entryPrice": 144.49,
-        "currentPrice": 144.41,
-        "marginUSD": 7.38,
-        "sizeUSD": 22.14,
-        "leverage": 3,
-        "stopLoss": 143.33,
-        "takeProfit": 146.22,
-        "unrealizedPnlUSD": -0.013,
-        "unrealizedPnlPercent": -0.17,
-        "isBreakevenProtected": false,
-        "isProfitLocked": false,
-        "reason": "AI All-Market Scanner (Top 1/415 coin): Điểm 99/100 [🔥 Siêu Quá Bán (Mean-Reversion Rebound)]",
-        "openTime": "2026-10-28T15:18:05.350Z"
-      },
-      {
-        "id": "POS-9351",
-        "symbol": "XRPUSDT",
-        "name": "Ripple",
-        "icon": "✕",
-        "side": "LONG",
-        "entryPrice": 1.3146,
-        "currentPrice": 1.3144,
-        "marginUSD": 7.38,
-        "sizeUSD": 22.14,
-        "leverage": 3,
-        "stopLoss": 1.3,
-        "takeProfit": 1.33,
-        "unrealizedPnlUSD": -0.004,
-        "unrealizedPnlPercent": -0.05,
-        "isBreakevenProtected": false,
-        "isProfitLocked": false,
-        "reason": "AI All-Market Scanner (Top 1/415 coin): Điểm 99/100 [🔥 Siêu Quá Bán (Mean-Reversion Rebound)]",
-        "openTime": "2026-10-28T15:18:09.351Z"
-      },
-      {
-        "id": "POS-7595",
+        "id": "POS-8771",
         "symbol": "USD1USDT",
         "name": "USD1",
         "icon": "🪙",
         "side": "LONG",
-        "entryPrice": 1.00014,
-        "currentPrice": 1.00014,
-        "marginUSD": 7.37,
-        "sizeUSD": 22.11,
+        "entryPrice": 1.00008,
+        "currentPrice": 1.00007,
+        "marginUSD": 7.4,
+        "sizeUSD": 22.2,
         "leverage": 3,
         "stopLoss": 0.99,
         "takeProfit": 1.01,
@@ -1609,13 +1575,416 @@
         "unrealizedPnlPercent": 0,
         "isBreakevenProtected": false,
         "isProfitLocked": false,
-        "reason": "AI All-Market Scanner (Top 1/415 coin): Điểm 99/100 [🔥 Siêu Quá Bán (Mean-Reversion Rebound)]",
-        "openTime": "2026-10-28T15:20:17.595Z"
+        "reason": "AI All-Market Scanner (Top 1/411 coin): Điểm 99/100 [🔥 [DERIV-03 + WYK-01] Capitulation OI Flush & Wyckoff Spring (VSA Stopping Vol)]",
+        "causalRuleId": "DERIV-03",
+        "causalTitle": "Capitulation Leverage Flush & OI Reset V-Bounce",
+        "mmBehavior": "Quá trình dọn dẹp đòn bẩy (Leverage Flush) đã hoàn tất. MM đã gom xong toàn bộ thanh khoản giá rẻ từ các lệnh bị cháy. Khi không còn lệnh Long nào để ép bán tiếp, áp lực cung cưỡng bức biến mất hoàn toàn. Composite Man đã vét sạch nguồn cung bán tháo của đám đông ở dưới hỗ trợ để chuẩn bị đánh thốc vào Pha D (Sign of Strength - SOS). Điểm hút thanh lý: Cụm thanh lý Short (Short Liquidation Cluster) dày đặc phía trên vùng $1.02.",
+        "kellyMarginPct": 18,
+        "atrSlPct": 0.68,
+        "rrRatio": 1.8,
+        "openTime": "2026-10-28T17:20:38.771Z"
+      },
+      {
+        "id": "POS-0970",
+        "symbol": "SOLUSDT",
+        "name": "Solana",
+        "icon": "◎",
+        "side": "LONG",
+        "entryPrice": 101.04,
+        "currentPrice": 101.05,
+        "marginUSD": 7.41,
+        "sizeUSD": 22.23,
+        "leverage": 3,
+        "stopLoss": 99.98,
+        "takeProfit": 102.95,
+        "unrealizedPnlUSD": 0.002,
+        "unrealizedPnlPercent": 0.03,
+        "isBreakevenProtected": false,
+        "isProfitLocked": false,
+        "reason": "AI All-Market Scanner (Top 1/411 coin): Điểm 99/100 [🔥 [DERIV-03 + WYK-01] Capitulation OI Flush & Wyckoff Spring (VSA Stopping Vol)]",
+        "causalRuleId": "DERIV-03",
+        "causalTitle": "Capitulation Leverage Flush & OI Reset V-Bounce",
+        "mmBehavior": "Quá trình dọn dẹp đòn bẩy (Leverage Flush) đã hoàn tất. MM đã gom xong toàn bộ thanh khoản giá rẻ từ các lệnh bị cháy. Khi không còn lệnh Long nào để ép bán tiếp, áp lực cung cưỡng bức biến mất hoàn toàn. Composite Man đã vét sạch nguồn cung bán tháo của đám đông ở dưới hỗ trợ để chuẩn bị đánh thốc vào Pha D (Sign of Strength - SOS). Điểm hút thanh lý: Cụm thanh lý Short (Short Liquidation Cluster) dày đặc phía trên vùng $102.56.",
+        "kellyMarginPct": 18,
+        "atrSlPct": 1.05,
+        "rrRatio": 1.8,
+        "openTime": "2026-10-28T17:22:10.971Z"
+      },
+      {
+        "id": "POS-7062",
+        "symbol": "ZECUSDT",
+        "name": "ZEC",
+        "icon": "🪙",
+        "side": "LONG",
+        "entryPrice": 1269.8,
+        "currentPrice": 1269.28,
+        "marginUSD": 7.41,
+        "sizeUSD": 22.23,
+        "leverage": 3,
+        "stopLoss": 1250.75,
+        "takeProfit": 1304.08,
+        "unrealizedPnlUSD": -0.009,
+        "unrealizedPnlPercent": -0.12,
+        "isBreakevenProtected": false,
+        "isProfitLocked": false,
+        "reason": "AI All-Market Scanner (Top 1/411 coin): Điểm 99/100 [🔥 [DERIV-03 + WYK-01] Capitulation OI Flush & Wyckoff Spring (VSA Stopping Vol)]",
+        "causalRuleId": "DERIV-03",
+        "causalTitle": "Capitulation Leverage Flush & OI Reset V-Bounce",
+        "mmBehavior": "Quá trình dọn dẹp đòn bẩy (Leverage Flush) đã hoàn tất. MM đã gom xong toàn bộ thanh khoản giá rẻ từ các lệnh bị cháy. Khi không còn lệnh Long nào để ép bán tiếp, áp lực cung cưỡng bức biến mất hoàn toàn. Composite Man đã vét sạch nguồn cung bán tháo của đám đông ở dưới hỗ trợ để chuẩn bị đánh thốc vào Pha D (Sign of Strength - SOS). Điểm hút thanh lý: Cụm thanh lý Short (Short Liquidation Cluster) dày đặc phía trên vùng $1288.85.",
+        "kellyMarginPct": 18,
+        "atrSlPct": 1.5,
+        "rrRatio": 1.8,
+        "openTime": "2026-10-28T17:22:47.062Z"
       }
-    ]
+    ],
+    "currentDateKey": "2026-10-29",
+    "lastDailyResetAt": "2026-10-28T17:22:06.404Z",
+    "todayTrades": 2,
+    "todayWins": 1,
+    "todayLosses": 1
   },
-  "dailyPnlRecords": [],
+  "dailyPnlRecords": [
+    {
+      "date": "2026-10-29",
+      "pnlUSD": 1.78,
+      "pnlVND": 45212,
+      "trades": 3,
+      "wins": 3,
+      "losses": 0,
+      "closedAt": "2026-10-28T17:22:06.404Z"
+    }
+  ],
   "logs": [
+    {
+      "timestamp": "2026-10-28T17:22:47.063Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] 🪙 ZECUSDT @ $1,269.8 | Quy tắc [DERIV-03]: Capitulation Leverage Flush & OI Reset V-Bounce | Kelly $7.41 (18% vốn, x3), ATR SL: $1250.75 (-1.5%), TP: $1304.08 (R:R 1:1.8)"
+    },
+    {
+      "timestamp": "2026-10-28T17:22:47.059Z",
+      "level": "INFO",
+      "source": "PoodleRadar",
+      "message": "🐩 [Poodle 24/7] Đã dò 411 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: ZECUSDT (Điểm: 99/100, RSI: 21, 24h: -3.04%, Vol: $123.3M, Setup: 🔥 [DERIV-03 + WYK-01] Capitulation OI Flush & Wyckoff Spring (VSA Stopping Vol))."
+    },
+    {
+      "timestamp": "2026-10-28T17:22:11.340Z",
+      "level": "SUCCESS",
+      "source": "RiskGuard",
+      "message": "🛡️ [BẢO VỆ VỐN] Vị thế LONG HAEDALUSDT đang lãi +0.45%. Đã tự động dời Stop Loss về giá vào ($0.02688). Lệnh này được bảo toàn hòa vốn 100%!"
+    },
+    {
+      "timestamp": "2026-10-28T17:22:10.974Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] ◎ SOLUSDT @ $101.04 | Quy tắc [DERIV-03]: Capitulation Leverage Flush & OI Reset V-Bounce | Kelly $7.41 (18% vốn, x3), ATR SL: $99.98 (-1.05%), TP: $102.95 (R:R 1:1.8)"
+    },
+    {
+      "timestamp": "2026-10-28T17:22:10.968Z",
+      "level": "INFO",
+      "source": "PoodleRadar",
+      "message": "🐩 [Poodle 24/7] Đã dò 411 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: SOLUSDT (Điểm: 99/100, RSI: 17, 24h: -0.02%, Vol: $138.9M, Setup: 🔥 [DERIV-03 + WYK-01] Capitulation OI Flush & Wyckoff Spring (VSA Stopping Vol))."
+    },
+    {
+      "timestamp": "2026-10-28T17:22:06.406Z",
+      "level": "SUCCESS",
+      "source": "DailyReset",
+      "message": "🕛 [RESET THU NHẬP 00:00] Đã chốt sổ ngày 2026-10-29 (+$1.78 ≈ 45.212 đ) và làm mới bộ đếm thu nhập ngày 2026-10-29 về $0.00!"
+    },
+    {
+      "timestamp": "2026-10-28T17:21:58.256Z",
+      "level": "INFO",
+      "source": "RiskControl",
+      "message": "Đã điều chỉnh đòn bẩy giao dịch cá nhân: x3"
+    },
+    {
+      "timestamp": "2026-10-28T17:21:57.543Z",
+      "level": "INFO",
+      "source": "RiskControl",
+      "message": "Đã điều chỉnh đòn bẩy giao dịch cá nhân: x5"
+    },
+    {
+      "timestamp": "2026-10-28T17:21:43.338Z",
+      "level": "SUCCESS",
+      "source": "RiskGuard",
+      "message": "🛡️ [BẢO VỆ VỐN] Vị thế LONG ZECUSDT đang lãi +0.41%. Đã tự động dời Stop Loss về giá vào ($1269.3). Lệnh này được bảo toàn hòa vốn 100%!"
+    },
+    {
+      "timestamp": "2026-10-28T17:21:42.905Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] 🪙 HAEDALUSDT @ $0.027 | Quy tắc [DERIV-03]: Capitulation Leverage Flush & OI Reset V-Bounce | Kelly $7.41 (18% vốn, x3), ATR SL: $0.0265 (-1.5%), TP: $0.0276 (R:R 1:1.8)"
+    },
+    {
+      "timestamp": "2026-10-28T17:21:30.622Z",
+      "level": "SUCCESS",
+      "source": "Security",
+      "message": "Xác thực thành công. Đã cấp quyền truy cập trạm điều hành."
+    },
+    {
+      "timestamp": "2026-10-28T17:21:18.859Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] 🪙 ZECUSDT @ $1,269.3 | Quy tắc [DERIV-03]: Capitulation Leverage Flush & OI Reset V-Bounce | Kelly $7.4 (18% vốn, x3), ATR SL: $1250.26 (-1.5%), TP: $1303.57 (R:R 1:1.8)"
+    },
+    {
+      "timestamp": "2026-10-28T17:21:18.852Z",
+      "level": "INFO",
+      "source": "PoodleRadar",
+      "message": "🐩 [Poodle 24/7] Đã dò 411 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: ZECUSDT (Điểm: 99/100, RSI: 20, 24h: -3%, Vol: $123.3M, Setup: 🔥 [DERIV-03 + WYK-01] Capitulation OI Flush & Wyckoff Spring (VSA Stopping Vol))."
+    },
+    {
+      "timestamp": "2026-10-28T17:20:38.772Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] 🪙 USD1USDT @ $1 | Quy tắc [DERIV-03]: Capitulation Leverage Flush & OI Reset V-Bounce | Kelly $7.4 (18% vốn, x3), ATR SL: $0.99 (-0.68%), TP: $1.01 (R:R 1:1.8)"
+    },
+    {
+      "timestamp": "2026-10-28T17:20:38.767Z",
+      "level": "INFO",
+      "source": "PoodleRadar",
+      "message": "🐩 [Poodle 24/7] Đã dò 411 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: USD1USDT (Điểm: 99/100, RSI: 23, 24h: 0%, Vol: $101.8M, Setup: 🔥 [DERIV-03 + WYK-01] Capitulation OI Flush & Wyckoff Spring (VSA Stopping Vol))."
+    },
+    {
+      "timestamp": "2026-10-28T17:20:23.543Z",
+      "level": "SUCCESS",
+      "source": "Tunnel",
+      "message": "Cổng truy cập riêng đã online tại: https://affiliation-costumes-transformation-pete.trycloudflare.com"
+    },
+    {
+      "timestamp": "2026-10-28T17:20:18.988Z",
+      "level": "SUCCESS",
+      "source": "QuantEngine",
+      "message": "Đã kết nối luồng dữ liệu toàn bộ thị trường Binance thời gian thực."
+    },
+    {
+      "timestamp": "2026-10-28T17:20:18.682Z",
+      "level": "SUCCESS",
+      "source": "PoodleRadar",
+      "message": "🐩 Radar Poodle: Đang quét 411 đồng coin Binance 24/7 tìm kèo thơm cho sếp."
+    },
+    {
+      "timestamp": "2026-10-28T17:20:18.449Z",
+      "level": "INFO",
+      "source": "Tunnel",
+      "message": "Đang thiết lập cổng bảo mật Cloudflare Tunnel truy cập riêng từ điện thoại..."
+    },
+    {
+      "timestamp": "2026-10-28T17:20:02.338Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] ◎ SOLUSDT @ $101.01 | Quy tắc [DERIV-03]: Capitulation Leverage Flush & OI Reset V-Bounce | Kelly $7.4 (18% vốn, x3), ATR SL: $99.95 (-1.05%), TP: $102.92 (R:R 1:1.8)"
+    },
+    {
+      "timestamp": "2026-10-28T17:19:38.338Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] 🪙 HAEDALUSDT @ $0.027 | Quy tắc [DERIV-03]: Capitulation Leverage Flush & OI Reset V-Bounce | Kelly $7.4 (18% vốn, x3), ATR SL: $0.0266 (-1.5%), TP: $0.0277 (R:R 1:1.8)"
+    },
+    {
+      "timestamp": "2026-10-28T17:19:38.335Z",
+      "level": "INFO",
+      "source": "PoodleRadar",
+      "message": "🐩 [Poodle 24/7] Đã dò 411 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: HAEDALUSDT (Điểm: 99/100, RSI: 19, 24h: -4.94%, Vol: $19.2M, Setup: 🔥 [DERIV-03 + WYK-01] Capitulation OI Flush & Wyckoff Spring (VSA Stopping Vol))."
+    },
+    {
+      "timestamp": "2026-10-28T17:18:06.208Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] 🪙 CRCLBUSDT @ $79.52 | Quy tắc [DERIV-03]: Capitulation Leverage Flush & OI Reset V-Bounce | Kelly $7.39 (18% vốn, x3), ATR SL: $78.44 (-1.36%), TP: $81.47 (R:R 1:1.8)"
+    },
+    {
+      "timestamp": "2026-10-28T17:18:06.206Z",
+      "level": "INFO",
+      "source": "PoodleRadar",
+      "message": "🐩 [Poodle 24/7] Đã dò 411 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: CRCLBUSDT (Điểm: 99/100, RSI: 10, 24h: -1.08%, Vol: $13.7M, Setup: 🔥 [DERIV-03 + WYK-01] Capitulation OI Flush & Wyckoff Spring (VSA Stopping Vol))."
+    },
+    {
+      "timestamp": "2026-10-28T17:17:30.136Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] 🪙 XAUTUSDT @ $4,038.83 | Quy tắc [DERIV-03]: Capitulation Leverage Flush & OI Reset V-Bounce | Kelly $7.39 (18% vốn, x3), ATR SL: $4011.37 (-0.68%), TP: $4088.1 (R:R 1:1.8)"
+    },
+    {
+      "timestamp": "2026-10-28T17:17:28.336Z",
+      "level": "SUCCESS",
+      "source": "RiskGuard",
+      "message": "🛡️ [BẢO VỆ VỐN] Vị thế LONG PUMPUSDT đang lãi +0.65%. Đã tự động dời Stop Loss về giá vào ($0.004185). Lệnh này được bảo toàn hòa vốn 100%!"
+    },
+    {
+      "timestamp": "2026-10-28T17:17:18.118Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] 🪙 HYPEUSDT @ $80.14 | Quy tắc [DERIV-03]: Capitulation Leverage Flush & OI Reset V-Bounce | Kelly $7.38 (18% vốn, x3), ATR SL: $79.16 (-1.22%), TP: $81.9 (R:R 1:1.8)"
+    },
+    {
+      "timestamp": "2026-10-28T17:17:18.116Z",
+      "level": "INFO",
+      "source": "PoodleRadar",
+      "message": "🐩 [Poodle 24/7] Đã dò 411 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: HYPEUSDT (Điểm: 99/100, RSI: 25, 24h: -0.57%, Vol: $20.8M, Setup: 🔥 [DERIV-03 + WYK-01] Capitulation OI Flush & Wyckoff Spring (VSA Stopping Vol))."
+    },
+    {
+      "timestamp": "2026-10-28T17:16:14.019Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] 🪙 PUMPUSDT @ $0.004 | Quy tắc [DERIV-03]: Capitulation Leverage Flush & OI Reset V-Bounce | Kelly $7.39 (18% vốn, x3), ATR SL: $0.0041 (-1.5%), TP: $0.0043 (R:R 1:1.8)"
+    },
+    {
+      "timestamp": "2026-10-28T17:15:53.996Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH SHORT] 🪙 SOXLBUSDT @ $104.84 | Quy tắc [SMC-02]: Bearish Liquidity Sweep + CHoCH + Supply OB/FVG | Kelly $7.39 (18% vốn, x3), ATR SL: $106.41 (-1.5%), TP: $101.54 (R:R 1:2.1)"
+    },
+    {
+      "timestamp": "2026-10-28T17:15:53.938Z",
+      "level": "INFO",
+      "source": "PoodleRadar",
+      "message": "🐩 [Poodle 24/7] Đã dò 411 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: SOXLBUSDT (Điểm: 99/100, RSI: 76, 24h: +4.51%, Vol: $52.4M, Setup: 🔻 [SMC-02 + WYK-02] Buy-Side Liquidity Sweep + Wyckoff UTAD & Bearish CVD)."
+    },
+    {
+      "timestamp": "2026-10-28T17:14:45.781Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] 🪙 SPCXBUSDT @ $144.6 | Quy tắc [DERIV-03]: Capitulation Leverage Flush & OI Reset V-Bounce | Kelly $7.39 (18% vốn, x3), ATR SL: $142.43 (-1.5%), TP: $148.5 (R:R 1:1.8)"
+    },
+    {
+      "timestamp": "2026-10-28T17:14:45.778Z",
+      "level": "INFO",
+      "source": "PoodleRadar",
+      "message": "🐩 [Poodle 24/7] Đã dò 411 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: SPCXBUSDT (Điểm: 99/100, RSI: 22, 24h: -3.92%, Vol: $27.7M, Setup: 🔥 [DERIV-03 + WYK-01] Capitulation OI Flush & Wyckoff Spring (VSA Stopping Vol))."
+    },
+    {
+      "timestamp": "2026-10-28T17:13:57.689Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] 🪙 ZECUSDT @ $1,266.56 | Quy tắc [DERIV-03]: Capitulation Leverage Flush & OI Reset V-Bounce | Kelly $7.39 (18% vốn, x3), ATR SL: $1247.56 (-1.5%), TP: $1300.76 (R:R 1:1.8)"
+    },
+    {
+      "timestamp": "2026-10-28T17:13:57.684Z",
+      "level": "INFO",
+      "source": "PoodleRadar",
+      "message": "🐩 [Poodle 24/7] Đã dò 411 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: ZECUSDT (Điểm: 99/100, RSI: 12, 24h: -3.14%, Vol: $123.8M, Setup: 🔥 [DERIV-03 + WYK-01] Capitulation OI Flush & Wyckoff Spring (VSA Stopping Vol))."
+    },
+    {
+      "timestamp": "2026-10-28T17:13:21.593Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] ◎ SOLUSDT @ $101.11 | Quy tắc [DERIV-03]: Capitulation Leverage Flush & OI Reset V-Bounce | Kelly $7.39 (18% vốn, x3), ATR SL: $100.05 (-1.05%), TP: $103.02 (R:R 1:1.8)"
+    },
+    {
+      "timestamp": "2026-10-28T17:13:21.582Z",
+      "level": "INFO",
+      "source": "PoodleRadar",
+      "message": "🐩 [Poodle 24/7] Đã dò 411 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: SOLUSDT (Điểm: 99/100, RSI: 25, 24h: +0.05%, Vol: $138.2M, Setup: 🔥 [DERIV-03 + WYK-01] Capitulation OI Flush & Wyckoff Spring (VSA Stopping Vol))."
+    },
+    {
+      "timestamp": "2026-10-28T17:12:29.403Z",
+      "level": "SUCCESS",
+      "source": "PoodleRadar",
+      "message": "🐩 Radar Poodle: Đang quét 411 đồng coin Binance 24/7 tìm kèo thơm cho sếp."
+    },
+    {
+      "timestamp": "2026-10-28T17:12:17.486Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH SHORT] 🪙 SOXLBUSDT @ $105.07 | Quy tắc [SMC-02]: Bearish Liquidity Sweep + CHoCH + Supply OB/FVG | Kelly $7.38 (18% vốn, x3), ATR SL: $106.65 (-1.5%), TP: $101.76 (R:R 1:2.1)"
+    },
+    {
+      "timestamp": "2026-10-28T17:12:13.469Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] 🪙 UUSDT @ $1 | Quy tắc [DERIV-03]: Capitulation Leverage Flush & OI Reset V-Bounce | Kelly $7.38 (18% vốn, x3), ATR SL: $0.99 (-0.68%), TP: $1.01 (R:R 1:1.8)"
+    },
+    {
+      "timestamp": "2026-10-28T17:12:09.470Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH SHORT] Ł LTCUSDT @ $59.31 | Quy tắc [SMC-02]: Bearish Liquidity Sweep + CHoCH + Supply OB/FVG | Kelly $7.38 (18% vốn, x3), ATR SL: $60.2 (-1.5%), TP: $57.44 (R:R 1:2.1)"
+    },
+    {
+      "timestamp": "2026-10-28T17:12:09.465Z",
+      "level": "INFO",
+      "source": "PoodleRadar",
+      "message": "🐩 [Poodle 24/7] Đã dò 411 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: LTCUSDT (Điểm: 99/100, RSI: 79, 24h: +4.75%, Vol: $16.6M, Setup: 🔻 [SMC-02 + WYK-02] Buy-Side Liquidity Sweep + Wyckoff UTAD & Bearish CVD)."
+    },
+    {
+      "timestamp": "2026-10-28T17:10:37.305Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] Ξ ETHUSDT @ $2,332.49 | Quy tắc [DERIV-03]: Capitulation Leverage Flush & OI Reset V-Bounce | Kelly $7.38 (18% vốn, x3), ATR SL: $2311.26 (-0.91%), TP: $2370.74 (R:R 1:1.8)"
+    },
+    {
+      "timestamp": "2026-10-28T17:10:37.298Z",
+      "level": "INFO",
+      "source": "PoodleRadar",
+      "message": "🐩 [Poodle 24/7] Đã dò 411 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: ETHUSDT (Điểm: 99/100, RSI: 15, 24h: -0.83%, Vol: $412.3M, Setup: 🔥 [DERIV-03 + WYK-01] Capitulation OI Flush & Wyckoff Spring (VSA Stopping Vol))."
+    },
+    {
+      "timestamp": "2026-10-28T17:09:55.336Z",
+      "level": "SUCCESS",
+      "source": "TrailingLock",
+      "message": "💰 [KHÓA LÃI THỤ ĐỘNG] Lợi nhuận SOXLBUSDT đạt +0.83%. Đã dời Stop Loss khóa chắc tối thiểu +0.35% lãi ròng."
+    },
+    {
+      "timestamp": "2026-10-28T17:09:49.856Z",
+      "level": "SUCCESS",
+      "source": "Security",
+      "message": "Xác thực thành công. Đã cấp quyền truy cập trạm điều hành."
+    },
+    {
+      "timestamp": "2026-10-28T17:09:41.336Z",
+      "level": "SUCCESS",
+      "source": "RiskGuard",
+      "message": "🛡️ [BẢO VỆ VỐN] Vị thế SHORT SOXLBUSDT đang lãi +0.37%. Đã tự động dời Stop Loss về giá vào ($105.29). Lệnh này được bảo toàn hòa vốn 100%!"
+    },
+    {
+      "timestamp": "2026-10-28T17:09:41.191Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] 🪙 ZECUSDT @ $1,269.4 | Quy tắc [DERIV-03]: Capitulation Leverage Flush & OI Reset V-Bounce | Kelly $7.38 (18% vốn, x3), ATR SL: $1250.36 (-1.5%), TP: $1303.67 (R:R 1:1.8)"
+    },
+    {
+      "timestamp": "2026-10-28T17:09:37.182Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] ₿ BTCUSDT @ $80,514.02 | Quy tắc [DERIV-03]: Capitulation Leverage Flush & OI Reset V-Bounce | Kelly $7.38 (18% vốn, x3), ATR SL: $79966.52 (-0.68%), TP: $81496.29 (R:R 1:1.8)"
+    },
+    {
+      "timestamp": "2026-10-28T17:09:34.724Z",
+      "level": "SUCCESS",
+      "source": "Tunnel",
+      "message": "Cổng truy cập riêng đã online tại: https://nathan-ground-fred-vitamin.trycloudflare.com"
+    },
+    {
+      "timestamp": "2026-10-28T17:09:33.174Z",
+      "level": "INFO",
+      "source": "PoodleAI",
+      "message": "🐩⚡ [POODLE VÀO LỆNH SHORT] 🪙 SOXLBUSDT @ $105.29 | Quy tắc [SMC-02]: Bearish Liquidity Sweep + CHoCH + Supply OB/FVG | Kelly $7.38 (18% vốn, x3), ATR SL: $106.87 (-1.5%), TP: $101.97 (R:R 1:2.1)"
+    },
+    {
+      "timestamp": "2026-10-28T17:09:33.170Z",
+      "level": "INFO",
+      "source": "PoodleRadar",
+      "message": "🐩 [Poodle 24/7] Đã dò 410 đồng coin Binance (Đang giữ 0/3 kèo). Kèo ngon nhất: SOXLBUSDT (Điểm: 99/100, RSI: 80, 24h: +4.944%, Vol: $52.8M, Setup: 🔻 [SMC-02 + WYK-02] Buy-Side Liquidity Sweep + Wyckoff UTAD & Bearish CVD)."
+    },
+    {
+      "timestamp": "2026-10-28T17:09:30.668Z",
+      "level": "SUCCESS",
+      "source": "RiskGuard",
+      "message": "🛡️ [BẢO VỆ VỐN] Vị thế LONG SPCXBUSDT đang lãi +0.35%. Đã tự động dời Stop Loss về giá vào ($144.49). Lệnh này được bảo toàn hòa vốn 100%!"
+    },
+    {
+      "timestamp": "2026-10-28T17:09:29.482Z",
+      "level": "SUCCESS",
+      "source": "QuantEngine",
+      "message": "Đã kết nối luồng dữ liệu toàn bộ thị trường Binance thời gian thực."
+    },
+    {
+      "timestamp": "2026-10-28T17:09:27.711Z",
+      "level": "INFO",
+      "source": "Tunnel",
+      "message": "Đang thiết lập cổng bảo mật Cloudflare Tunnel truy cập riêng từ điện thoại..."
+    },
     {
       "timestamp": "2026-10-28T15:20:17.597Z",
       "level": "INFO",
@@ -2485,336 +2854,6 @@
       "level": "INFO",
       "source": "PoodleAI",
       "message": "🐩⚡ [POODLE VÀO LỆNH LONG] ✕ XRPUSDT @ $1.31. Đòn bẩy x3, Ký quỹ $7.29 (18% vốn). SL: $1.3, TP: $1.33 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:38:51.415Z",
-      "level": "INFO",
-      "source": "PoodleRadar",
-      "message": "🐩 [Poodle 24/7] Đã dò 420 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: XRPUSDT (Điểm: 99/100, RSI: 15, 24h: -0.56%, Vol: $96.7M, Setup: 🔥 Siêu Quá Bán (Mean-Reversion Rebound))."
-    },
-    {
-      "timestamp": "2026-10-28T14:37:15.308Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] ₿ BTCUSDT @ $80,493.23. Đòn bẩy x3, Ký quỹ $7.29 (18% vốn). SL: $79849.28, TP: $81459.15 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:37:15.249Z",
-      "level": "INFO",
-      "source": "PoodleRadar",
-      "message": "🐩 [Poodle 24/7] Đã dò 420 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: BTCUSDT (Điểm: 99/100, RSI: 14, 24h: +0.16%, Vol: $1027.2M, Setup: 🔥 Siêu Quá Bán (Mean-Reversion Rebound))."
-    },
-    {
-      "timestamp": "2026-10-28T14:37:04.347Z",
-      "level": "SUCCESS",
-      "source": "TrailingLock",
-      "message": "💰 [KHÓA LÃI THỤ ĐỘNG] Lợi nhuận SOXLBUSDT đạt +0.81%. Đã dời Stop Loss khóa chắc tối thiểu +0.35% lãi ròng."
-    },
-    {
-      "timestamp": "2026-10-28T14:36:49.349Z",
-      "level": "SUCCESS",
-      "source": "RiskGuard",
-      "message": "🛡️ [BẢO VỆ VỐN] Vị thế SHORT SOXLBUSDT đang lãi +0.32%. Đã tự động dời Stop Loss về giá vào ($103.58). Lệnh này được bảo toàn hòa vốn 100%!"
-    },
-    {
-      "timestamp": "2026-10-28T14:36:23.069Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] 🪙 XAUTUSDT @ $4,037.27. Đòn bẩy x3, Ký quỹ $7.28 (18% vốn). SL: $4004.97, TP: $4085.72 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:36:19.053Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] 🪙 ENAUSDT @ $0.194. Đòn bẩy x3, Ký quỹ $7.28 (18% vốn). SL: $0.1925, TP: $0.1964 | Poodle đang giữ: 2/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:36:11.039Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH SHORT] 🪙 SOXLBUSDT @ $103.58. Đòn bẩy x3, Ký quỹ $7.28 (18% vốn). SL: $104.41, TP: $102.34 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:36:11.037Z",
-      "level": "INFO",
-      "source": "PoodleRadar",
-      "message": "🐩 [Poodle 24/7] Đã dò 420 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: SOXLBUSDT (Điểm: 99/100, RSI: 80, 24h: +6.75%, Vol: $61.2M, Setup: 🔻 Siêu Quá Mua (Mean-Reversion Short))."
-    },
-    {
-      "timestamp": "2026-10-28T14:34:50.842Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] 🪙 ZECUSDT @ $1,273.5. Đòn bẩy x3, Ký quỹ $7.28 (18% vốn). SL: $1263.31, TP: $1288.78 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:34:50.815Z",
-      "level": "INFO",
-      "source": "PoodleRadar",
-      "message": "🐩 [Poodle 24/7] Đã dò 419 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: ZECUSDT (Điểm: 99/100, RSI: 21, 24h: -0.59%, Vol: $158.1M, Setup: 🔥 Siêu Quá Bán (Mean-Reversion Rebound))."
-    },
-    {
-      "timestamp": "2026-10-28T14:33:46.545Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] ₿ BTCUSDT @ $80,540.36. Đòn bẩy x3, Ký quỹ $7.28 (18% vốn). SL: $79896.04, TP: $81506.84 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:33:38.528Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] ✕ XRPUSDT @ $1.312. Đòn bẩy x3, Ký quỹ $7.28 (18% vốn). SL: $1.3, TP: $1.33 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:33:38.526Z",
-      "level": "INFO",
-      "source": "PoodleRadar",
-      "message": "🐩 [Poodle 24/7] Đã dò 419 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: XRPUSDT (Điểm: 99/100, RSI: 16, 24h: -0.46%, Vol: $96.7M, Setup: 🔥 Siêu Quá Bán (Mean-Reversion Rebound))."
-    },
-    {
-      "timestamp": "2026-10-28T14:32:18.349Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] 🪙 UUSDT @ $1. Đòn bẩy x3, Ký quỹ $7.28 (18% vốn). SL: $0.99, TP: $1.01 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:32:16.337Z",
-      "level": "SUCCESS",
-      "source": "RiskGuard",
-      "message": "🛡️ [BẢO VỆ VỐN] Vị thế SHORT SKHYBUSDT đang lãi +0.34%. Đã tự động dời Stop Loss về giá vào ($160.73). Lệnh này được bảo toàn hòa vốn 100%!"
-    },
-    {
-      "timestamp": "2026-10-28T14:32:06.339Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] ◎ SOLUSDT @ $100.63. Đòn bẩy x3, Ký quỹ $7.28 (18% vốn). SL: $99.82, TP: $101.84 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:32:06.337Z",
-      "level": "INFO",
-      "source": "PoodleRadar",
-      "message": "🐩 [Poodle 24/7] Đã dò 419 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: SOLUSDT (Điểm: 99/100, RSI: 26, 24h: +0.08%, Vol: $140.2M, Setup: 🔥 Siêu Quá Bán (Mean-Reversion Rebound))."
-    },
-    {
-      "timestamp": "2026-10-28T14:31:14.247Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] ₿ BTCUSDT @ $80,573.44. Đòn bẩy x3, Ký quỹ $7.27 (18% vốn). SL: $79928.85, TP: $81540.32 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:31:14.243Z",
-      "level": "INFO",
-      "source": "PoodleRadar",
-      "message": "🐩 [Poodle 24/7] Đã dò 419 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: BTCUSDT (Điểm: 99/100, RSI: 13, 24h: +0.29%, Vol: $1027.6M, Setup: 🔥 Siêu Quá Bán (Mean-Reversion Rebound))."
-    },
-    {
-      "timestamp": "2026-10-28T14:30:46.164Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH SHORT] 🪙 SKHYBUSDT @ $160.73. Đòn bẩy x3, Ký quỹ $7.26 (18% vốn). SL: $162.02, TP: $158.8 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:30:42.206Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH SHORT] 🪙 SNDKBUSDT @ $1,363.96. Đòn bẩy x3, Ký quỹ $7.26 (18% vốn). SL: $1374.87, TP: $1347.59 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:30:42.198Z",
-      "level": "INFO",
-      "source": "PoodleRadar",
-      "message": "🐩 [Poodle 24/7] Đã dò 419 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: SNDKBUSDT (Điểm: 99/100, RSI: 85, 24h: +5.31%, Vol: $35.3M, Setup: 🔻 Siêu Quá Mua (Mean-Reversion Short))."
-    },
-    {
-      "timestamp": "2026-10-28T14:30:29.337Z",
-      "level": "SUCCESS",
-      "source": "TrailingLock",
-      "message": "💰 [KHÓA LÃI THỤ ĐỘNG] Lợi nhuận ENAUSDT đạt +0.77%. Đã dời Stop Loss khóa chắc tối thiểu +0.35% lãi ròng."
-    },
-    {
-      "timestamp": "2026-10-28T14:30:16.335Z",
-      "level": "SUCCESS",
-      "source": "RiskGuard",
-      "message": "🛡️ [BẢO VỆ VỐN] Vị thế LONG ENAUSDT đang lãi +0.31%. Đã tự động dời Stop Loss về giá vào ($0.194). Lệnh này được bảo toàn hòa vốn 100%!"
-    },
-    {
-      "timestamp": "2026-10-28T14:30:10.045Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] 🪙 ENAUSDT @ $0.194. Đòn bẩy x3, Ký quỹ $7.26 (18% vốn). SL: $0.1924, TP: $0.1963 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:30:10.042Z",
-      "level": "INFO",
-      "source": "PoodleRadar",
-      "message": "🐩 [Poodle 24/7] Đã dò 419 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: ENAUSDT (Điểm: 99/100, RSI: 22, 24h: -6.55%, Vol: $36.8M, Setup: 🔥 Siêu Quá Bán (Mean-Reversion Rebound))."
-    },
-    {
-      "timestamp": "2026-10-28T14:29:46.337Z",
-      "level": "SUCCESS",
-      "source": "RiskGuard",
-      "message": "🛡️ [BẢO VỆ VỐN] Vị thế LONG ZECUSDT đang lãi +0.32%. Đã tự động dời Stop Loss về giá vào ($1272.2). Lệnh này được bảo toàn hòa vốn 100%!"
-    },
-    {
-      "timestamp": "2026-10-28T14:29:29.967Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] ₿ BTCUSDT @ $80,551.85. Đòn bẩy x3, Ký quỹ $7.26 (18% vốn). SL: $79907.44, TP: $81518.47 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:29:29.961Z",
-      "level": "INFO",
-      "source": "PoodleRadar",
-      "message": "🐩 [Poodle 24/7] Đã dò 419 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: BTCUSDT (Điểm: 99/100, RSI: 13, 24h: +0.35%, Vol: $1029.0M, Setup: 🔥 Siêu Quá Bán (Mean-Reversion Rebound))."
-    },
-    {
-      "timestamp": "2026-10-28T14:29:05.927Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] 🪙 ZECUSDT @ $1,272.2. Đòn bẩy x3, Ký quỹ $7.25 (18% vốn). SL: $1262.02, TP: $1287.47 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:28:49.902Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] ✕ XRPUSDT @ $1.312. Đòn bẩy x3, Ký quỹ $7.25 (18% vốn). SL: $1.3, TP: $1.33 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:28:49.899Z",
-      "level": "INFO",
-      "source": "PoodleRadar",
-      "message": "🐩 [Poodle 24/7] Đã dò 419 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: XRPUSDT (Điểm: 99/100, RSI: 9, 24h: -0.44%, Vol: $96.8M, Setup: 🔥 Siêu Quá Bán (Mean-Reversion Rebound))."
-    },
-    {
-      "timestamp": "2026-10-28T14:28:39.334Z",
-      "level": "SUCCESS",
-      "source": "TrailingLock",
-      "message": "💰 [KHÓA LÃI THỤ ĐỘNG] Lợi nhuận NEARUSDT đạt +0.73%. Đã dời Stop Loss khóa chắc tối thiểu +0.35% lãi ròng."
-    },
-    {
-      "timestamp": "2026-10-28T14:28:29.337Z",
-      "level": "SUCCESS",
-      "source": "RiskGuard",
-      "message": "🛡️ [BẢO VỆ VỐN] Vị thế LONG ETHUSDT đang lãi +0.3%. Đã tự động dời Stop Loss về giá vào ($2327.45). Lệnh này được bảo toàn hòa vốn 100%!"
-    },
-    {
-      "timestamp": "2026-10-28T14:28:13.828Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH SHORT] 🪙 SKHYBUSDT @ $160.67. Đòn bẩy x3, Ký quỹ $7.24 (18% vốn). SL: $161.96, TP: $158.74 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:28:07.758Z",
-      "level": "SUCCESS",
-      "source": "PoodleRadar",
-      "message": "🐩 Radar Poodle: Đang quét 443 đồng coin Binance 24/7 tìm kèo thơm cho sếp."
-    },
-    {
-      "timestamp": "2026-10-28T14:28:02.338Z",
-      "level": "SUCCESS",
-      "source": "RiskGuard",
-      "message": "🛡️ [BẢO VỆ VỐN] Vị thế LONG NEARUSDT đang lãi +0.33%. Đã tự động dời Stop Loss về giá vào ($4.545). Lệnh này được bảo toàn hòa vốn 100%!"
-    },
-    {
-      "timestamp": "2026-10-28T14:28:01.807Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] Ⓝ NEARUSDT @ $4.545. Đòn bẩy x3, Ký quỹ $7.24 (18% vốn). SL: $4.51, TP: $4.6 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:27:45.766Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] Ξ ETHUSDT @ $2,327.45. Đòn bẩy x3, Ký quỹ $7.24 (18% vốn). SL: $2308.83, TP: $2355.38 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:27:45.764Z",
-      "level": "INFO",
-      "source": "PoodleRadar",
-      "message": "🐩 [Poodle 24/7] Đã dò 419 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: ETHUSDT (Điểm: 99/100, RSI: 7, 24h: +0.13%, Vol: $476.9M, Setup: 🔥 Siêu Quá Bán (Mean-Reversion Rebound))."
-    },
-    {
-      "timestamp": "2026-10-28T14:26:45.543Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] ✕ XRPUSDT @ $1.31. Đòn bẩy x3, Ký quỹ $7.25 (18% vốn). SL: $1.3, TP: $1.33 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:26:45.539Z",
-      "level": "INFO",
-      "source": "PoodleRadar",
-      "message": "🐩 [Poodle 24/7] Đã dò 419 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: XRPUSDT (Điểm: 99/100, RSI: 25, 24h: -0.19%, Vol: $96.8M, Setup: 🔥 Siêu Quá Bán (Mean-Reversion Rebound))."
-    },
-    {
-      "timestamp": "2026-10-28T14:25:29.399Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] Ⓝ NEARUSDT @ $4.553. Đòn bẩy x3, Ký quỹ $7.25 (18% vốn). SL: $4.52, TP: $4.61 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:25:13.322Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] Ξ ETHUSDT @ $2,329.24. Đòn bẩy x3, Ký quỹ $7.24 (18% vốn). SL: $2310.61, TP: $2357.19 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:25:13.319Z",
-      "level": "INFO",
-      "source": "PoodleRadar",
-      "message": "🐩 [Poodle 24/7] Đã dò 419 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: ETHUSDT (Điểm: 99/100, RSI: 13, 24h: +0.37%, Vol: $477.0M, Setup: 🔥 Siêu Quá Bán (Mean-Reversion Rebound))."
-    },
-    {
-      "timestamp": "2026-10-28T14:25:01.335Z",
-      "level": "SUCCESS",
-      "source": "RiskGuard",
-      "message": "🛡️ [BẢO VỆ VỐN] Vị thế SHORT SOXLBUSDT đang lãi +0.32%. Đã tự động dời Stop Loss về giá vào ($103.84). Lệnh này được bảo toàn hòa vốn 100%!"
-    },
-    {
-      "timestamp": "2026-10-28T14:24:31.337Z",
-      "level": "SUCCESS",
-      "source": "RiskGuard",
-      "message": "🛡️ [BẢO VỆ VỐN] Vị thế LONG SUIUSDT đang lãi +0.36%. Đã tự động dời Stop Loss về giá vào ($0.9176). Lệnh này được bảo toàn hòa vốn 100%!"
-    },
-    {
-      "timestamp": "2026-10-28T14:24:29.202Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH SHORT] 🪙 SOXLBUSDT @ $103.84. Đòn bẩy x3, Ký quỹ $7.24 (18% vốn). SL: $104.67, TP: $102.59 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:24:13.162Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] 🪙 USD1USDT @ $1. Đòn bẩy x3, Ký quỹ $7.23 (18% vốn). SL: $0.99, TP: $1.01 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:24:09.165Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] 💧 SUIUSDT @ $0.918. Đòn bẩy x3, Ký quỹ $7.24 (18% vốn). SL: $0.9103, TP: $0.9286 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:24:09.161Z",
-      "level": "INFO",
-      "source": "PoodleRadar",
-      "message": "🐩 [Poodle 24/7] Đã dò 419 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: SUIUSDT (Điểm: 99/100, RSI: 22, 24h: +0.37%, Vol: $26.4M, Setup: 🔥 Siêu Quá Bán (Mean-Reversion Rebound))."
-    },
-    {
-      "timestamp": "2026-10-28T14:22:32.624Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] Ξ ETHUSDT @ $2,327.13. Đòn bẩy x3, Ký quỹ $7.24 (18% vốn). SL: $2308.51, TP: $2355.06 | Poodle đang giữ: 3/3 kèo"
-    },
-    {
-      "timestamp": "2026-10-28T14:22:32.611Z",
-      "level": "INFO",
-      "source": "PoodleRadar",
-      "message": "🐩 [Poodle 24/7] Đã dò 419 đồng coin Binance (Đang giữ 2/3 kèo). Kèo ngon nhất: ETHUSDT (Điểm: 99/100, RSI: 15, 24h: +0.25%, Vol: $477.1M, Setup: 🔥 Siêu Quá Bán (Mean-Reversion Rebound))."
-    },
-    {
-      "timestamp": "2026-10-28T14:21:40.434Z",
-      "level": "INFO",
-      "source": "PoodleAI",
-      "message": "🐩⚡ [POODLE VÀO LỆNH LONG] ◎ SOLUSDT @ $100.62. Đòn bẩy x3, Ký quỹ $7.24 (18% vốn). SL: $99.82, TP: $101.83 | Poodle đang giữ: 3/3 kèo"
     }
   ],
   "auth": {
