@@ -131,6 +131,7 @@
           </div>
           <div class="poodle-quick-chat">
             <button class="btn-chat-chip" id="btn-chat-market">💬 Kèo nào thơm nhất?</button>
+            <button class="btn-chat-chip" id="btn-chat-causal">🧠 Phân tích SMC / Wyckoff / Kelly</button>
             <button class="btn-chat-chip" id="btn-chat-safety">🛡️ Tiền em canh an toàn không?</button>
             <button class="btn-chat-chip" id="btn-chat-pet">🐾 Vuốt ve Poodle</button>
           </div>
@@ -241,18 +242,141 @@
               <th>Volume 24h</th>
               <th>RSI (14)</th>
               <th>Điểm Tiềm Năng AI</th>
-              <th>Thiết Lập Kỹ Thuật</th>
+              <th>Thiết Lập Nhân Quả (4 Trụ Cột)</th>
               <th>Tín Hiệu AI</th>
+              <th>Truy Xuất RAG</th>
             </tr>
           </thead>
           <tbody id="radar-tbody">
             <tr>
-              <td colspan="9" style="text-align:center; padding:30px; color:var(--text-dim);">
+              <td colspan="10" style="text-align:center; padding:30px; color:var(--text-dim);">
                 🐩 Em Poodle đang kết nối luồng giá thời gian thực từ Binance WebSocket...
               </td>
             </tr>
           </tbody>
         </table>
+      </div>
+    </section>
+
+    <!-- QUANT KNOWLEDGE BASE & AI CAUSAL CONTEXT RETRIEVER (4 PILLARS) -->
+    <section class="card kb-card" id="kb-section">
+      <div class="card-header kb-header-wrap">
+        <div class="card-title">
+          <span class="pulse-dot-cyan"></span>
+          <span>🧠 TRUNG TÂM TRI THỨC QUANT &amp; BỘ TRUY XUẤT NGỮ CẢNH NHÂN QUẢ (CAUSAL RAG ENGINE)</span>
+        </div>
+        <div class="kb-stats-pills">
+          <span class="badge-mini text-accent" id="kb-stat-pillars">4 Trụ Cột Cốt Lõi</span>
+          <span class="badge-mini highlight-green" id="kb-stat-rules">9 Quy Tắc Nhân Quả</span>
+          <span class="badge-mini" id="kb-stat-chunks">RAG Context Ready</span>
+        </div>
+      </div>
+
+      <!-- LIVE CAUSAL REASONING ANALYZER (CONTEXT RETRIEVER IN ACTION) -->
+      <div class="causal-analyzer-box">
+        <div class="causal-analyzer-toolbar">
+          <div class="causal-toolbar-left">
+            <span class="causal-badge-live">⚡ AI CONTEXT RETRIEVER</span>
+            <strong>Phân Tích Nhân Quả Thời Gian Thực (Bối Cảnh &rarr; Dấu Hiệu &rarr; Hành Vi Cá Mập &rarr; Hành Động &amp; Kelly/ATR)</strong>
+          </div>
+          <div class="causal-toolbar-controls">
+            <select id="select-causal-coin" class="form-input form-input-sm mono">
+              <option value="">-- Tự động chọn Top 1 Kèo Thơm --</option>
+            </select>
+            <button id="btn-run-causal-analyzer" class="btn btn-sm btn-primary">🔍 Truy Xuất Ngữ Cảnh &amp; Phân Tích</button>
+            <button id="btn-toggle-llm-prompt" class="btn btn-sm btn-outline">📄 Xem LLM RAG Prompt</button>
+          </div>
+        </div>
+
+        <!-- 4-Step Causal Chain Grid -->
+        <div id="causal-chain-result" class="causal-chain-grid">
+          <div class="causal-step-card step-context">
+            <div class="step-hdr">1️⃣ BỐI CẢNH THỊ TRƯỜNG (MARKET CONTEXT)</div>
+            <div class="step-body" id="causal-step-context">Đang nạp dữ liệu thị trường...</div>
+          </div>
+          <div class="causal-step-card step-signals">
+            <div class="step-hdr">2️⃣ DẤU HIỆU DỮ LIỆU (SMC &bull; OI/CVD/FUNDING &bull; VSA)</div>
+            <div class="step-body" id="causal-step-signals">Đang đồng bộ 4 trụ cột...</div>
+          </div>
+          <div class="causal-step-card step-mm">
+            <div class="step-hdr">3️⃣ HÀNH VI CÁ MẬP / MARKET MAKER (MM BEHAVIOR)</div>
+            <div class="step-body" id="causal-step-mm">Đang giải mã dấu chân tổ chức...</div>
+          </div>
+          <div class="causal-step-card step-action">
+            <div class="step-hdr">4️⃣ KỊCH BẢN HÀNH ĐỘNG &amp; KELLY / ATR SIZING</div>
+            <div class="step-body" id="causal-step-action">Đang tính toán công thức Kelly &amp; ATR Stop Loss...</div>
+          </div>
+        </div>
+
+        <!-- Mathematical Kelly Criterion & ATR Stop-Loss Telemetry Strip -->
+        <div id="causal-sizing-strip" class="causal-sizing-strip mono">
+          <div class="sizing-metric">
+            <span class="s-lbl">QUY TẮC KHỚP:</span>
+            <span class="s-val text-accent" id="sizing-rule-id">SMC-01</span>
+          </div>
+          <div class="sizing-metric">
+            <span class="s-lbl">WIN RATE KỲ VỌNG (W):</span>
+            <span class="s-val highlight-green" id="sizing-winrate">65%</span>
+          </div>
+          <div class="sizing-metric">
+            <span class="s-lbl">TỶ LỆ R:R TỐI ƯU:</span>
+            <span class="s-val" id="sizing-rr">1 : 2.2</span>
+          </div>
+          <div class="sizing-metric">
+            <span class="s-lbl">FRACTIONAL KELLY (0.25x):</span>
+            <span class="s-val text-cyan" id="sizing-kelly">18.0% Vốn</span>
+          </div>
+          <div class="sizing-metric">
+            <span class="s-lbl">BIẾN ĐỘNG ATR(14):</span>
+            <span class="s-val" id="sizing-atr">0.55%</span>
+          </div>
+          <div class="sizing-metric">
+            <span class="s-lbl">STOP LOSS CHUẨN ATR:</span>
+            <span class="s-val highlight-red" id="sizing-sl">--</span>
+          </div>
+          <div class="sizing-metric">
+            <span class="s-lbl">TAKE PROFIT MỤC TIÊU:</span>
+            <span class="s-val highlight-green" id="sizing-tp">--</span>
+          </div>
+        </div>
+
+        <!-- Collapsible Raw LLM RAG Context Prompt Box -->
+        <div id="llm-prompt-box" class="llm-prompt-box hidden">
+          <div class="llm-prompt-hdr">
+            <span>🤖 NGỮ CẢNH ĐẦU VÀO ĐÃ CHUẨN HÓA CHO LLM (STRUCTURED RAG CONTEXT PROMPT)</span>
+            <button id="btn-copy-llm-prompt" class="btn btn-xs btn-outline">Sao chép Prompt</button>
+          </div>
+          <pre id="llm-prompt-content" class="mono"></pre>
+        </div>
+      </div>
+
+      <!-- KNOWLEDGE BASE SEARCH & 4 PILLARS FILTER -->
+      <div class="kb-explorer-bar">
+        <div class="kb-pillar-tabs" id="kb-pillar-tabs">
+          <button class="kb-tab active" data-pillar="ALL">📚 Tất Cả (4 Trụ Cột)</button>
+          <button class="kb-tab" data-pillar="SMC">🎯 1. SMC &amp; Price Action</button>
+          <button class="kb-tab" data-pillar="DERIVATIVES">📊 2. Dữ Liệu Phái Sinh (OI/CVD/Funding)</button>
+          <button class="kb-tab" data-pillar="WYCKOFF_VSA">🏛️ 3. Wyckoff &amp; VSA</button>
+          <button class="kb-tab" data-pillar="RISK_SIZING">🛡️ 4. Quản Lý Rủi Ro (Kelly &amp; ATR)</button>
+        </div>
+        <div class="kb-search-wrap">
+          <input type="text" id="input-kb-search" class="form-input form-input-sm" placeholder="🔍 Tìm quy tắc: BOS, CHoCH, FVG, Liquidity Sweep, OI, CVD, Funding, Spring, UTAD, Kelly, ATR...">
+          <button id="btn-view-pillar-doc" class="btn btn-sm btn-outline" title="Đọc tài liệu Markdown gốc của trụ cột">📖 Tài Liệu Chuyên Sâu (.MD)</button>
+        </div>
+      </div>
+
+      <!-- CAUSAL RULES CARDS GRID -->
+      <div id="kb-rules-grid" class="kb-rules-grid">
+        <!-- Populated dynamically by dashboard.js -->
+      </div>
+
+      <!-- MARKDOWN DOCUMENT VIEWER MODAL / DRAWER -->
+      <div id="kb-markdown-viewer" class="kb-markdown-viewer hidden">
+        <div class="kb-md-hdr">
+          <strong id="kb-md-title">📖 TÀI LIỆU CHUẨN HÓA (.MD)</strong>
+          <button id="btn-close-md-viewer" class="btn btn-xs btn-ghost">Đóng &times;</button>
+        </div>
+        <pre id="kb-md-body" class="kb-md-body mono"></pre>
       </div>
     </section>
 

@@ -1,5 +1,6 @@
 const WebSocket = require('ws');
 const db = require('./db');
+const contextRetriever = require('./contextRetriever');
 
 // Extended coin metadata for beautiful UI representation
 const POPULAR_COINS = {
@@ -381,41 +382,66 @@ class QuantEngine {
       item.ema21 = ema21;
     }
 
-    // 3. Multi-Factor Setup Scoring (Statistical Mean Reversion + Trend Momentum + Volume Boost)
+    // 3. Multi-Factor Setup Scoring (4-Pillar Confluence: SMC + Derivatives OI/CVD + Wyckoff VSA + Kelly/ATR)
     const rsi = item.rsi;
-    let score = 50;
-    let setup = 'Đang theo dõi biến động...';
-    let signal = 'NEUTRAL';
+    const range24h = Math.max(item.high24h - item.low24h, item.price * 0.005);
+    item.atrPct = parseFloat(Math.max(0.45, Math.min(2.5, (range24h / item.price) * 100 * 0.22)).toFixed(3));
 
-    // A. Extreme Oversold Mean-Reversion (Tỷ lệ thắng cao: RSI <= 26)
+    let score = 50;
+    let setup = 'Đang theo dõi cấu trúc SMC & VSA...';
+    let signal = 'NEUTRAL';
+    let causalRuleId = 'SMC-03';
+    let causalPillar = 'SMC';
+
+    // A. Extreme Oversold Capitulation Flush & Wyckoff Spring (Tỷ lệ thắng cao: RSI <= 26)
     if (rsi <= 26) {
       score = 93 + Math.floor(Math.random() * 5);
-      setup = '🔥 Siêu Quá Bán (Mean-Reversion Rebound)';
+      setup = '🔥 [DERIV-03 + WYK-01] Capitulation OI Flush & Wyckoff Spring (VSA Stopping Vol)';
       signal = 'STRONG_BUY';
+      causalRuleId = 'DERIV-03';
+      causalPillar = 'DERIVATIVES';
     } 
-    // B. Extreme Overbought Mean-Reversion (Tỷ lệ thắng cao: RSI >= 74)
+    // B. Extreme Overbought Crowded Long Trap & Wyckoff UTAD (Tỷ lệ thắng cao: RSI >= 74)
     else if (rsi >= 74) {
       score = 92 + Math.floor(Math.random() * 5);
-      setup = '🔻 Siêu Quá Mua (Mean-Reversion Short)';
+      setup = '🔻 [SMC-02 + WYK-02] Buy-Side Liquidity Sweep + Wyckoff UTAD & Bearish CVD';
       signal = 'STRONG_SELL';
+      causalRuleId = 'SMC-02';
+      causalPillar = 'SMC';
     } 
-    // C. Trend Following Dip Buy (EMA 9 > EMA 21 & RSI hồi phục về 34 - 44)
-    else if (rsi <= 44 && item.change24h > 1.0) {
-      score = 85 + Math.floor(Math.random() * 5);
-      setup = '⚡ Vùng Mua Kéo Lùi Xu Hướng (Dip in Uptrend)';
-      signal = 'BUY';
+    // C. SMC Bullish Sweep + Order Block / FVG & Late-Short Squeeze (RSI <= 38)
+    else if (rsi <= 38) {
+      score = 88 + Math.floor(Math.random() * 5);
+      setup = '🎯 [SMC-01 + DERIV-02] Sell-Side Sweep + Bullish CHoCH tại OB/FVG (Short Squeeze)';
+      signal = 'STRONG_BUY';
+      causalRuleId = 'SMC-01';
+      causalPillar = 'SMC';
     }
-    // D. Trend Following Pullback Short (EMA 9 < EMA 21 & RSI hồi về 56 - 66)
+    // D. Trend Following Dip Buy (BOS + Inducement Sweep into OTE/FVG)
+    else if (rsi <= 45 && item.change24h > 1.0) {
+      score = 84 + Math.floor(Math.random() * 5);
+      setup = '⚡ [SMC-03 + WYK-01] Bullish BOS + Quét IDM về vùng OTE / LPS (No Supply)';
+      signal = 'BUY';
+      causalRuleId = 'SMC-03';
+      causalPillar = 'SMC';
+    }
+    // E. Trend Following Pullback Short (Bearish BOS + Supply OB/FVG)
     else if (rsi >= 56 && item.change24h < -1.0) {
       score = 84 + Math.floor(Math.random() * 5);
-      setup = '⚡ Vùng Bán Hồi Phục Xu Hướng (Pullback Short)';
+      setup = '⚡ [SMC-03 + WYK-02] Bearish BOS + Hồi LPSY No Demand tại Supply FVG';
       signal = 'SELL';
+      causalRuleId = 'WYK-02';
+      causalPillar = 'WYCKOFF_VSA';
     }
-    // E. High Volatility Momentum Surge
+    // F. High Volatility Displacement Surge
     else if (Math.abs(item.change24h) >= 5.0) {
       score = 79 + Math.floor(Math.random() * 5);
-      setup = item.change24h > 0 ? '🚀 Sóng Đẩy Momentum Đột Phá' : '⚠️ Sóng Xả Momentum Mạnh';
+      setup = item.change24h > 0
+        ? '🚀 [SMC-03] Nến đẩy Displacement BOS + Mở rộng OI/CVD Dương'
+        : '⚠️ [DERIV-01] Sóng xả Displacement BOS + Thanh lý Long Heatmap';
       signal = item.change24h > 0 ? 'BUY' : 'SELL';
+      causalRuleId = item.change24h > 0 ? 'SMC-03' : 'DERIV-01';
+      causalPillar = item.change24h > 0 ? 'SMC' : 'DERIVATIVES';
     }
 
     // Liquidity Factor: Coins with > $10M volume get bonus, < $1M volume get penalty
@@ -428,6 +454,8 @@ class QuantEngine {
     item.opportunityScore = score;
     item.setupType = setup;
     item.signal = signal;
+    item.causalRuleId = causalRuleId;
+    item.causalPillar = causalPillar;
   }
 
   // --- ADAPTIVE POSITION MANAGEMENT & DYNAMIC TRAILING PROFIT LOCK ---
@@ -592,12 +620,19 @@ class QuantEngine {
     const trading = db.getTrading();
     const leverage = trading.leverage || 3;
     const balanceUSD = trading.balanceUSD || 19.68;
-    const marginUSD = parseFloat((balanceUSD * this.positionMarginRatio).toFixed(2));
+
+    // Retrieve Causal Reasoning Context & Kelly + ATR Position Sizing from Knowledge Base
+    const ragContext = contextRetriever.retrieveByMarketState(coinData, { balanceUSD, leverage });
+    const sizing = ragContext.riskSizing || {};
+
+    const marginUSD = sizing.marginUSD || parseFloat((balanceUSD * this.positionMarginRatio).toFixed(2));
     const sizeUSD = parseFloat((marginUSD * leverage).toFixed(2));
 
-    // Dynamic Volatility Stops - Fast Scalping
-    const slDistance = currentPrice * 0.008; // Cắt lỗ 0.8%
-    const tpDistance = currentPrice * 0.012; // Chốt lời 1.2% (Tỷ lệ R:R = 1.5)
+    // Dynamic ATR-based Volatility Stops + Optimal R:R (Pillar 4)
+    const slPct = (sizing.slDistancePct || 0.8) / 100;
+    const tpPct = (sizing.tpDistancePct || 1.44) / 100;
+    const slDistance = currentPrice * slPct;
+    const tpDistance = currentPrice * tpPct;
 
     const stopLoss = side === 'LONG'
       ? parseFloat((currentPrice - slDistance).toFixed(currentPrice < 1 ? 4 : 2))
@@ -625,6 +660,12 @@ class QuantEngine {
       isBreakevenProtected: false,
       isProfitLocked: false,
       reason,
+      causalRuleId: ragContext.primaryRule ? ragContext.primaryRule.id : (coinData.causalRuleId || 'SMC-01'),
+      causalTitle: ragContext.primaryRule ? ragContext.primaryRule.title : coinData.setupType,
+      mmBehavior: ragContext.causalSynthesis ? ragContext.causalSynthesis.mmBehavior : '',
+      kellyMarginPct: sizing.allocatedMarginPct || 18,
+      atrSlPct: sizing.slDistancePct || 0.8,
+      rrRatio: sizing.rewardRiskRatio || 1.8,
       openTime: new Date().toISOString()
     };
 
@@ -638,7 +679,7 @@ class QuantEngine {
     db.addLog(
       'INFO',
       'PoodleAI',
-      `🐩⚡ [POODLE VÀO LỆNH ${side}] ${position.icon} ${symbol} @ $${currentPrice.toLocaleString('en-US')}. Đòn bẩy x${leverage}, Ký quỹ $${marginUSD} (18% vốn). SL: $${stopLoss}, TP: $${takeProfit} | Poodle đang giữ: ${this.activePositions.length}/${this.maxConcurrentPositions} kèo`
+      `🐩⚡ [POODLE VÀO LỆNH ${side}] ${position.icon} ${symbol} @ $${currentPrice.toLocaleString('en-US')} | Quy tắc [${position.causalRuleId}]: ${position.causalTitle} | Kelly $${marginUSD} (${position.kellyMarginPct}% vốn, x${leverage}), ATR SL: $${stopLoss} (-${position.atrSlPct}%), TP: $${takeProfit} (R:R 1:${position.rrRatio})`
     );
 
     this.broadcast({

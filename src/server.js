@@ -10,6 +10,7 @@ const crypto = require('crypto');
 
 const db = require('./db');
 const QuantEngine = require('./quantEngine');
+const contextRetriever = require('./contextRetriever');
 
 // Crash prevention handlers for abrupt socket resets
 process.on('uncaughtException', err => {
@@ -103,6 +104,7 @@ wss.on('connection', (ws, req) => {
           stats: { totalTrades: 0, wins: 0, losses: 0, winRate: 0 }
         },
         config: db.getConfig(),
+        knowledgeSummary: contextRetriever.getKnowledgeSummary(),
         marketRadar: Object.values(quantEngine.marketData),
         isAutoTrading: quantEngine.isAutoTrading,
         publicUrl: db.getPublicUrl(),
@@ -287,6 +289,67 @@ app.post('/api/logs/clear', requireAuth, (req, res) => {
   db.clearLogs();
   broadcast({ type: 'LOGS_CLEARED' });
   res.json({ success: true });
+});
+
+// --- QUANTITATIVE KNOWLEDGE BASE & CAUSAL RAG CONTEXT RETRIEVER ROUTES ---
+
+app.get('/api/knowledge/summary', (req, res) => {
+  res.json({
+    success: true,
+    data: contextRetriever.getKnowledgeSummary()
+  });
+});
+
+app.get('/api/knowledge/search', (req, res) => {
+  const q = req.query.q || '';
+  const pillar = req.query.pillar || 'ALL';
+  const results = contextRetriever.searchKnowledgeBase(q, pillar);
+  res.json({
+    success: true,
+    data: results
+  });
+});
+
+app.get('/api/knowledge/document/:pillar', (req, res) => {
+  const pillar = (req.params.pillar || 'SMC').toUpperCase();
+  const doc = contextRetriever.getMarkdownDocument(pillar);
+  res.json({
+    success: true,
+    pillar,
+    markdown: doc
+  });
+});
+
+app.post('/api/knowledge/analyze', (req, res) => {
+  const { symbol } = req.body || {};
+  const allCoins = Object.values(quantEngine.marketData).filter(c => c.price > 0);
+  allCoins.sort((a, b) => (b.opportunityScore || 0) - (a.opportunityScore || 0));
+
+  const targetCoin = (symbol && quantEngine.marketData[symbol])
+    ? quantEngine.marketData[symbol]
+    : (allCoins[0] || {
+        symbol: 'BTCUSDT',
+        name: 'Bitcoin',
+        price: 68500,
+        high24h: 69800,
+        low24h: 67200,
+        change24h: 1.85,
+        volume: 1500000000,
+        rsi: 34,
+        opportunityScore: 88
+      });
+
+  const trading = db.getTrading();
+  const analysis = contextRetriever.retrieveByMarketState(targetCoin, {
+    balanceUSD: trading.balanceUSD || 19.68,
+    leverage: trading.leverage || 3
+  });
+
+  res.json({
+    success: true,
+    coin: targetCoin,
+    analysis
+  });
 });
 
 // --- CLOUDFLARE QUICK TUNNEL LAUNCHER (SECURE PRIVATE WEB ACCESS) ---

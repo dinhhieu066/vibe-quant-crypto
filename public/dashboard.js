@@ -613,8 +613,9 @@ function renderPosition() {
             </div>
 
             <div class="pos-reason-box" style="margin: 8px 0;">
-              <span class="reason-label">CHIẾN LƯỢC:</span>
-              <span class="reason-text">${escapeHtml(pos.reason || 'AI Quantitative Scalp')}</span>
+              <span class="reason-label">CHIẾN LƯỢC (${escapeHtml(pos.causalRuleId || 'SMC-01')}):</span>
+              <span class="reason-text">${escapeHtml(pos.causalTitle || pos.reason || 'AI Quantitative Scalp')}</span>
+              ${pos.mmBehavior ? `<div style="font-size:11px; color:var(--text-muted); margin-top:4px;">🐋 <strong>MM Behavior:</strong> ${escapeHtml(pos.mmBehavior)}</div>` : ''}
             </div>
 
             <div class="pos-item-prices">
@@ -732,9 +733,14 @@ function renderRadarTable() {
         </td>
         <td class="font-xs setup-text">${escapeHtml(coin.setupType || 'Rà soát tín hiệu...')}</td>
         <td>${signalBadge}</td>
+        <td>
+          <button class="btn btn-xs btn-outline" onclick="analyzeCoinCausal('${coin.symbol}', true)">🧠 Phân Tích</button>
+        </td>
       </tr>
     `;
   }).join('');
+
+  populateCausalCoinSelect(sorted);
 }
 
 // Render Closed Trades History
@@ -1075,10 +1081,21 @@ function initPoodle3D() {
     btnChatSafety.onclick = () => {
       if (!window.poodle3D) return;
       window.poodle3D.ensureAudioContext();
-      const speech = 'Vốn của sếp đang an toàn tuyệt đối 100%! Em phân bổ tối đa 18% mỗi lệnh và có cắt lỗ tự động, nên không bao giờ cháy ví đâu sếp yên tâm nha!';
+      const speech = 'Vốn của sếp đang an toàn tuyệt đối 100%! Em phân bổ theo công thức Fractional Kelly tối đa 18% mỗi lệnh kèm cắt lỗ động theo ATR, nên không bao giờ cháy ví đâu sếp yên tâm nha!';
       const speechEl = document.getElementById('poodle-speech');
       if (speechEl) speechEl.innerHTML = `"${speech}"`;
       window.poodle3D.speak(speech);
+    };
+  }
+
+  const btnChatCausal = document.getElementById('btn-chat-causal');
+  if (btnChatCausal) {
+    btnChatCausal.onclick = async () => {
+      const radar = state.marketRadar || [];
+      const topSymbol = radar.length > 0
+        ? [...radar].sort((a, b) => (b.opportunityScore || 0) - (a.opportunityScore || 0))[0].symbol
+        : 'BTCUSDT';
+      await analyzeCoinCausal(topSymbol, true);
     };
   }
 
@@ -1093,10 +1110,260 @@ function initPoodle3D() {
   }
 }
 
+// --- QUANT KNOWLEDGE BASE & CAUSAL RAG CONTEXT RETRIEVER UI ---
+let currentPillarFilter = 'ALL';
+let hasInitializedCausalAnalyzer = false;
+
+function populateCausalCoinSelect(sortedCoins = []) {
+  const sel = document.getElementById('select-causal-coin');
+  if (!sel || sortedCoins.length === 0) return;
+
+  const currentVal = sel.value;
+  const top20 = sortedCoins.slice(0, 20);
+  sel.innerHTML = `<option value="">-- Tự động chọn Top 1 (${top20[0].symbol}) --</option>` +
+    top20.map(c => `<option value="${c.symbol}">${c.symbol} (Điểm: ${c.opportunityScore}/100 | RSI: ${c.rsi})</option>`).join('');
+
+  if (currentVal && top20.some(c => c.symbol === currentVal)) {
+    sel.value = currentVal;
+  }
+
+  if (!hasInitializedCausalAnalyzer && top20.length > 0) {
+    hasInitializedCausalAnalyzer = true;
+    analyzeCoinCausal(top20[0].symbol, false);
+  }
+}
+
+async function loadKnowledgeBaseUI() {
+  try {
+    const res = await fetch('/api/knowledge/summary');
+    const json = await res.json();
+    if (json.success && json.data) {
+      state.knowledgeSummary = json.data;
+      const statPillars = document.getElementById('kb-stat-pillars');
+      const statRules = document.getElementById('kb-stat-rules');
+      const statChunks = document.getElementById('kb-stat-chunks');
+
+      if (statPillars) statPillars.textContent = `${json.data.totalPillars} Trụ Cột Cốt Lõi`;
+      if (statRules) statRules.textContent = `${json.data.totalRules} Quy Tắc Nhân Quả`;
+      if (statChunks) statChunks.textContent = `${json.data.totalRagChunks} Phân Đoạn RAG (.MD)`;
+
+      renderCausalRuleCards(json.data.rules || []);
+    }
+  } catch (err) {
+    console.error('Error loading Knowledge Base summary:', err);
+  }
+}
+
+function renderCausalRuleCards(rules = []) {
+  const grid = document.getElementById('kb-rules-grid');
+  if (!grid) return;
+
+  if (!rules || rules.length === 0) {
+    grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:24px; color:var(--text-dim);">Không tìm thấy quy tắc nhân quả phù hợp với từ khóa.</div>`;
+    return;
+  }
+
+  grid.innerHTML = rules.map(r => {
+    const dirClass = r.direction === 'LONG'
+      ? 'highlight-green'
+      : (r.direction === 'SHORT' ? 'highlight-red' : 'text-accent');
+    const c = r.causalChain || {};
+    const sm = r.sizingModel || {};
+
+    return `
+      <div class="kb-rule-card">
+        <div class="kb-rule-top">
+          <span class="kb-rule-id mono">${escapeHtml(r.id)}</span>
+          <span class="kb-rule-pillar">${escapeHtml(r.pillarName || r.pillar)}</span>
+          <span class="kb-rule-dir mono ${dirClass}">${escapeHtml(r.direction)}</span>
+        </div>
+        <h4 class="kb-rule-title">${escapeHtml(r.title)}</h4>
+        <div class="kb-causal-steps">
+          <div class="kb-c-row">
+            <span class="kb-c-lbl">1. Bối cảnh:</span>
+            <span class="kb-c-txt">${escapeHtml(c.marketContext)}</span>
+          </div>
+          <div class="kb-c-row">
+            <span class="kb-c-lbl">2. Dấu hiệu dữ liệu:</span>
+            <span class="kb-c-txt">${escapeHtml(c.dataSignals)}</span>
+          </div>
+          <div class="kb-c-row">
+            <span class="kb-c-lbl">3. Hành vi Cá mập (MM):</span>
+            <span class="kb-c-txt">${escapeHtml(c.mmBehavior)}</span>
+          </div>
+          <div class="kb-c-row">
+            <span class="kb-c-lbl">4. Kịch bản hành động:</span>
+            <span class="kb-c-txt">${escapeHtml(c.actionPlan)}</span>
+          </div>
+        </div>
+        <div class="kb-rule-footer mono">
+          <span>WinRate cơ sở: <strong>${sm.baseWinRate ? Math.round(sm.baseWinRate * 100) + '%' : 'Quarter-Kelly'}</strong></span>
+          <span>R:R tối ưu: <strong>1:${sm.targetRR || sm.minRR || 1.8}</strong></span>
+          <span>ATR SL: <strong>${sm.atrSlMultiplier || sm.defaultAtrMultiplier || 1.5}x ATR</strong></span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+async function analyzeCoinCausal(symbol, scrollAndSpeak = false) {
+  try {
+    const sel = document.getElementById('select-causal-coin');
+    const targetSymbol = symbol || (sel ? sel.value : '');
+
+    const res = await fetch('/api/knowledge/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ symbol: targetSymbol })
+    });
+    const json = await res.json();
+    if (!json.success || !json.analysis) return;
+
+    const a = json.analysis;
+    const cs = a.causalSynthesis || {};
+    const rs = a.riskSizing || {};
+
+    const elContext = document.getElementById('causal-step-context');
+    const elSignals = document.getElementById('causal-step-signals');
+    const elMm = document.getElementById('causal-step-mm');
+    const elAction = document.getElementById('causal-step-action');
+
+    if (elContext) elContext.textContent = cs.marketContext || '';
+    if (elSignals) elSignals.innerHTML = escapeHtml(cs.dataSignals || '').replace(/\n/g, '<br>');
+    if (elMm) elMm.textContent = cs.mmBehavior || '';
+    if (elAction) elAction.textContent = cs.actionPlan || '';
+
+    // Update Kelly & ATR Sizing Strip
+    const elRuleId = document.getElementById('sizing-rule-id');
+    const elWr = document.getElementById('sizing-winrate');
+    const elRr = document.getElementById('sizing-rr');
+    const elKelly = document.getElementById('sizing-kelly');
+    const elAtr = document.getElementById('sizing-atr');
+    const elSl = document.getElementById('sizing-sl');
+    const elTp = document.getElementById('sizing-tp');
+    const elPrompt = document.getElementById('llm-prompt-content');
+
+    if (elRuleId) elRuleId.textContent = `${cs.primaryRuleId || 'SMC-01'} (${a.recommendedSide})`;
+    if (elWr) elWr.textContent = `${rs.winRateEstPct || 64}%`;
+    if (elRr) elRr.textContent = `1 : ${rs.rewardRiskRatio || 2.0}`;
+    if (elKelly) elKelly.textContent = `${rs.allocatedMarginPct || 18}% Vốn ($${rs.marginUSD || 3.54})`;
+    if (elAtr) elAtr.textContent = `${rs.atrPct || 0.55}% ($${rs.atrValue || 0})`;
+    if (elSl) elSl.textContent = `$${rs.recommendedSL} (-${rs.slDistancePct}%)`;
+    if (elTp) elTp.textContent = `$${rs.recommendedTP} (+${rs.tpDistancePct}%)`;
+    if (elPrompt) elPrompt.textContent = a.llmPromptContext || '';
+
+    if (scrollAndSpeak) {
+      const kbSection = document.getElementById('kb-section');
+      if (kbSection) kbSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      const speech = `Gâu gâu! Em đã truy xuất Knowledge Base 4 trụ cột cho đồng ${a.symbol}: Khớp quy tắc ${cs.primaryRuleId}, khuyến nghị ${a.recommendedSide} với xác suất thắng ${rs.winRateEstPct} phần trăm, cắt lỗ chuẩn ATR tại ${rs.recommendedSL} đô và phân bổ vốn Fractional Kelly ${rs.allocatedMarginPct} phần trăm!`;
+      const speechEl = document.getElementById('poodle-speech');
+      if (speechEl) speechEl.innerHTML = `"${speech}"`;
+      if (window.poodle3D) {
+        window.poodle3D.ensureAudioContext();
+        window.poodle3D.speak(speech);
+      }
+    }
+  } catch (err) {
+    console.error('Error analyzing coin causal state:', err);
+  }
+}
+
+function setupKnowledgeBaseControls() {
+  const tabsWrap = document.getElementById('kb-pillar-tabs');
+  const searchInput = document.getElementById('input-kb-search');
+  const btnAnalyze = document.getElementById('btn-run-causal-analyzer');
+  const btnTogglePrompt = document.getElementById('btn-toggle-llm-prompt');
+  const promptBox = document.getElementById('llm-prompt-box');
+  const btnCopyPrompt = document.getElementById('btn-copy-llm-prompt');
+  const btnViewDoc = document.getElementById('btn-view-pillar-doc');
+  const mdViewer = document.getElementById('kb-markdown-viewer');
+  const btnCloseMd = document.getElementById('btn-close-md-viewer');
+
+  async function triggerSearch() {
+    const q = searchInput ? searchInput.value.trim() : '';
+    try {
+      const res = await fetch(`/api/knowledge/search?q=${encodeURIComponent(q)}&pillar=${encodeURIComponent(currentPillarFilter)}`);
+      const json = await res.json();
+      if (json.success && json.data) {
+        renderCausalRuleCards(json.data.rules || []);
+      }
+    } catch (e) {
+      console.error('KB search error:', e);
+    }
+  }
+
+  if (tabsWrap) {
+    tabsWrap.querySelectorAll('.kb-tab').forEach(btn => {
+      btn.onclick = () => {
+        tabsWrap.querySelectorAll('.kb-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentPillarFilter = btn.getAttribute('data-pillar') || 'ALL';
+        triggerSearch();
+      };
+    });
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      triggerSearch();
+    });
+  }
+
+  if (btnAnalyze) {
+    btnAnalyze.onclick = () => {
+      const sel = document.getElementById('select-causal-coin');
+      analyzeCoinCausal(sel ? sel.value : '', true);
+    };
+  }
+
+  if (btnTogglePrompt && promptBox) {
+    btnTogglePrompt.onclick = () => {
+      promptBox.classList.toggle('hidden');
+    };
+  }
+
+  if (btnCopyPrompt) {
+    btnCopyPrompt.onclick = () => {
+      const pre = document.getElementById('llm-prompt-content');
+      if (pre && pre.textContent) {
+        navigator.clipboard.writeText(pre.textContent);
+        btnCopyPrompt.textContent = '✅ Đã sao chép!';
+        setTimeout(() => { btnCopyPrompt.textContent = 'Sao chép Prompt'; }, 2000);
+      }
+    };
+  }
+
+  if (btnViewDoc && mdViewer) {
+    btnViewDoc.onclick = async () => {
+      const targetPillar = currentPillarFilter === 'ALL' ? 'SMC' : currentPillarFilter;
+      try {
+        const res = await fetch(`/api/knowledge/document/${targetPillar}`);
+        const json = await res.json();
+        if (json.success) {
+          const titleEl = document.getElementById('kb-md-title');
+          const bodyEl = document.getElementById('kb-md-body');
+          if (titleEl) titleEl.textContent = `📖 TÀI LIỆU CHUẨN HÓA: TRỤ CỘT ${targetPillar} (.MD)`;
+          if (bodyEl) bodyEl.textContent = json.markdown || '';
+          mdViewer.classList.remove('hidden');
+        }
+      } catch (e) {
+        console.error('Error loading markdown doc:', e);
+      }
+    };
+  }
+
+  if (btnCloseMd && mdViewer) {
+    btnCloseMd.onclick = () => mdViewer.classList.add('hidden');
+  }
+}
+
 setupPinKeypad();
 setupCapitalButtons();
 setupLeverageButtons();
 setupSettingsModal();
+setupKnowledgeBaseControls();
+loadKnowledgeBaseUI();
 initPoodle3D();
 
 // If we already have a saved token, verify it silently

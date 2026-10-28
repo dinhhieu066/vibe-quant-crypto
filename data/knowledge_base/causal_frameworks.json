@@ -1,0 +1,251 @@
+{
+  "version": "2.0.0",
+  "updatedAt": "2026-10-28T23:55:00+07:00",
+  "description": "Quantitative Crypto Futures Causal Reasoning Knowledge Base (4 Pillars: SMC, Derivatives Data, Wyckoff VSA, Risk & Kelly/ATR Sizing)",
+  "pillars": [
+    {
+      "id": "SMC",
+      "name": "Smart Money Concepts (SMC) & Price Action",
+      "icon": "🎯",
+      "summary": "BOS, CHoCH, Order Block (OB), Fair Value Gap (FVG), Liquidity Sweep (Quét thanh khoản 2 đầu Long/Short)",
+      "docFile": "smc_price_action.md"
+    },
+    {
+      "id": "DERIVATIVES",
+      "name": "Derivatives Data Analysis (Dữ liệu Phái sinh)",
+      "icon": "📊",
+      "summary": "Open Interest (OI), Funding Rate, Liquidation Heatmap, Long/Short Ratio & Cumulative Volume Delta (CVD)",
+      "docFile": "derivatives_data_analysis.md"
+    },
+    {
+      "id": "WYCKOFF_VSA",
+      "name": "Wyckoff Logic & Volume Spread Analysis (VSA)",
+      "icon": "🏛️",
+      "summary": "Pha Tích lũy (Spring/SOS) gom Long, Pha Phân phối (UTAD/SOW) gom Short & Quy luật Nỗ lực - Kết quả",
+      "docFile": "wyckoff_vsa_logic.md"
+    },
+    {
+      "id": "RISK_SIZING",
+      "name": "Risk Management & Kelly/ATR Position Sizing",
+      "icon": "🛡️",
+      "summary": "Công thức Fractional Kelly Criterion, ATR Volatility Stop-Loss, Leverage Isolation & Tối ưu R:R",
+      "docFile": "risk_position_sizing.md"
+    }
+  ],
+  "rules": [
+    {
+      "id": "SMC-01",
+      "pillar": "SMC",
+      "pillarName": "Smart Money Concepts & Price Action",
+      "title": "Bullish Liquidity Sweep + CHoCH + Order Block/FVG Confluence",
+      "direction": "LONG",
+      "tags": ["liquidity sweep", "choch", "order block", "fvg", "equal lows", "bull trap", "bear trap", "long", "discount"],
+      "triggerMetrics": {
+        "maxRsi": 38,
+        "pricePosition": "DISCOUNT_SWEEP",
+        "structure": "BULLISH_CHOCH"
+      },
+      "causalChain": {
+        "marketContext": "Giá điều chỉnh về vùng Chiết khấu (Discount < 50% biên độ 24h) hoặc tích lũy tạo cụm Đáy bằng nhau (Equal Lows - EQL) nơi đám đông đặt Stop-Loss lệnh Long.",
+        "dataSignals": "Giá sập nhanh quét thủng đáy EQL nhưng rút râu dưới mạnh (Rejection Wick), sau đó đóng nến tăng biên độ lớn vượt đỉnh cấu trúc nội tại (Bullish CHoCH), để lại khoảng trống thanh khoản Bullish FVG trùng với Order Block (OB).",
+        "mmBehavior": "Market Maker (MM) đạp giá xuyên thủng hỗ trợ để kích hoạt lệnh Sell Stop (cắt lỗ của Long) và dụ phe Breakout Short nhảy vào, qua đó gom toàn bộ thanh khoản giá rẻ cho vị thế Long tổ chức.",
+        "actionPlan": "Mở vị thế LONG tại vùng hợp lưu Bullish FVG + Order Block (OTE 61.8%-78.6%). Đặt Stop Loss dưới đáy râu nến Sweep trừ 0.5×ATR(14). Chốt lời TP1 tại đỉnh nội tại (R:R 1:1.8), TP2 tại cụm Buy-side Liquidity đối diện (R:R 1:3)."
+      },
+      "sizingModel": {
+        "baseWinRate": 0.62,
+        "targetRR": 2.2,
+        "atrSlMultiplier": 1.6
+      }
+    },
+    {
+      "id": "SMC-02",
+      "pillar": "SMC",
+      "pillarName": "Smart Money Concepts & Price Action",
+      "title": "Bearish Liquidity Sweep + CHoCH + Supply OB/FVG",
+      "direction": "SHORT",
+      "tags": ["liquidity sweep", "choch", "order block", "fvg", "equal highs", "short", "premium", "upthrust"],
+      "triggerMetrics": {
+        "minRsi": 66,
+        "pricePosition": "PREMIUM_SWEEP",
+        "structure": "BEARISH_CHOCH"
+      },
+      "causalChain": {
+        "marketContext": "Giá tăng nóng vào vùng Đắt (Premium > 75% biên độ 24h) hoặc tiệm cận cụm Đỉnh bằng nhau (Equal Highs - EQH) nơi tập trung Stop-Loss của phe Short.",
+        "dataSignals": "Giá phóng vọt qua đỉnh EQH (Sweep Buy-side Liquidity) rồi lập tức rút râu trên dài, tiếp nối bằng nến giảm mạnh phá vỡ đáy swing gần nhất tạo Bearish CHoCH và để lại Bearish FVG dưới Supply Order Block.",
+        "mmBehavior": "MM đẩy giá vượt đỉnh để ép phe Short sớm phải mua cắt lỗ (Buy-to-cover) và kích hoạt lệnh FOMO Long Breakout của đám đông làm thanh khoản đối ứng để MM khớp khối lượng lớn lệnh Short trên đỉnh.",
+        "actionPlan": "Mở vị thế SHORT khi giá hồi kiểm định vùng Bearish FVG + Supply OB. Đặt Stop Loss phía trên đỉnh râu Sweep cộng 0.5×ATR(14). Chốt lời tại cụm Sell-side Liquidity (EQL bên dưới, R:R >= 1:2)."
+      },
+      "sizingModel": {
+        "baseWinRate": 0.60,
+        "targetRR": 2.1,
+        "atrSlMultiplier": 1.6
+      }
+    },
+    {
+      "id": "SMC-03",
+      "pillar": "SMC",
+      "pillarName": "Smart Money Concepts & Price Action",
+      "title": "Inducement (IDM) Sweep & Trend Continuation BOS",
+      "direction": "BOTH",
+      "tags": ["bos", "break of structure", "inducement", "idm", "trend continuation", "order block", "fvg", "ema"],
+      "triggerMetrics": {
+        "minRsi": 35,
+        "maxRsi": 65,
+        "structure": "BOS_CONTINUATION"
+      },
+      "causalChain": {
+        "marketContext": "Thị trường đang có xu hướng rõ rệt (EMA 9 tách biệt EMA 21) và vừa đóng thân nến xác nhận Break of Structure (BOS) thuận xu hướng.",
+        "dataSignals": "Sau BOS, giá tạo nhịp hồi nông hình thành đáy/đỉnh phụ giả (Inducement - IDM) ngay trước vùng Order Block cực trị (Extreme POI), sau đó quét qua IDM để lấp đầy FVG.",
+        "mmBehavior": "MM tạo vùng hỗ trợ/kháng cự giả (IDM) để dụ trader thiếu kiên nhẫn vào lệnh sớm, sau đó quét sạch SL của nhóm này để nạp thanh khoản trước khi đẩy giá đi tiếp theo xu hướng chính.",
+        "actionPlan": "Bỏ qua nhịp hồi đầu tiên chưa quét IDM. Chỉ vào lệnh thuận xu hướng (LONG khi EMA9 > EMA21, SHORT khi EMA9 < EMA21) ngay khi giá quét xong IDM và phản ứng rút chân tại vùng OB + FVG."
+      },
+      "sizingModel": {
+        "baseWinRate": 0.64,
+        "targetRR": 2.0,
+        "atrSlMultiplier": 1.5
+      }
+    },
+    {
+      "id": "DERIV-01",
+      "pillar": "DERIVATIVES",
+      "pillarName": "Derivatives Data Analysis",
+      "title": "Crowded Long Trap + Bearish CVD Absorption + Liquidation Cascade",
+      "direction": "SHORT",
+      "tags": ["open interest", "oi", "funding rate", "cvd", "liquidation heatmap", "long squeeze", "short", "crowded long"],
+      "triggerMetrics": {
+        "minRsi": 70,
+        "fundingState": "EXTREME_POSITIVE",
+        "oiRegime": "RISING_STALLED_PRICE"
+      },
+      "causalChain": {
+        "marketContext": "Giá tăng nóng và bắt đầu đi ngang tại vùng kháng cự, tâm lý đám đông cực kỳ hưng phấn với Long/Short Ratio nghiêng hẳn về phe Long (> 65%).",
+        "dataSignals": "Open Interest (OI) tăng vọt nhưng giá không thể tạo đỉnh cao mới; Funding Rate dương cực đại (> +0.03%/8h); CVD tăng nhưng giá bị chặn đứng (Limit Sell Absorption); Liquidation Heatmap tích tụ cụm thanh lý Long dày đặc ngay dưới hỗ trợ.",
+        "mmBehavior": "MM đã dùng tường lệnh Limit Sell hấp thụ toàn bộ lực mua Market Buy FOMO của Retail. Khi đám đông đã ôm bụng lệnh Long đòn bẩy cao, MM xả mồi để đạp giá xuyên vào cụm Liquidation Heatmap bên dưới, kích hoạt bán tháo dây chuyền.",
+        "actionPlan": "Tuyệt đối cấm mở Long đuổi. Mở vị thế SHORT khi xuất hiện nến gãy cấu trúc hỗ trợ ngắn hạn. Đặt TP ngay tại vùng cụm thanh lý Long (Liquidation Cluster) bên dưới nơi OI sụt giảm mạnh."
+      },
+      "sizingModel": {
+        "baseWinRate": 0.63,
+        "targetRR": 2.3,
+        "atrSlMultiplier": 1.7
+      }
+    },
+    {
+      "id": "DERIV-02",
+      "pillar": "DERIVATIVES",
+      "pillarName": "Derivatives Data Analysis",
+      "title": "Aggressive Late-Short Trap + Bullish CVD Absorption (Short Squeeze)",
+      "direction": "LONG",
+      "tags": ["open interest", "oi", "funding rate", "negative funding", "cvd", "short squeeze", "liquidation heatmap", "long"],
+      "triggerMetrics": {
+        "maxRsi": 36,
+        "fundingState": "NEGATIVE_CROWDED_SHORT",
+        "oiRegime": "RISING_AT_SUPPORT"
+      },
+      "causalChain": {
+        "marketContext": "Giá tích lũy ở vùng đáy sau nhịp giảm, đám đông bi quan cực độ và liên tục mở lệnh Short đuổi ngay tại vùng hỗ trợ.",
+        "dataSignals": "Open Interest (OI) tăng mạnh tại đáy kèm Funding Rate chuyển âm sâu (< -0.02%); CVD cắm xuống sâu (lực Market Sell lớn) nhưng giá không thủng đáy (Bullish CVD Absorption); Liquidation Heatmap dày đặc các cụm thanh lý Short phía trên.",
+        "mmBehavior": "MM dựng tường Limit Buy gom sạch toàn bộ hợp đồng Short bán tháo của Retail ở đáy. Khi phe Short đã kẹt cứng, MM đẩy giá vượt nhẹ qua kháng cự để ép phe Short cháy tài khoản (Forced Market Buy), tạo cột sóng Short Squeeze.",
+        "actionPlan": "Mở vị thế LONG đón đầu sóng Short Squeeze khi giá bứt lên khỏi vùng nén kèm CVD ngoặt dương. Chốt lời khi giá quét sạch cụm Liquidation Heatmap phía trên và OI bắt đầu giảm."
+      },
+      "sizingModel": {
+        "baseWinRate": 0.65,
+        "targetRR": 2.4,
+        "atrSlMultiplier": 1.6
+      }
+    },
+    {
+      "id": "DERIV-03",
+      "pillar": "DERIVATIVES",
+      "pillarName": "Derivatives Data Analysis",
+      "title": "Capitulation Leverage Flush & OI Reset V-Bounce",
+      "direction": "LONG",
+      "tags": ["capitulation", "liquidation", "oi drop", "mean reversion", "oversold", "rsi", "v-bounce", "long"],
+      "triggerMetrics": {
+        "maxRsi": 26,
+        "oiRegime": "CAPITULATION_FLUSH"
+      },
+      "causalChain": {
+        "marketContext": "Thị trường vừa xảy ra nhịp sập tháo cống (Flash Crash), chỉ báo RSI rơi về vùng Siêu Quá Bán (<= 26).",
+        "dataSignals": "Open Interest (OI) sụt giảm thẳng đứng (-10% đến -25%) do lệnh Long đòn bẩy cao bị thanh lý cưỡng bức hàng loạt; Funding Rate reset về 0 hoặc âm; Volume nổ cực đại kèm nến rút chân dài.",
+        "mmBehavior": "Quá trình dọn dẹp đòn bẩy (Leverage Flush) đã hoàn tất. MM đã gom xong toàn bộ thanh khoản giá rẻ từ các lệnh bị cháy. Khi không còn lệnh Long nào để ép bán tiếp, áp lực cung cưỡng bức biến mất hoàn toàn.",
+        "actionPlan": "Mở vị thế LONG (Mean-Reversion Rebound) ngay khi nến rũ bỏ đóng cửa rút chân. Đặt SL dưới đáy râu nến Capitulation, chốt lời nhanh khi giá bật hồi chữ V về vùng EMA 9 / EMA 21."
+      },
+      "sizingModel": {
+        "baseWinRate": 0.67,
+        "targetRR": 1.8,
+        "atrSlMultiplier": 1.5
+      }
+    },
+    {
+      "id": "WYK-01",
+      "pillar": "WYCKOFF_VSA",
+      "pillarName": "Wyckoff Logic & Volume Spread Analysis (VSA)",
+      "title": "Wyckoff Accumulation Phase C 'Spring' + VSA Stopping Volume & No Supply",
+      "direction": "LONG",
+      "tags": ["wyckoff", "vsa", "accumulation", "spring", "shakeout", "stopping volume", "no supply", "sos", "long"],
+      "triggerMetrics": {
+        "maxRsi": 40,
+        "wyckoffPhase": "ACCUMULATION_SPRING"
+      },
+      "causalChain": {
+        "marketContext": "Sau xu hướng giảm, giá tạo Selling Climax (SC) và đi ngang trong vùng Tích lũy (Trading Range). Đám đông mất kiên nhẫn hoặc sợ sập tiếp.",
+        "dataSignals": "Giá đánh thủng đáy hỗ trợ Trading Range tạo cú 'Spring / Shakeout' với Volume cao đột biến (Stopping Volume) nhưng thân nến rút chân đóng cửa quay lại vào trong biên độ (Effort lớn nhưng Result giảm = 0). Nhịp test lại xuất hiện nến biên độ hẹp Volume cạn kiệt (No Supply Bar).",
+        "mmBehavior": "Composite Man thực hiện cú rũ bỏ cuối cùng (Terminal Shakeout) để vét sạch lượng cung trôi nổi và quét Stop-Loss trước khi phát tín hiệu Sign of Strength (SOS) đẩy giá bước vào pha Markup.",
+        "actionPlan": "Gom LONG tại nến Test of Spring (No Supply) hoặc điểm hồi Last Point of Support (LPS) sau SOS. Đặt SL dưới đáy Spring trừ 0.5×ATR. Gồng lời theo sóng Markup lên biên trên Trading Range."
+      },
+      "sizingModel": {
+        "baseWinRate": 0.64,
+        "targetRR": 2.5,
+        "atrSlMultiplier": 1.6
+      }
+    },
+    {
+      "id": "WYK-02",
+      "pillar": "WYCKOFF_VSA",
+      "pillarName": "Wyckoff Logic & Volume Spread Analysis (VSA)",
+      "title": "Wyckoff Distribution Phase C 'UTAD' + VSA Effort Without Result & No Demand",
+      "direction": "SHORT",
+      "tags": ["wyckoff", "vsa", "distribution", "utad", "upthrust", "sow", "no demand", "short"],
+      "triggerMetrics": {
+        "minRsi": 68,
+        "wyckoffPhase": "DISTRIBUTION_UTAD"
+      },
+      "causalChain": {
+        "marketContext": "Sau chu kỳ tăng nóng, giá tạo Buying Climax (BC) và dao động trên vùng đỉnh Phân phối (Distribution Range) giữa lúc tin tốt bơm ra dồn dập.",
+        "dataSignals": "Giá bứt phá giả lên trên đỉnh Trading Range tạo UTAD (Upthrust After Distribution) với Volume rất lớn nhưng thân nến bị ép đóng cửa sát đáy quay ngược vào trong Range (VSA Effort to Rise without Result). Nhịp hồi LPSY tiếp theo có biên độ hẹp và Volume thấp (No Demand).",
+        "mmBehavior": "Composite Man tạo cú Breakout giả để kích hoạt dòng tiền FOMO của đám đông làm thanh khoản xả nốt toàn bộ kho hàng Long và chất lệnh Short khổng lồ trước khi đạp gãy hỗ trợ Ice sang pha Markdown.",
+        "actionPlan": "Gom SHORT ngay khi giá đóng nến thất bại quay lại vào trong Trading Range (xác nhận UTAD) hoặc tại nhịp hồi yếu LPSY (No Demand) sau Sign of Weakness (SOW). Đặt SL trên đỉnh râu UTAD cộng 0.5×ATR."
+      },
+      "sizingModel": {
+        "baseWinRate": 0.62,
+        "targetRR": 2.4,
+        "atrSlMultiplier": 1.6
+      }
+    },
+    {
+      "id": "RISK-01",
+      "pillar": "RISK_SIZING",
+      "pillarName": "Risk Management & Kelly/ATR Position Sizing",
+      "title": "Fractional Kelly Criterion + Dynamic ATR Stop-Loss & Leverage Isolation",
+      "direction": "RISK_CONTROL",
+      "tags": ["kelly criterion", "fractional kelly", "atr", "stop loss", "position sizing", "leverage", "risk reward"],
+      "triggerMetrics": {
+        "alwaysActive": true
+      },
+      "causalChain": {
+        "marketContext": "Mọi lệnh mở trên thị trường Crypto Futures đòn bẩy đều đối mặt với rủi ro đuôi béo (Fat-tail Flash Crash) và hành vi quét râu (Stop-hunt) của thuật toán sàn.",
+        "dataSignals": "Đo lường biến động thực tế qua ATR(14), xác suất thắng kỳ vọng (W) từ điểm hội tụ AI (Opportunity Score), và tỷ lệ Lợi nhuận/Rủi ro (R:R).",
+        "mmBehavior": "Thuật toán MM thường xuyên mở rộng biên độ quét qua các mức Stop Loss đặt quá sát (< 0.5%) và thanh lý các tài khoản dùng Full Kelly hoặc đòn bẩy quá mức mà không cô lập rủi ro.",
+        "actionPlan": "Áp dụng Quarter-Kelly: f* = 0.25 × [W - (1 - W)/R] (giới hạn ký quỹ tối đa 18% vốn/lệnh, tối đa 3 lệnh = 54% vốn, dự trữ 46% tiền mặt). Đặt SL động theo biến động: SL = Entry ∓ k×ATR(14), TP = Entry ± R×SL_Distance (R >= 1.5). Khi lãi đạt +0.30%, tự động dời SL về Hòa vốn (Breakeven 100%). Khi lãi đạt +0.70%, khóa cứng tối thiểu +0.35% lãi ròng."
+      },
+      "sizingModel": {
+        "kellyFraction": 0.25,
+        "maxMarginPerTradeRatio": 0.18,
+        "maxPortfolioMarginRatio": 0.54,
+        "defaultAtrMultiplier": 1.5,
+        "minRR": 1.5
+      }
+    }
+  ]
+}
+
